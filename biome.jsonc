@@ -1,0 +1,57 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "extends": ["ultracite"],
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "jsxQuoteStyle": "double",
+      "arrowParentheses": "asNeeded"
+    }
+  },
+  "files": {
+    "includes": ["./src/**/*"],
+    "ignoreUnknown": true
+  },
+  "css": {
+    "formatter": {
+      "enabled": false
+    },
+    "linter": {
+      "enabled": false
+    }
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useConst": {
+          "level": "error",
+          "fix": "safe",
+          "options": {}
+        },
+        "noEnum": "off",
+        "useFilenamingConvention": "off",
+        "noParameterProperties": "off",
+        "noNonNullAssertion": "off"
+      },
+      "nursery": {
+        "useImageSize": "off",
+        "useConsistentTypeDefinitions": "off"
+      },
+      "suspicious": {
+        "noEmptyBlockStatements": "off"
+      },
+      "performance": {
+        "noImgElement": "off",
+        "useTopLevelRegex": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "complexity": {
+        "noStaticOnlyClass": "off"
+      }
+    }
+  }
+}
