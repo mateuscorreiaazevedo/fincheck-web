@@ -39,7 +39,8 @@
         "useConsistentTypeDefinitions": "off"
       },
       "suspicious": {
-        "noEmptyBlockStatements": "off"
+        "noEmptyBlockStatements": "off",
+        "noConsole": "error"
       },
       "performance": {
         "noImgElement": "off",
