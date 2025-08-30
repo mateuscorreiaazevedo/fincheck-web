@@ -1,10 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 const MIN_LENGHT_PASSWORD = 8;
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email: z
     .email({
       error: iss =>
@@ -32,17 +30,4 @@ const loginSchema = z.object({
     }),
 });
 
-type LoginSchemaType = z.infer<typeof loginSchema>;
-
-export function useLoginController() {
-  const form = useForm<LoginSchemaType>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const handleSubmit = form.handleSubmit(async () => {});
-
-  return {
-    handleSubmit,
-    control: form.control,
-  };
-}
+export type LoginSchemaType = z.infer<typeof loginSchema>;

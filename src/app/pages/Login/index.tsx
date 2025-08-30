@@ -1,11 +1,11 @@
 import { Controller } from 'react-hook-form';
-import { AuthHeader } from '@/app/components/features/auth/AuthHeader';
-import { Button } from '@/app/components/ui/Button';
-import { Input } from '@/app/components/ui/Input';
-import { useLoginController } from '@/core/features/auth';
+import { AuthHeader, PasswordIconButton } from '@/app/components/features/auth';
+import { Button, Input } from '@/app/components/ui';
+import { useLoginController } from './useLoginController';
 
 export default function LoginPage() {
-  const { control, handleSubmit } = useLoginController();
+  const { control, handleSubmit, handleTogglePassword, showPassword } =
+    useLoginController();
 
   return (
     <main>
@@ -32,7 +32,14 @@ export default function LoginPage() {
           name="password"
           render={({ field, fieldState }) => (
             <Input
+              type={showPassword ? 'text' : 'password'}
               {...field}
+              endComponent={
+                <PasswordIconButton
+                  onClick={handleTogglePassword}
+                  visible={showPassword}
+                />
+              }
               error={fieldState.error?.message}
               placeholder="Senha"
             />

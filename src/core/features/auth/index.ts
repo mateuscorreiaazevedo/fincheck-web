@@ -1,1 +1,1 @@
-export * from './hooks/useLoginController';
+export * from './utils/loginSchema';

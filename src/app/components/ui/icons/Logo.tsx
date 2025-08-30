@@ -1,8 +1,6 @@
-type LogoProps = {
-  className?: string;
-};
+import type { IconProps } from '@/app/types/shared/IconProps';
 
-export function Logo({ className }: LogoProps) {
+export function Logo({ className }: IconProps) {
   return (
     <svg
       className={className}
