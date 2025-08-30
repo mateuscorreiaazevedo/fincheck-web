@@ -1,4 +1,3 @@
-import { SymbolIcon } from '@radix-ui/react-icons';
 import { Controller } from 'react-hook-form';
 import {
   AuthHeader,
@@ -55,14 +54,13 @@ export default function LoginPage() {
           )}
         />
 
-        <Button className="mt-2" disabled={isPending} type="submit">
-          {isPending && (
-            <>
-              <SymbolIcon className="animate-spin" />
-              Entrando...
-            </>
-          )}
-          {!isPending && 'Entrar'}
+        <Button
+          className="mt-2"
+          isLoading={isPending}
+          isLoadingLabel="Entrando..."
+          type="submit"
+        >
+          Entrar
         </Button>
       </form>
     </main>

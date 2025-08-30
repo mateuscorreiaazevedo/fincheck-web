@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
+import { Spinner } from './Spinner';
 
 const buttonVariants = tv({
   base: 'flex items-center justify-center gap-2 transition-all disabled:cursor-not-allowed disabled:bg-gray-1 disabled:text-gray-4',
@@ -27,19 +28,38 @@ const buttonVariants = tv({
 });
 
 type ButtonProps = ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants>;
+  VariantProps<typeof buttonVariants> & {
+    isLoading?: boolean;
+    isLoadingLabel?: string;
+  };
 
 export function Button({
   className,
   variant,
   size,
   radius,
+  disabled,
+  isLoading,
+  children,
+  isLoadingLabel,
   ...props
 }: ButtonProps) {
   return (
     <button
       {...props}
       className={buttonVariants({ size, className, variant, radius })}
-    />
+      disabled={isLoading || disabled}
+    >
+      {isLoading && (
+        <>
+          <Spinner />
+
+          {isLoadingLabel && (
+            <span className="text-teal-7">{isLoadingLabel}</span>
+          )}
+        </>
+      )}
+      {!isLoading && children}
+    </button>
   );
 }
