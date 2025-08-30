@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Outlet } from 'react-router';
-import illustration from '@/app/assets/images/illustration.png';
+import illustration from '@/assets/images/illustration.png';
 import { Logo } from '../ui';
 
 function AuthLayout() {

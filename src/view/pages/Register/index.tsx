@@ -1,27 +1,51 @@
 import { SymbolIcon } from '@radix-ui/react-icons';
 import { Controller } from 'react-hook-form';
-import { AuthHeader, PasswordIconButton } from '@/app/components/features/auth';
-import { Button, Input } from '@/app/components/ui';
-import { useLoginController } from '@/core/features/auth';
+import { useRegisterController } from '@/core/features/auth';
+import { PasswordIconButton } from '@/view/components/features/auth';
+import { AuthHeader } from '@/view/components/features/auth/AuthHeader';
+import { Button } from '@/view/components/ui/Button';
+import { Input } from '@/view/components/ui/Input';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const {
     control,
     handleSubmit,
     handleTogglePassword,
-    showPassword,
     isPending,
-  } = useLoginController();
+    showPassword,
+  } = useRegisterController();
 
   return (
     <main>
       <AuthHeader
-        linkHref="/register"
-        linkLabel="Crie sua conta"
-        subtitle="Novo por aqui?"
-        title="Entre em sua conta"
+        linkHref="/login"
+        linkLabel="Fazer login"
+        subtitle="Já possui uma conta?"
+        title="Crie sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+        <Controller
+          control={control}
+          name="firstName"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              error={fieldState.error?.message}
+              placeholder="Nome"
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="lastName"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              error={fieldState.error?.message}
+              placeholder="Sobrenome"
+            />
+          )}
+        />
         <Controller
           control={control}
           name="email"
@@ -38,7 +62,6 @@ export default function LoginPage() {
           name="password"
           render={({ field, fieldState }) => (
             <Input
-              type={showPassword ? 'text' : 'password'}
               {...field}
               endComponent={
                 <PasswordIconButton
@@ -48,18 +71,19 @@ export default function LoginPage() {
               }
               error={fieldState.error?.message}
               placeholder="Senha"
+              type={showPassword ? 'text' : 'password'}
             />
           )}
         />
 
         <Button className="mt-2" disabled={isPending} type="submit">
+          {!isPending && 'Criar conta'}
           {isPending && (
             <>
               <SymbolIcon className="animate-spin" />
-              Entrando...
+              Criando sua conta...
             </>
           )}
-          {!isPending && 'Entrar'}
         </Button>
       </form>
     </main>

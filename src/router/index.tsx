@@ -1,16 +1,11 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { AuthGuard } from '@/app/components/features/auth';
+import { AuthGuard } from '@/view/components/features/auth';
+import { publicRoutes } from './PublicRoutes';
+import { privateRoutes } from './privateRoutes';
 
 // Layouts
-const AuthLayout = lazy(() => import('@/app/components/layouts/AuthLayout'));
-
-// Public Pages
-const LoginPage = lazy(() => import('@/app/pages/Login'));
-const RegisterPage = lazy(() => import('@/app/pages/Register'));
-
-// Private Pages
-const DashboardPage = lazy(() => import('@/app/pages/Dashboard'));
+const AuthLayout = lazy(() => import('@/view/components/layouts/AuthLayout'));
 
 export function Router() {
   return (
@@ -19,14 +14,17 @@ export function Router() {
         {/* Public Routes */}
         <Route element={<AuthGuard isPrivate={false} />}>
           <Route element={<AuthLayout />}>
-            <Route element={<LoginPage />} path="/login" />
-            <Route element={<RegisterPage />} path="/register" />
+            {publicRoutes.map(item => (
+              <Route key={item.path} {...item} />
+            ))}
           </Route>
         </Route>
 
         {/* Private Routes */}
         <Route element={<AuthGuard isPrivate />}>
-          <Route element={<DashboardPage />} path="/" />
+          {privateRoutes.map(item => (
+            <Route key={item.path} {...item} />
+          ))}
         </Route>
       </Routes>
     </BrowserRouter>
