@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { AuthGuard } from '@/view/components/features/auth';
-import { publicRoutes } from './PublicRoutes';
+import { AuthGuard } from '@/core/features/auth';
 import { privateRoutes } from './privateRoutes';
+import { publicRoutes } from './publicRoutes';
 
 // Layouts
 const AuthLayout = lazy(() => import('@/view/components/layouts/AuthLayout'));
