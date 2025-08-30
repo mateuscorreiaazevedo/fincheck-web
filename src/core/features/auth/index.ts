@@ -3,3 +3,5 @@ export * from './hooks/useLoginController';
 export * from './hooks/useRegisterController';
 
 export * from './services/HttpClientAuthService';
+
+export * from './utils/tokensUtil';

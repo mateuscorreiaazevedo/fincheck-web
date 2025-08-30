@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { authService } from '../services/HttpClientAuthService';
+import { tokensUtil } from '../utils/tokensUtil';
 
 const MIN_LENGHT_PASSWORD = 8;
 
@@ -44,7 +45,14 @@ export function useLoginController() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending, error } = useMutation({
+    mutationKey: ['login'],
     mutationFn: (data: LoginSchemaType) => authService.login(data),
+    onSuccess: ({ accessToken, refreshToken }) => {
+      tokensUtil.setTokens({
+        accessToken,
+        refreshToken,
+      });
+    },
   });
 
   const handleTogglePassword = () => {
