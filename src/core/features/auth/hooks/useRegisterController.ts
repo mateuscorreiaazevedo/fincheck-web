@@ -6,7 +6,9 @@ import z from 'zod';
 
 const MIN_LENGHT_PASSWORD = 8;
 
-const loginSchema = z.object({
+const registerSchema = z.object({
+  firstName: z.string({ error: 'Nome é obrigatório' }),
+  lastName: z.string({ error: 'Sobrenome é obrigatório' }),
   email: z
     .email({
       error: iss =>
@@ -34,16 +36,16 @@ const loginSchema = z.object({
     }),
 });
 
-type LoginSchemaType = z.infer<typeof loginSchema>;
+type RegisterSchemaType = z.infer<typeof registerSchema>;
 
-export function useLoginController() {
-  const form = useForm<LoginSchemaType>({
-    resolver: zodResolver(loginSchema),
+export function useRegisterController() {
+  const form = useForm<RegisterSchemaType>({
+    resolver: zodResolver(registerSchema),
   });
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: LoginSchemaType) => {
+    mutationFn: async (data: RegisterSchemaType) => {
       // biome-ignore lint/style/noMagicNumbers: test
       await new Promise(resolve => setTimeout(resolve, 1000));
 

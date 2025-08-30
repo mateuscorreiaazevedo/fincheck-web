@@ -1,8 +1,20 @@
+import { SymbolIcon } from '@radix-ui/react-icons';
+import { Controller } from 'react-hook-form';
+import { PasswordIconButton } from '@/app/components/features/auth';
 import { AuthHeader } from '@/app/components/features/auth/AuthHeader';
 import { Button } from '@/app/components/ui/Button';
 import { Input } from '@/app/components/ui/Input';
+import { useRegisterController } from '@/core/features/auth';
 
 export default function RegisterPage() {
+  const {
+    control,
+    handleSubmit,
+    handleTogglePassword,
+    isPending,
+    showPassword,
+  } = useRegisterController();
+
   return (
     <main>
       <AuthHeader
@@ -11,12 +23,68 @@ export default function RegisterPage() {
         subtitle="Já possui uma conta?"
         title="Crie sua conta"
       />
-      <form className="flex w-full flex-col gap-4">
-        <Input name="firstName" placeholder="Nome" />
-        <Input name="lastName" placeholder="Sobrenome" />
-        <Input name="email" placeholder="Email" type="email" />
-        <Input name="password" placeholder="Senha" type="password" />
-        <Button type="submit">Criar conta</Button>
+      <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+        <Controller
+          control={control}
+          name="firstName"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              error={fieldState.error?.message}
+              placeholder="Nome"
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="lastName"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              error={fieldState.error?.message}
+              placeholder="Sobrenome"
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="email"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              error={fieldState.error?.message}
+              placeholder="Email"
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              endComponent={
+                <PasswordIconButton
+                  onClick={handleTogglePassword}
+                  visible={showPassword}
+                />
+              }
+              error={fieldState.error?.message}
+              placeholder="Senha"
+              type={showPassword ? 'text' : 'password'}
+            />
+          )}
+        />
+
+        <Button className="mt-2" disabled={isPending} type="submit">
+          {!isPending && 'Criar conta'}
+          {isPending && (
+            <>
+              <SymbolIcon className="animate-spin" />
+              Criando sua conta...
+            </>
+          )}
+        </Button>
       </form>
     </main>
   );
