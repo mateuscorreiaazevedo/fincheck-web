@@ -1,3 +1,5 @@
+import { colors } from './src/app/assets/styles/colors'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -5,7 +7,19 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors,
+      boxShadow: {
+        default: '0px 11px 20px rgba(0, 0, 0, 0.1)'
+      },
+      blur: {
+        default: '10px'
+      },
+      borderRadius: {
+        default: '16px',
+        pill: '100%'
+      }
+    },
   },
   plugins: [],
 }
