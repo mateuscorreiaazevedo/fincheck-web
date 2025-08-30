@@ -1,4 +1,4 @@
-import type { IconProps } from '@/app/types/shared/IconProps';
+import type { IconProps } from '@/app/types/shared';
 
 export function Logo({ className }: IconProps) {
   return (

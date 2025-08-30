@@ -1,5 +1,6 @@
+import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { twMerge } from 'tailwind-merge';
-import { Button, EyeClosed, EyeOpen } from '../../ui';
+import { Button } from '../../ui';
 
 interface PasswordIconButtonProps {
   onClick?: VoidFunction;
@@ -10,7 +11,7 @@ export function PasswordIconButton({
   onClick,
   visible,
 }: PasswordIconButtonProps) {
-  const Icon = visible ? EyeOpen : EyeClosed;
+  const Icon = visible ? EyeOpenIcon : EyeClosedIcon;
 
   return (
     <Button
@@ -18,10 +19,10 @@ export function PasswordIconButton({
       radius="pill"
       size="icon"
       type="button"
-      variant="ghost"
+      variant="ghostGray"
     >
       <Icon
-        className={twMerge('size-6 text-gray-7', !visible && 'translate-y-0.5')}
+        className={twMerge('size-5 text-gray-7', !visible && 'translate-y-0.5')}
       />
     </Button>
   );

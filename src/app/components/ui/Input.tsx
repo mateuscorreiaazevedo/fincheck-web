@@ -1,5 +1,6 @@
+import { CrossCircledIcon } from '@radix-ui/react-icons';
 import type { ComponentProps, ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/core/shared';
 
 type InputProps = ComponentProps<'input'> & {
   name: string;
@@ -24,8 +25,9 @@ export function Input({
         <input
           data-error={!!error}
           {...props}
-          className={twMerge(
-            'peer h-[52px] w-full rounded-lg border border-gray-5 bg-white px-3 pt-4 font-normal text-gray-8 outline-none transition-colors focus:border-gray-8 data-[error=true]:border-red-9',
+          className={cn(
+            'peer h-[52px] w-full rounded-lg border border-gray-5 bg-white px-3 pt-4 font-normal text-gray-8 outline-none transition-colors focus:border-gray-8',
+            !!error && '!border-red-9 bg-red-0',
             !!endComponent && 'pr-11',
             className
           )}
@@ -35,7 +37,7 @@ export function Input({
         />
         {!!placeholder && (
           <label
-            className={twMerge(
+            className={cn(
               'pointer-events-none absolute top-2 left-3 font-normal text-gray-7 text-xs transition-all',
               'peer-placeholder-shown:top-3.5 peer-placeholder-shown:left-3.5 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:left-3 peer-focus:text-xs'
             )}
@@ -51,8 +53,9 @@ export function Input({
         )}
       </div>
       {!!error && (
-        <div className="mt-2 flex items-center gap-2">
-          <span className="font-normal text-red-9 text-xs">{error}</span>
+        <div className="mt-2 flex items-center gap-2 pl-2 text-red-9">
+          <CrossCircledIcon className="size-4 rounded-pill" />
+          <span className="font-normal text-xs">{error}</span>
         </div>
       )}
     </div>

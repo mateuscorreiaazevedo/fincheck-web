@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Outlet } from 'react-router';
 import illustration from '@/app/assets/images/illustration.png';
-import { Logo } from '../ui/icons/Logo';
+import { Logo } from '../ui';
 
 function AuthLayout() {
   return (

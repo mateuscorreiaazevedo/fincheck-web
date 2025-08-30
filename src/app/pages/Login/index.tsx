@@ -1,11 +1,17 @@
+import { SymbolIcon } from '@radix-ui/react-icons';
 import { Controller } from 'react-hook-form';
 import { AuthHeader, PasswordIconButton } from '@/app/components/features/auth';
 import { Button, Input } from '@/app/components/ui';
-import { useLoginController } from './useLoginController';
+import { useLoginController } from '@/core/features/auth';
 
 export default function LoginPage() {
-  const { control, handleSubmit, handleTogglePassword, showPassword } =
-    useLoginController();
+  const {
+    control,
+    handleSubmit,
+    handleTogglePassword,
+    showPassword,
+    isPending,
+  } = useLoginController();
 
   return (
     <main>
@@ -46,7 +52,15 @@ export default function LoginPage() {
           )}
         />
 
-        <Button type="submit">Entrar</Button>
+        <Button className="mt-2" disabled={isPending} type="submit">
+          {isPending && (
+            <>
+              <SymbolIcon className="animate-spin" />
+              Entrando...
+            </>
+          )}
+          {!isPending && 'Entrar'}
+        </Button>
       </form>
     </main>
   );

@@ -20,7 +20,10 @@ export function AuthHeader({
       </h1>
       <span className="space-x-2 text-gray-7 tracking-[-0.5px]">
         {subtitle}{' '}
-        <Link className="font-medium text-teal-9 hover:underline" to={linkHref}>
+        <Link
+          className="font-medium text-teal-9 outline-none hover:underline focus:underline-offset-0"
+          to={linkHref}
+        >
           {linkLabel}
         </Link>
       </span>
