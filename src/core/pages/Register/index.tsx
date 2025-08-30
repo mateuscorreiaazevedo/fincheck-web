@@ -5,7 +5,7 @@ import {
   PasswordIconButton,
   useRegisterController,
 } from '@/features/auth';
-import { Button, ErrorMessage, Input } from '@/shared';
+import { Button, Input } from '@/shared';
 
 export default function RegisterPage() {
   const {
@@ -14,7 +14,6 @@ export default function RegisterPage() {
     handleTogglePassword,
     isPending,
     showPassword,
-    error,
   } = useRegisterController();
 
   return (
@@ -26,7 +25,6 @@ export default function RegisterPage() {
         title="Crie sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-        <ErrorMessage className="mt-0 justify-center" error={error} />
         <Controller
           control={control}
           name="firstName"

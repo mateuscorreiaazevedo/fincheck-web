@@ -2,7 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import z from 'zod';
+import { throwException } from '@/shared';
 import { authService } from '../services/HttpClientAuthService';
 import { tokensUtil } from '../utils/tokensUtil';
 
@@ -46,7 +48,7 @@ export function useRegisterController() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationKey: ['register'],
     mutationFn: (data: RegisterSchemaType) => authService.register(data),
     onSuccess: ({ accessToken, refreshToken }) => {
@@ -61,7 +63,13 @@ export function useRegisterController() {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = form.handleSubmit(data => mutate(data));
+  const handleSubmit = form.handleSubmit(async data => {
+    await toast.promise(mutateAsync(data), {
+      loading: 'Criando sua conta...',
+      success: 'Bem-vindo ao Fincheck!',
+      error: err => throwException(err),
+    });
+  });
 
   return {
     handleSubmit,
@@ -69,6 +77,5 @@ export function useRegisterController() {
     showPassword,
     handleTogglePassword,
     isPending,
-    error,
   };
 }

@@ -18,6 +18,8 @@ export function httpResponseHandler<T = unknown>(response: HttpResponse<T>): T {
       throw new Error(data!.message![0]);
     case HttpStatusCode.NOT_FOUND:
       throw new Error(data!.message![0]);
+    case HttpStatusCode.CONFLICT:
+      throw new Error(data!.message![0]);
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
       throw new Error(data!.message![0]);
     default:

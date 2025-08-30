@@ -2,7 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import z from 'zod';
+import { throwException } from '@/shared';
 import { authService } from '../services/HttpClientAuthService';
 import { tokensUtil } from '../utils/tokensUtil';
 
@@ -44,7 +46,7 @@ export function useLoginController() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationKey: ['login'],
     mutationFn: (data: LoginSchemaType) => authService.login(data),
     onSuccess: ({ accessToken, refreshToken }) => {
@@ -59,7 +61,13 @@ export function useLoginController() {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = form.handleSubmit(data => mutate(data));
+  const handleSubmit = form.handleSubmit(async data => {
+    await toast.promise(mutateAsync(data), {
+      loading: 'Entrando...',
+      success: 'Bem-vindo!',
+      error: error => throwException(error),
+    });
+  });
 
   return {
     handleSubmit,
@@ -67,6 +75,5 @@ export function useLoginController() {
     showPassword,
     handleTogglePassword,
     isPending,
-    error,
   };
 }

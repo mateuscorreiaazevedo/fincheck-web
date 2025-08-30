@@ -5,7 +5,7 @@ import {
   PasswordIconButton,
   useLoginController,
 } from '@/features/auth';
-import { Button, ErrorMessage, Input } from '@/shared';
+import { Button, Input } from '@/shared';
 
 export default function LoginPage() {
   const {
@@ -14,7 +14,6 @@ export default function LoginPage() {
     handleTogglePassword,
     showPassword,
     isPending,
-    error,
   } = useLoginController();
 
   return (
@@ -26,7 +25,6 @@ export default function LoginPage() {
         title="Entre em sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-        <ErrorMessage className="mt-0 justify-center" error={error} />
         <Controller
           control={control}
           name="email"
