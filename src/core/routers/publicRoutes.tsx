@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import type { RouteItem } from '../types/RouteItem';
 
-const LoginPage = lazy(() => import('@/pages/Login'));
-const RegisterPage = lazy(() => import('@/pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const RegisterPage = lazy(() => import('../pages/Register'));
 
 export const publicRoutes: RouteItem[] = [
   {
