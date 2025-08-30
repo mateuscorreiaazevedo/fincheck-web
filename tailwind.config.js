@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['DM Sans', 'sans-serif']
+      },
       colors,
       boxShadow: {
         default: '0px 11px 20px rgba(0, 0, 0, 0.1)'

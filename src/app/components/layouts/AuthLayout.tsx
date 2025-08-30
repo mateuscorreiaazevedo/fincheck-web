@@ -5,7 +5,7 @@ import { Logo } from '../ui/icons/Logo';
 
 function AuthLayout() {
   return (
-    <main className="flex h-full">
+    <div className="flex h-full">
       <div className="flex h-full w-full flex-col items-center justify-center gap-16 lg:w-1/2">
         <Logo className="h-6 text-gray-5" />
 
@@ -28,7 +28,7 @@ function AuthLayout() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
