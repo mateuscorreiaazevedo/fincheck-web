@@ -1,6 +1,6 @@
-import { CrossCircledIcon } from '@radix-ui/react-icons';
 import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/core/shared';
+import { ErrorUI } from './ErrorUI';
 
 type InputProps = ComponentProps<'input'> & {
   name: string;
@@ -52,12 +52,7 @@ export function Input({
           </div>
         )}
       </div>
-      {!!error && (
-        <div className="mt-2 flex items-center gap-2 pl-2 text-red-9">
-          <CrossCircledIcon className="size-4 rounded-pill" />
-          <span className="font-normal text-xs">{error}</span>
-        </div>
-      )}
+      {!!error && <ErrorUI error={error} />}
     </div>
   );
 }

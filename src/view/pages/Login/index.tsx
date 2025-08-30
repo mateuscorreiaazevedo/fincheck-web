@@ -5,6 +5,7 @@ import {
   AuthHeader,
   PasswordIconButton,
 } from '@/view/components/features/auth';
+import { ErrorMessage } from '@/view/components/shared';
 import { Button, Input } from '@/view/components/ui';
 
 export default function LoginPage() {
@@ -14,6 +15,7 @@ export default function LoginPage() {
     handleTogglePassword,
     showPassword,
     isPending,
+    error,
   } = useLoginController();
 
   return (
@@ -25,6 +27,7 @@ export default function LoginPage() {
         title="Entre em sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+        <ErrorMessage className="mt-0 justify-center" error={error} />
         <Controller
           control={control}
           name="email"

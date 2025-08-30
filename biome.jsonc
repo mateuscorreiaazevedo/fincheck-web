@@ -32,10 +32,12 @@
           "fix": "safe",
           "options": {}
         },
+        "useReadonlyClassProperties": "off",
         "noEnum": "off",
         "useFilenamingConvention": "off",
         "noParameterProperties": "off",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useDefaultSwitchClause": "off"
       },
       "nursery": {
         "useImageSize": "off",

@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { authService } from '../services/HttpClientAuthService';
 
 const MIN_LENGHT_PASSWORD = 8;
 
@@ -44,14 +45,8 @@ export function useRegisterController() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: RegisterSchemaType) => {
-      // biome-ignore lint/style/noMagicNumbers: test
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // biome-ignore lint/suspicious/noConsole: test
-      console.log('chegou', data);
-    },
+  const { mutateAsync, isPending, error } = useMutation({
+    mutationFn: (data: RegisterSchemaType) => authService.register(data),
   });
 
   const handleTogglePassword = () => {
@@ -66,5 +61,6 @@ export function useRegisterController() {
     showPassword,
     handleTogglePassword,
     isPending,
+    error,
   };
 }

@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { useRegisterController } from '@/core/features/auth';
 import { PasswordIconButton } from '@/view/components/features/auth';
 import { AuthHeader } from '@/view/components/features/auth/AuthHeader';
+import { ErrorMessage } from '@/view/components/shared';
 import { Button } from '@/view/components/ui/Button';
 import { Input } from '@/view/components/ui/Input';
 
@@ -13,6 +14,7 @@ export default function RegisterPage() {
     handleTogglePassword,
     isPending,
     showPassword,
+    error,
   } = useRegisterController();
 
   return (
@@ -24,6 +26,7 @@ export default function RegisterPage() {
         title="Crie sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+        <ErrorMessage className="mt-0 justify-center" error={error} />
         <Controller
           control={control}
           name="firstName"
