@@ -46,7 +46,7 @@ export function useRegisterController() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutateAsync, isPending, error } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationKey: ['register'],
     mutationFn: (data: RegisterSchemaType) => authService.register(data),
     onSuccess: ({ accessToken, refreshToken }) => {
@@ -61,7 +61,7 @@ export function useRegisterController() {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = form.handleSubmit(data => mutateAsync(data));
+  const handleSubmit = form.handleSubmit(data => mutate(data));
 
   return {
     handleSubmit,

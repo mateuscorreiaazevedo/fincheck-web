@@ -44,7 +44,7 @@ export function useLoginController() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutateAsync, isPending, error } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: (data: LoginSchemaType) => authService.login(data),
     onSuccess: ({ accessToken, refreshToken }) => {
@@ -59,7 +59,7 @@ export function useLoginController() {
     setShowPassword(prev => !prev);
   };
 
-  const handleSubmit = form.handleSubmit(data => mutateAsync(data));
+  const handleSubmit = form.handleSubmit(data => mutate(data));
 
   return {
     handleSubmit,
