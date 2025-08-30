@@ -11,7 +11,7 @@ first_word=$(echo "$commit_message" | awk '{print $1}' | tr -d ':')
 
 # Verifica se a primeira palavra está na lista de palavras permitidas
 if [[ ! " ${allowed_prefixes[@]} " =~ " ${first_word} " ]]; then
-  echo "❌ O commit falhou: O prefixo '$first_word' da mensagem deve ser uma das seguintes palavras-chave: feat, fix, wip, chore, docs, style, refactor, test, perf, ci, build, release."
+  echo "❌ O commit falhou: O prefixo '$first_word' da mensagem deve ser uma das seguintes palavras-chave: feat, fix, chore, docs, style, refactor, test, perf, ci, build, release."
   exit 1
 fi
 
