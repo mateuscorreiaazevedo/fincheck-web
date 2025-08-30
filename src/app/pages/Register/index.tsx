@@ -16,7 +16,7 @@ export default function RegisterPage() {
         <Input name="lastName" placeholder="Sobrenome" />
         <Input name="email" placeholder="Email" type="email" />
         <Input name="password" placeholder="Senha" type="password" />
-        <Button type="submit">Entrar</Button>
+        <Button type="submit">Criar conta</Button>
       </form>
     </main>
   );

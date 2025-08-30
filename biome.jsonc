@@ -47,7 +47,8 @@
       },
       "performance": {
         "noImgElement": "off",
-        "useTopLevelRegex": "off"
+        "useTopLevelRegex": "off",
+        "noBarrelFile": "off"
       },
       "correctness": {
         "useHookAtTopLevel": "off",

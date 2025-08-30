@@ -25,7 +25,7 @@ export function Input({
           data-error={!!error}
           {...props}
           className={twMerge(
-            'peer h-[52px] w-full rounded-lg border border-gray-5 bg-white px-3 pt-4 font-normal text-gray-8 outline-none transition-colors focus:border-gray-8',
+            'peer h-[52px] w-full rounded-lg border border-gray-5 bg-white px-3 pt-4 font-normal text-gray-8 outline-none transition-colors focus:border-gray-8 data-[error=true]:border-red-9',
             !!endComponent && 'pr-11',
             className
           )}
