@@ -45,7 +45,8 @@
       },
       "suspicious": {
         "noEmptyBlockStatements": "off",
-        "noConsole": "error"
+        "noConsole": "error",
+        "noAssignInExpressions": "off"
       },
       "performance": {
         "noImgElement": "off",

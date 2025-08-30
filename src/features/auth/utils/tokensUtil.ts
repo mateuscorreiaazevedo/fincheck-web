@@ -5,8 +5,8 @@ type SetTokensArgs = {
   refreshToken: string;
 };
 
-const ACCESS_TOKEN_KEY = 'access_token';
-const REFRESH_TOKEN_KEY = 'refresh_token';
+const ACCESS_TOKEN_KEY = 'fincheck::access_token';
+const REFRESH_TOKEN_KEY = 'fincheck::refresh_token';
 
 const storage = storageUtil(localStorage);
 

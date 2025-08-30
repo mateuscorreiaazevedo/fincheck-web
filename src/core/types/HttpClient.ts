@@ -2,7 +2,7 @@ export interface HttpRequest<TBody = unknown> {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: TBody;
-  headers?: Record<string, string | number>;
+  headers?: Record<string, string>;
   params?: object;
 }
 

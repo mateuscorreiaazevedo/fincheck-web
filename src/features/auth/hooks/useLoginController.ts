@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
 import { authService } from '../services/HttpClientAuthService';
-import { tokensUtil } from '../utils/tokensUtil';
+import { useAuth } from './useAuth';
 
 const MIN_LENGHT_PASSWORD = 8;
 
@@ -45,15 +45,12 @@ export function useLoginController() {
     resolver: zodResolver(loginSchema),
   });
   const [showPassword, setShowPassword] = useState(false);
-
+  const { signin } = useAuth();
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ['login'],
     mutationFn: (data: LoginSchemaType) => authService.login(data),
     onSuccess: ({ accessToken, refreshToken }) => {
-      tokensUtil.setTokens({
-        accessToken,
-        refreshToken,
-      });
+      signin(accessToken, refreshToken);
     },
   });
 

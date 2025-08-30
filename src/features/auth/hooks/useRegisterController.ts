@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
 import { authService } from '../services/HttpClientAuthService';
-import { tokensUtil } from '../utils/tokensUtil';
+import { useAuth } from './useAuth';
 
 const MIN_LENGHT_PASSWORD = 8;
 
@@ -47,15 +47,13 @@ export function useRegisterController() {
     resolver: zodResolver(registerSchema),
   });
   const [showPassword, setShowPassword] = useState(false);
+  const { signin } = useAuth();
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ['register'],
     mutationFn: (data: RegisterSchemaType) => authService.register(data),
     onSuccess: ({ accessToken, refreshToken }) => {
-      tokensUtil.setTokens({
-        accessToken,
-        refreshToken,
-      });
+      signin(accessToken, refreshToken);
     },
   });
 

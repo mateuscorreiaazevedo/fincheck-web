@@ -1,5 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
+import { tokensUtil } from '@/features/auth';
 import { env } from '../config/env';
 import type { HttpRequest, HttpResponse } from '../types/HttpClient';
 
@@ -17,6 +18,12 @@ export class HttpClientService {
   ): Promise<HttpResponse<TData>> {
     const { url, method = 'GET', body, headers, params } = request;
     let response: AxiosResponse;
+
+    const { accessToken } = tokensUtil;
+
+    if (accessToken) {
+      this.instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    }
 
     try {
       response = await this.instance.request<TData>({
