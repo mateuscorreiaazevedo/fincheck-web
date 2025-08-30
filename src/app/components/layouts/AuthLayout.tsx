@@ -6,14 +6,15 @@ import { Logo } from '../ui/icons/Logo';
 function AuthLayout() {
   return (
     <main className="flex h-full">
-      <div className="flex h-full w-1/2 flex-col items-center justify-center gap-16">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-16 lg:w-1/2">
         <Logo className="h-6 text-gray-5" />
 
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-lg px-8">
           <Outlet />
         </div>
       </div>
-      <div className="relative flex h-full w-1/2 items-center justify-center p-8">
+
+      <div className="relative hidden h-full w-1/2 items-center justify-center p-8 lg:flex">
         <img
           alt="auth-illustration"
           className="h-full max-h-[960px] w-full max-w-[656px] select-none rounded-[32px] object-cover"
