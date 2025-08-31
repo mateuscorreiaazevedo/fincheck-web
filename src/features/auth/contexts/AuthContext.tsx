@@ -7,13 +7,14 @@ import {
 } from 'react';
 import toast from 'react-hot-toast';
 import { type IMeResponse, useQueryMe } from '@/features/users';
+import { SplashScreen } from '@/shared';
 import { tokensUtil } from '../utils/tokensUtil';
 
 interface AuthContextValue {
   signedIn: boolean;
   signin(accessToken: string, refreshToken: string): void;
   signout(): void;
-  user?: IMeResponse;
+  loggedUser?: IMeResponse;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
@@ -24,8 +25,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return !!accessToken;
   });
 
+  const { user, isError, isFetching, isSuccess, removeQuery } = useQueryMe({
+    enabled: signedIn,
+  });
+
   const signin = useCallback((access_token: string, refresh_token: string) => {
-    setSignedIn(!!access_token);
+    setSignedIn(true);
     tokensUtil.setTokens({
       accessToken: access_token,
       refreshToken: refresh_token,
@@ -35,11 +40,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const signout = useCallback(() => {
     setSignedIn(false);
     tokensUtil.removeTokens();
+    removeQuery();
   }, []);
-
-  const { user, isError } = useQueryMe({
-    enabled: signedIn,
-  });
 
   useEffect(() => {
     if (isError) {
@@ -49,8 +51,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, [isError]);
 
   return (
-    <AuthContext.Provider value={{ signedIn, signin, signout, user }}>
-      {children}
+    <AuthContext.Provider
+      value={{
+        signedIn: isSuccess && signedIn,
+        signin,
+        signout,
+        loggedUser: user,
+      }}
+    >
+      {!isFetching && children}
+      <SplashScreen isLoading={isFetching} />
     </AuthContext.Provider>
   );
 }

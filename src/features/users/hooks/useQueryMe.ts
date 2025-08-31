@@ -1,27 +1,30 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usersService } from '../services/httpClientUsersService';
 
 type UseQueryMeProps = {
   enabled?: boolean;
 };
 
-const MILLISECONDS = 1000;
-const SLATE_TIME_1_HOUR = 60 * 60 * MILLISECONDS;
-
 export function useQueryMe(props: UseQueryMeProps = {}) {
   const { enabled = false } = props;
+  const queryClient = useQueryClient();
 
-  const { data, isLoading, isFetching, isError } = useQuery({
+  const { data, isFetching, isError, isSuccess } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: () => usersService.getMe(),
-    staleTime: SLATE_TIME_1_HOUR, // 1 hour
+    staleTime: Number.POSITIVE_INFINITY,
     enabled,
   });
 
+  function removeQuery() {
+    queryClient.removeQueries({ queryKey: ['users', 'me'] });
+  }
+
   return {
     user: data,
-    isLoading,
+    isSuccess,
     isFetching,
     isError,
+    removeQuery,
   };
 }
