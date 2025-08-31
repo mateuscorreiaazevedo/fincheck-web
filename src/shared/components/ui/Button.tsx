@@ -3,7 +3,7 @@ import { tv, type VariantProps } from 'tailwind-variants';
 import { Spinner } from './Spinner';
 
 const buttonVariants = tv({
-  base: 'flex items-center justify-center gap-2 transition-all disabled:cursor-not-allowed disabled:bg-gray-1 disabled:text-gray-4',
+  base: 'flex items-center justify-center gap-2 px-6 transition-all disabled:cursor-not-allowed disabled:bg-gray-1 disabled:text-gray-4',
   variants: {
     variant: {
       default:

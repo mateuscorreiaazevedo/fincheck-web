@@ -5,10 +5,20 @@ type SetTokensArgs = {
   refreshToken: string;
 };
 
-const ACCESS_TOKEN_KEY = 'fincheck::access_token';
-const REFRESH_TOKEN_KEY = 'fincheck::refresh_token';
+export const ACCESS_TOKEN_KEY = 'fincheck::access_token';
+export const REFRESH_TOKEN_KEY = 'fincheck::refresh_token';
 
 const storage = storageUtil(localStorage);
+
+function getTokens() {
+  const accessToken = storage.get<string>(ACCESS_TOKEN_KEY, false);
+  const refreshToken = storage.get<string>(REFRESH_TOKEN_KEY, false);
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+}
 
 function setTokens({ accessToken, refreshToken }: SetTokensArgs) {
   storage.set(ACCESS_TOKEN_KEY, accessToken);
@@ -21,8 +31,7 @@ function removeTokens() {
 }
 
 export const tokensUtil = {
-  accessToken: storage.get<string>(ACCESS_TOKEN_KEY),
-  refreshToken: storage.get<string>(REFRESH_TOKEN_KEY),
+  getTokens,
   setTokens,
   removeTokens,
 };

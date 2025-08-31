@@ -5,7 +5,7 @@ export const storageUtil = (callback: Storage) => {
     callback.setItem(key, transformedValue);
   }
 
-  function get<T>(key: string, useParse = false): T | string | null {
+  function get<T>(key: string, useParse: boolean): T | string | null {
     const stringfiedValue = callback.getItem(key);
 
     if (!stringfiedValue) {

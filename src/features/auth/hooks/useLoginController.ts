@@ -5,10 +5,9 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
-import { authService } from '../services/HttpClientAuthService';
+import { MIN_LENGTH_PASSWORD } from '../constants/minLengthPassword';
+import { authService } from '../services/httpClientAuthService';
 import { useAuth } from './useAuth';
-
-const MIN_LENGHT_PASSWORD = 8;
 
 const loginSchema = z.object({
   email: z
@@ -21,7 +20,7 @@ const loginSchema = z.object({
     .nonempty({ error: 'E-mail é obrigatório' }),
   password: z
     .string({ error: 'Senha é obrigatório' })
-    .min(MIN_LENGHT_PASSWORD, {
+    .min(MIN_LENGTH_PASSWORD, {
       error: 'A senha deve ter no mínimo 8 caracteres',
     })
     .regex(/[A-Z]/, {

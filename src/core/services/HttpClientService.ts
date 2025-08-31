@@ -7,9 +7,22 @@ import type { HttpRequest, HttpResponse } from '../types/HttpClient';
 export class HttpClientService {
   private instance: AxiosInstance;
 
-  constructor(private readonly BASE_URL: string = env.VITE_APP_API_BASE_URL) {
+  constructor(
+    private readonly BASE_URL: string = env.VITE_APP_API_BASE_URL,
+    useCredentials = true
+  ) {
     this.instance = axios.create({
       baseURL: this.BASE_URL,
+    });
+
+    this.instance.interceptors.request.use(config => {
+      const { accessToken } = tokensUtil.getTokens();
+
+      if (useCredentials && accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
+
+      return config;
     });
   }
 
@@ -18,12 +31,6 @@ export class HttpClientService {
   ): Promise<HttpResponse<TData>> {
     const { url, method = 'GET', body, headers, params } = request;
     let response: AxiosResponse;
-
-    const { accessToken } = tokensUtil;
-
-    if (accessToken) {
-      this.instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    }
 
     try {
       response = await this.instance.request<TData>({

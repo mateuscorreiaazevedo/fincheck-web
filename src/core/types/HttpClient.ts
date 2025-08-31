@@ -7,7 +7,7 @@ export interface HttpRequest<TBody = unknown> {
 }
 
 export interface HttpError {
-  message?: string[];
+  message?: string | string[];
 }
 
 export interface HttpResponse<TData = unknown> {
