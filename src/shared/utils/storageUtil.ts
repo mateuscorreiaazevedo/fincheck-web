@@ -1,16 +1,18 @@
 export const storageUtil = (callback: Storage) => {
-  function set(key: string, value: unknown) {
-    callback.setItem(key, JSON.stringify(value));
+  function set<T = unknown>(key: string, value: T) {
+    const transformedValue =
+      typeof value === 'string' ? value : JSON.stringify(value);
+    callback.setItem(key, transformedValue);
   }
 
-  function get<T>(key: string): T | null {
+  function get<T>(key: string, useParse = false): T | string | null {
     const stringfiedValue = callback.getItem(key);
 
     if (!stringfiedValue) {
       return null;
     }
 
-    return JSON.parse(stringfiedValue) as T;
+    return useParse ? (JSON.parse(stringfiedValue) as T) : stringfiedValue;
   }
 
   function remove(key: string) {

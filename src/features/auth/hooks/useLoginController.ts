@@ -68,7 +68,8 @@ export function useLoginController() {
 
   return {
     handleSubmit,
-    control: form.control,
+    register: form.register,
+    fieldErrors: form.formState.errors,
     showPassword,
     handleTogglePassword,
     isPending,

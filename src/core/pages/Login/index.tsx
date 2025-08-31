@@ -1,4 +1,3 @@
-import { Controller } from 'react-hook-form';
 import {
   AuthHeader,
   PasswordIconButton,
@@ -8,11 +7,12 @@ import { Button, Input } from '@/shared';
 
 export default function LoginPage() {
   const {
-    control,
     handleSubmit,
     handleTogglePassword,
     showPassword,
     isPending,
+    fieldErrors,
+    register,
   } = useLoginController();
 
   return (
@@ -24,36 +24,23 @@ export default function LoginPage() {
         title="Entre em sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <Input
-              {...field}
-              error={fieldState.error?.message}
-              placeholder="Email"
-            />
-          )}
+        <Input
+          {...register('email')}
+          error={fieldErrors.email?.message}
+          placeholder="Email"
         />
-        <Controller
-          control={control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <Input
-              type={showPassword ? 'text' : 'password'}
-              {...field}
-              endComponent={
-                <PasswordIconButton
-                  onClick={handleTogglePassword}
-                  visible={showPassword}
-                />
-              }
-              error={fieldState.error?.message}
-              placeholder="Senha"
+        <Input
+          type={showPassword ? 'text' : 'password'}
+          {...register('password')}
+          endComponent={
+            <PasswordIconButton
+              onClick={handleTogglePassword}
+              visible={showPassword}
             />
-          )}
+          }
+          error={fieldErrors.password?.message}
+          placeholder="Senha"
         />
-
         <Button
           className="mt-2"
           isLoading={isPending}

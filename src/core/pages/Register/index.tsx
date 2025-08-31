@@ -1,4 +1,3 @@
-import { Controller } from 'react-hook-form';
 import {
   AuthHeader,
   PasswordIconButton,
@@ -8,7 +7,8 @@ import { Button, Input } from '@/shared';
 
 export default function RegisterPage() {
   const {
-    control,
+    fieldErrors,
+    register,
     handleSubmit,
     handleTogglePassword,
     isPending,
@@ -24,58 +24,33 @@ export default function RegisterPage() {
         title="Crie sua conta"
       />
       <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
-        <Controller
-          control={control}
-          name="firstName"
-          render={({ field, fieldState }) => (
-            <Input
-              {...field}
-              error={fieldState.error?.message}
-              placeholder="Nome"
-            />
-          )}
+        <Input
+          {...register('firstName')}
+          error={fieldErrors.firstName?.message}
+          placeholder="Nome"
         />
-        <Controller
-          control={control}
-          name="lastName"
-          render={({ field, fieldState }) => (
-            <Input
-              {...field}
-              error={fieldState.error?.message}
-              placeholder="Sobrenome"
-            />
-          )}
+        <Input
+          {...register('lastName')}
+          error={fieldErrors.lastName?.message}
+          placeholder="Sobrenome"
         />
-        <Controller
-          control={control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <Input
-              {...field}
-              error={fieldState.error?.message}
-              placeholder="Email"
-            />
-          )}
+        <Input
+          {...register('email')}
+          error={fieldErrors.email?.message}
+          placeholder="Email"
         />
-        <Controller
-          control={control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <Input
-              {...field}
-              endComponent={
-                <PasswordIconButton
-                  onClick={handleTogglePassword}
-                  visible={showPassword}
-                />
-              }
-              error={fieldState.error?.message}
-              placeholder="Senha"
-              type={showPassword ? 'text' : 'password'}
+        <Input
+          {...register('password')}
+          endComponent={
+            <PasswordIconButton
+              onClick={handleTogglePassword}
+              visible={showPassword}
             />
-          )}
+          }
+          error={fieldErrors.password?.message}
+          placeholder="Senha"
+          type={showPassword ? 'text' : 'password'}
         />
-
         <Button
           className="mt-2"
           isLoading={isPending}
