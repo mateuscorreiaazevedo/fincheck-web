@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import toast from 'react-hot-toast';
-import { type IMeResponse, useQueryMe } from '@/features/users';
+import { type IMeResponse, useGetMe } from '@/features/users';
 import { SplashScreen } from '@/shared';
 import { tokensUtil } from '../utils/tokensUtil';
 
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return !!accessToken;
   });
 
-  const { user, isError, isFetching, isSuccess, removeQuery } = useQueryMe({
+  const { user, isError, isFetching, isSuccess, removeQuery } = useGetMe({
     enabled: signedIn,
   });
 

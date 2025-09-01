@@ -5,7 +5,7 @@ type UseQueryMeProps = {
   enabled?: boolean;
 };
 
-export function useQueryMe(props: UseQueryMeProps = {}) {
+export function useGetMe(props: UseQueryMeProps = {}) {
   const { enabled = false } = props;
   const queryClient = useQueryClient();
 
