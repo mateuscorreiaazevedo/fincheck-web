@@ -1,7 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { tokensUtil } from '@/features/auth';
-import { sleep } from '@/shared';
 import { env } from '../config/env';
 import type { HttpRequest, HttpResponse } from '../types/HttpClient';
 
@@ -26,9 +25,7 @@ export class HttpClientService {
       return config;
     });
 
-    this.instance.interceptors.response.use(async data => {
-      // biome-ignore lint/style/noMagicNumbers: <explanation>
-      await sleep(1500);
+    this.instance.interceptors.response.use(data => {
       return data;
     });
   }
