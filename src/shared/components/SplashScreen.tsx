@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react';
-import { Logo, Spinner } from './ui';
+import { LoaderAnimated } from './LoaderAnimated';
+import { Logo } from './ui';
 
 interface SplashScreenProps {
   isLoading?: boolean;
@@ -17,8 +18,9 @@ export function SplashScreen({ isLoading = false }: SplashScreenProps) {
       show={isLoading}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-teal-9">
-        <Logo className="h-10 text-white" />
-        <Spinner className="size-10 fill-white text-teal-8/30" />
+        <Logo className="h-10 translate-y-14 text-white" />
+        <LoaderAnimated />
+        {/* <Spinner className="size-10 fill-white text-teal-8/30" /> */}
       </div>
     </Transition>
   );
