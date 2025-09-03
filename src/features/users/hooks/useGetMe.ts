@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { usersQueryKeys } from '../constants/usersQueryKeys';
 import { usersService } from '../services/httpClientUsersService';
 
 type UseQueryMeProps = {
@@ -10,14 +11,14 @@ export function useGetMe(props: UseQueryMeProps = {}) {
   const queryClient = useQueryClient();
 
   const { data, isFetching, isError, isSuccess } = useQuery({
-    queryKey: ['users', 'me'],
+    queryKey: usersQueryKeys.getMeKey(),
     queryFn: () => usersService.getMe(),
     staleTime: Number.POSITIVE_INFINITY,
     enabled,
   });
 
   function removeQuery() {
-    queryClient.removeQueries({ queryKey: ['users', 'me'] });
+    queryClient.removeQueries({ queryKey: usersQueryKeys.getMeKey() });
   }
 
   return {

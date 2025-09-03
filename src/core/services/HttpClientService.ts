@@ -27,8 +27,8 @@ export class HttpClientService {
     });
 
     this.instance.interceptors.response.use(async data => {
-      // biome-ignore lint/style/noMagicNumbers: for test
-      await sleep(500);
+      // biome-ignore lint/style/noMagicNumbers: <explanation>
+      await sleep(1500);
       return data;
     });
   }

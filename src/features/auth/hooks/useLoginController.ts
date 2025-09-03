@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
+import { authQueryKeys } from '../constants/authQueryKeys';
 import { MIN_LENGTH_PASSWORD } from '../constants/minLengthPassword';
 import { authService } from '../services/httpClientAuthService';
 import { useAuth } from './useAuth';
@@ -45,8 +46,9 @@ export function useLoginController() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const { signin } = useAuth();
+
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ['login'],
+    mutationKey: authQueryKeys.loginKey(),
     mutationFn: (data: LoginSchemaType) => authService.login(data),
     onSuccess: ({ accessToken, refreshToken }) => {
       signin(accessToken, refreshToken);

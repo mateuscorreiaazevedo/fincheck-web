@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
+import { authQueryKeys } from '../constants/authQueryKeys';
 import { MIN_LENGTH_PASSWORD } from '../constants/minLengthPassword';
 import { authService } from '../services/httpClientAuthService';
 import { useAuth } from './useAuth';
@@ -49,7 +50,7 @@ export function useRegisterController() {
   const { signin } = useAuth();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ['register'],
+    mutationKey: authQueryKeys.registerKey(),
     mutationFn: (data: RegisterSchemaType) => authService.register(data),
     onSuccess: ({ accessToken, refreshToken }) => {
       signin(accessToken, refreshToken);
