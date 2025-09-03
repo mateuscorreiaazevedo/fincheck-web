@@ -1,6 +1,5 @@
 // Components
 
-export * from './components/AuthGuard';
 export * from './components/AuthHeader';
 export * from './components/PasswordIconButton';
 

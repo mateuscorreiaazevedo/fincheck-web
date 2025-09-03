@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { AuthGuard } from '@/features/auth';
+import { AuthGuard } from './AuthGuard';
 import { privateRoutes } from './privateRoutes';
 import { publicRoutes } from './publicRoutes';
 
