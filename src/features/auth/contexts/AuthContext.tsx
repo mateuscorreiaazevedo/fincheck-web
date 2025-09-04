@@ -25,7 +25,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return !!accessToken;
   });
 
-  const { user, isError, isFetching, isSuccess, removeQuery } = useGetMe({
+  const { user, isFetching, isSuccess, isError, removeQuery } = useGetMe({
     enabled: signedIn,
   });
 

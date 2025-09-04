@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
+
 export interface HttpRequest<TBody = unknown> {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -25,4 +27,10 @@ export enum HttpStatusCode {
   NOT_FOUND = 404,
   CONFLICT = 409,
   INTERNAL_SERVER_ERROR = 500,
+}
+
+export interface HttpFailedQueue {
+  resolve: (value?: unknown) => void;
+  reject: (value?: unknown) => void;
+  config: AxiosRequestConfig;
 }

@@ -1,11 +1,23 @@
-import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import type {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 import axios from 'axios';
-import { tokensUtil } from '@/features/auth';
+import { type IAuthResponse, tokensUtil } from '@/features/auth';
 import { env } from '../config/env';
-import type { HttpRequest, HttpResponse } from '../types/HttpClient';
+import {
+  type HttpFailedQueue,
+  type HttpRequest,
+  type HttpResponse,
+  HttpStatusCode,
+} from '../types/HttpClient';
 
 export class HttpClientService {
   private instance: AxiosInstance;
+  private isRefreshing = false;
+  private failedQueue: HttpFailedQueue[] = [];
 
   constructor(
     private readonly BASE_URL: string = env.VITE_APP_API_BASE_URL,
@@ -25,9 +37,64 @@ export class HttpClientService {
       return config;
     });
 
-    this.instance.interceptors.response.use(data => {
-      return data;
-    });
+    this.instance.interceptors.response.use(
+      response => response,
+      async error => {
+        const originalRequest = error.config as AxiosRequestConfig & {
+          _retry?: boolean;
+        };
+
+        if (originalRequest.url?.startsWith('/auth')) {
+          tokensUtil.removeTokens();
+          return Promise.reject(error);
+        }
+
+        if (
+          error.response?.status === HttpStatusCode.UNAUTHORIZED &&
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true;
+
+          if (this.isRefreshing) {
+            return new Promise((resolve, reject) => {
+              this.failedQueue.push({
+                config: originalRequest,
+                reject,
+                resolve,
+              });
+            });
+          }
+
+          this.isRefreshing = true;
+
+          try {
+            const { accessToken, refreshToken } = await this.refreshToken();
+
+            tokensUtil.setTokens({
+              accessToken,
+              refreshToken,
+            });
+
+            this.failedQueue.forEach(({ config, resolve }) => {
+              resolve(this.instance(config));
+            });
+            this.failedQueue = [];
+
+            return this.instance(originalRequest);
+          } catch (refreshError) {
+            tokensUtil.removeTokens();
+            this.failedQueue.forEach(({ reject }) => {
+              reject(refreshError);
+            });
+            this.failedQueue = [];
+
+            return Promise.reject(refreshError);
+          } finally {
+            this.isRefreshing = false;
+          }
+        }
+      }
+    );
   }
 
   protected async request<TData = unknown, TBody = unknown>(
@@ -58,5 +125,17 @@ export class HttpClientService {
       statusCode: response.status,
       data: response.data,
     };
+  }
+
+  private async refreshToken() {
+    const { refreshToken } = tokensUtil.getTokens();
+
+    const response = await this.request<IAuthResponse>({
+      url: '/auth/refresh',
+      method: 'POST',
+      body: { refreshToken },
+    });
+
+    return response.data!;
   }
 }

@@ -10,6 +10,7 @@ export * from './contexts/AuthContext';
 export * from './hooks/useAuth';
 export * from './hooks/useLoginController';
 export * from './hooks/useRegisterController';
-
+// Types
+export * from './types/HttpAuthResponse';
 // Utils
 export * from './utils/tokensUtil';

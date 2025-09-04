@@ -1,3 +1,5 @@
+import type { IAuthResponse } from './HttpAuthResponse';
+
 export interface IRegisterRequest {
   firstName: string;
   lastName: string;
@@ -5,7 +7,4 @@ export interface IRegisterRequest {
   password: string;
 }
 
-export interface IRegisterResponse {
-  accessToken: string;
-  refreshToken: string;
-}
+export type IRegisterResponse = IAuthResponse;
