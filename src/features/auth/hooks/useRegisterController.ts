@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import z from 'zod';
 import { throwException } from '@/shared';
+import { authErrorsMessage } from '../constants/authErrorsMessage';
 import { authQueryKeys } from '../constants/authQueryKeys';
 import { MIN_LENGTH_PASSWORD } from '../constants/minLengthPassword';
 import { authService } from '../services/httpClientAuthService';
@@ -65,7 +66,7 @@ export function useRegisterController() {
     await toast.promise(mutateAsync(data), {
       loading: 'Criando sua conta...',
       success: 'Bem-vindo ao Fincheck!',
-      error: err => throwException(err),
+      error: err => authErrorsMessage[throwException(err)],
     });
   });
 

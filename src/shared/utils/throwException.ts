@@ -1,3 +1,5 @@
 export function throwException(error: unknown) {
-  return (error as Error).message;
+  const errorLabel = (error as Error).message;
+
+  return errorLabel;
 }
