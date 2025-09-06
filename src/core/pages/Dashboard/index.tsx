@@ -1,13 +1,15 @@
-import { useAuth } from '@/features/auth';
-import { Button } from '@/shared';
+import { BankAccountsResume } from '@/features/bankAccounts';
+import { ListTransactions } from '@/features/transactions';
 
 export default function DashboardPage() {
-  const { signout, loggedUser } = useAuth();
-
   return (
-    <div>
-      <h1>Olá {loggedUser?.firstName}</h1>
-      <Button onClick={signout}>Sair</Button>
-    </div>
+    <main className="flex flex-1 flex-col gap-4 lg:flex-row">
+      <aside className="w-full lg:w-1/2">
+        <BankAccountsResume />
+      </aside>
+      <article className="w-full lg:w-1/2">
+        <ListTransactions />
+      </article>
+    </main>
   );
 }

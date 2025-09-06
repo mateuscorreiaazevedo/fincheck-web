@@ -6,6 +6,7 @@ import { publicRoutes } from './publicRoutes';
 
 // Layouts
 const AuthLayout = lazy(() => import('@/shared/components/layouts/AuthLayout'));
+const AppLayout = lazy(() => import('@/shared/components/layouts/AppLayout'));
 
 export function Router() {
   return (
@@ -22,9 +23,11 @@ export function Router() {
 
         {/* Private Routes */}
         <Route element={<AuthGuard isPrivate />}>
-          {privateRoutes.map(item => (
-            <Route key={item.path} {...item} />
-          ))}
+          <Route element={<AppLayout />}>
+            {privateRoutes.map(item => (
+              <Route key={item.path} {...item} />
+            ))}
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
