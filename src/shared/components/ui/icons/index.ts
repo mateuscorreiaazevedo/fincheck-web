@@ -2,6 +2,7 @@ export * from './Bank';
 export * from './Car';
 export * from './Card';
 export * from './Clothes';
+export * from './Dot';
 export * from './Education';
 export * from './Expense';
 export * from './Food';
