@@ -7,9 +7,11 @@ const buttonVariants = tv({
   variants: {
     variant: {
       default:
-        'bg-teal-8 font-medium text-white outline-teal-9 hover:bg-teal-7 active:bg-teal-9',
-      ghostGray: 'text-teal-9 outline-gray-2 hover:bg-gray-1 active:bg-gray-2',
-      ghostTeal: 'text-white outline-teal-9 hover:bg-teal-8 active:bg-teal-9',
+        'bg-teal-8 font-medium text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-7',
+      ghostGray:
+        'text-teal-9 outline-gray-2 active:bg-gray-2 enabled:hover:bg-gray-1',
+      ghostTeal:
+        'text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-8',
     },
     size: {
       default: 'h-12 text-base',
