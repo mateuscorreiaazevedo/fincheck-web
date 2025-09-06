@@ -2,6 +2,7 @@ export * from './Bank';
 export * from './Bottom';
 export * from './Car';
 export * from './Card';
+export * from './Cash';
 export * from './Clothes';
 export * from './Contacts';
 export * from './Cross';

@@ -6,6 +6,7 @@ import {
   VisibilityToggleButton,
   VisibilityToggleContent,
 } from '@/shared';
+import { BankAccountCard } from './BankAccountCard';
 
 export function BankAccountsResume() {
   return (
@@ -46,7 +47,26 @@ export function BankAccountsResume() {
             </Button>
           </div>
         </div>
-        <div>Sidebar</div>
+        <div className="mt-4 flex w-full gap-4">
+          <BankAccountCard
+            accountType="CHECKING"
+            balanceInCents={123_620}
+            color="#3498d8"
+            name="Nubank"
+          />
+          <BankAccountCard
+            accountType="INVESTMENT"
+            balanceInCents={1_000_000}
+            color="#242424"
+            name="XP Investimentos"
+          />
+          <BankAccountCard
+            accountType="CASH"
+            balanceInCents={10_000}
+            color="#090"
+            name="Carteira"
+          />
+        </div>
       </div>
     </ContentView>
   );
