@@ -1,5 +1,5 @@
-import { CrossCircledIcon } from '@radix-ui/react-icons';
 import { cn } from '@/shared/utils';
+import { CrossCircleIcon } from './icons';
 
 type ErrorProps = {
   error: string;
@@ -11,7 +11,7 @@ export function ErrorUI({ error, className }: ErrorProps) {
     <div
       className={cn('mt-2 flex items-center gap-2 pl-2 text-red-9', className)}
     >
-      <CrossCircledIcon className="size-4" />
+      <CrossCircleIcon className="size-4" />
       <span className="font-normal text-xs">{error}</span>
     </div>
   );

@@ -1,6 +1,5 @@
-import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 import { twMerge } from 'tailwind-merge';
-import { Button } from '@/shared';
+import { Button, EyeClosedIcon, EyeOpenedIcon } from '@/shared';
 
 interface PasswordIconButtonProps {
   onClick?: VoidFunction;
@@ -11,7 +10,7 @@ export function PasswordIconButton({
   onClick,
   visible,
 }: PasswordIconButtonProps) {
-  const Icon = visible ? EyeOpenIcon : EyeClosedIcon;
+  const Icon = visible ? EyeOpenedIcon : EyeClosedIcon;
 
   return (
     <Button
