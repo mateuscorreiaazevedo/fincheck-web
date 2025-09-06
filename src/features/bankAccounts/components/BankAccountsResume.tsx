@@ -1,12 +1,11 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
 import {
-  Button,
   ContentView,
-  LeftIcon,
-  RightIcon,
   VisibilityToggleButton,
   VisibilityToggleContent,
 } from '@/shared';
 import { BankAccountCard } from './BankAccountCard';
+import { BankAccountsSliderNavigation } from './BankAccountsSliderNavigation';
 
 export function BankAccountsResume() {
   return (
@@ -23,49 +22,45 @@ export function BankAccountsResume() {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end">
-        <div className="flex items-center justify-between">
-          <strong className="text-lg text-white tracking-[-1px]">
-            Minhas contas
-          </strong>
-          <div className="flex items-center gap-1">
-            <Button
-              className="py-3 pr-3.5 pl-2.5 disabled:bg-transparent disabled:opacity-40"
-              disabled
-              radius="pill"
-              size="icon"
-              variant="ghostTeal"
+        <div>
+          <Swiper slidesPerView={2.1} spaceBetween={16}>
+            <div
+              className="mb-4 flex items-center justify-between"
+              slot="container-start"
             >
-              <LeftIcon className="size-6 text-white" />
-            </Button>
-            <Button
-              className="py-3 pr-2.5 pl-3.5 disabled:bg-transparent disabled:opacity-40"
-              radius="pill"
-              size="icon"
-              variant="ghostTeal"
-            >
-              <RightIcon className="size-6 text-white" />
-            </Button>
-          </div>
-        </div>
-        <div className="mt-4 flex w-full gap-4">
-          <BankAccountCard
-            accountType="CHECKING"
-            balanceInCents={123_620}
-            color="#3498d8"
-            name="Nubank"
-          />
-          <BankAccountCard
-            accountType="INVESTMENT"
-            balanceInCents={1_000_000}
-            color="#242424"
-            name="XP Investimentos"
-          />
-          <BankAccountCard
-            accountType="CASH"
-            balanceInCents={10_000}
-            color="#090"
-            name="Carteira"
-          />
+              <strong className="text-lg text-white tracking-[-1px]">
+                Minhas contas
+              </strong>
+              <BankAccountsSliderNavigation />
+            </div>
+
+            <div>
+              <SwiperSlide>
+                <BankAccountCard
+                  accountType="CHECKING"
+                  balanceInCents={123_620}
+                  color="#3498d8"
+                  name="Nubank"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <BankAccountCard
+                  accountType="INVESTMENT"
+                  balanceInCents={1_000_000}
+                  color="#242424"
+                  name="XP Investimentos"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <BankAccountCard
+                  accountType="CASH"
+                  balanceInCents={10_000}
+                  color="#090"
+                  name="Carteira"
+                />
+              </SwiperSlide>
+            </div>
+          </Swiper>
         </div>
       </div>
     </ContentView>
