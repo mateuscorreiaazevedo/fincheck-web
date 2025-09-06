@@ -1,21 +1,29 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   ContentView,
+  formatCurrencyHelper,
   VisibilityToggleButton,
   VisibilityToggleContent,
 } from '@/shared';
+import { bankAccountsSliderConstants } from '../constants/bankAccountsSliderConstants';
+import { useBankAccountsResume } from '../hooks/useBankAccountsResume';
 import { BankAccountCard } from './BankAccountCard';
 import { BankAccountsSliderNavigation } from './BankAccountsSliderNavigation';
 
+const mockTotalBalance = 105_000;
+
 export function BankAccountsResume() {
+  const { onChangeSliderState, sliderState, isMobileDisplay } =
+    useBankAccountsResume();
+
   return (
     <ContentView className="flex flex-col bg-teal-9">
-      <div>
+      <div className="mb-10 md:mb-0">
         <span className="text-white tracking-[-0.5px]">Saldo total</span>
         <div className="flex items-center gap-2">
           <VisibilityToggleContent>
             <strong className="text-2xl text-white tracking-[-1px]">
-              R$ 1000,00
+              {formatCurrencyHelper(mockTotalBalance)}
             </strong>
           </VisibilityToggleContent>
           <VisibilityToggleButton />
@@ -23,7 +31,15 @@ export function BankAccountsResume() {
       </div>
       <div className="flex flex-1 flex-col justify-end">
         <div>
-          <Swiper slidesPerView={2.1} spaceBetween={16}>
+          <Swiper
+            onSlideChange={onChangeSliderState}
+            slidesPerView={
+              isMobileDisplay
+                ? bankAccountsSliderConstants.mobileQuantity
+                : bankAccountsSliderConstants.desktopQuantity
+            }
+            spaceBetween={16}
+          >
             <div
               className="mb-4 flex items-center justify-between"
               slot="container-start"
@@ -31,7 +47,7 @@ export function BankAccountsResume() {
               <strong className="text-lg text-white tracking-[-1px]">
                 Minhas contas
               </strong>
-              <BankAccountsSliderNavigation />
+              <BankAccountsSliderNavigation {...sliderState} />
             </div>
 
             <div>
