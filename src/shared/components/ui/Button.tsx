@@ -12,6 +12,8 @@ const buttonVariants = tv({
         'text-teal-9 outline-gray-2 active:bg-gray-2 enabled:hover:bg-gray-1',
       ghostTeal:
         'text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-8',
+      secondary:
+        'font-medium text-gray-8 text-sm tracking-[-0.5px] hover:bg-gray-2',
     },
     size: {
       default: 'h-12 text-base',

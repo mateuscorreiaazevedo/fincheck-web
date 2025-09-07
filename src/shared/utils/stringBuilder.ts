@@ -27,7 +27,8 @@ export class StringBuilder {
    * @returns
    */
   capitalize(separator = ' '): StringBuilder {
-    const words = this.value.split(separator);
+    const validateSeparator = separator === '' ? '' : separator;
+    const words = this.value.split(validateSeparator);
 
     this.value = words
       .map(item => {
