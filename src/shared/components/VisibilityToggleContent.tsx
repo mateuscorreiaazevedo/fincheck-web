@@ -12,5 +12,9 @@ export function VisibilityToggleContent({
 }: PropsWithChildren<VisibilityToggleContentProps>) {
   const { value: isVisible } = useVisibilityValueStore();
 
-  return <div className={cn(!isVisible && 'blur', className)}>{children}</div>;
+  return (
+    <div className={cn('select-none', !isVisible && 'blur', className)}>
+      {children}
+    </div>
+  );
 }

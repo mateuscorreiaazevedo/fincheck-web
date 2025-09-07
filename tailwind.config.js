@@ -21,7 +21,12 @@ export default {
       borderRadius: {
         default: '16px',
         pill: '100%'
+      },
+      spacing: {
+        'full-content': 'calc(100% - 64px)'
+
       }
+
     },
   },
   plugins: [],

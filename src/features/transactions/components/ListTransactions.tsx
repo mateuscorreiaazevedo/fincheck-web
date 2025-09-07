@@ -11,12 +11,13 @@ import { generateDateKey } from '../utils/generateDateKey';
 import { listMonths } from '../utils/listMonths';
 import { SliderItem } from './SliderItem';
 import { SliderNavigation } from './SliderNavigation';
+import { TransactionCard } from './TransactionCard';
 
 export function ListTransactions() {
   const { sliderState, onChangeSliderState } = useListTransactions();
 
   return (
-    <ContentView className="bg-gray-1">
+    <ContentView className="flex flex-col bg-gray-1">
       <header>
         <div className="flex items-center justify-between">
           <button className="flex items-center gap-2 text-gray-9" type="button">
@@ -48,7 +49,11 @@ export function ListTransactions() {
           </Swiper>
         </div>
       </header>
-      <div className="mt-4 bg-blue-5">Conteúdo</div>
+      <div className="mt-4 flex-1 space-y-2 overflow-y-auto">
+        {Array.from({ length: 15 }).map(item => (
+          <TransactionCard key={String(item)} />
+        ))}
+      </div>
     </ContentView>
   );
 }

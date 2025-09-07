@@ -3,7 +3,7 @@ import { ListTransactions } from '@/features/transactions';
 
 export default function DashboardPage() {
   return (
-    <main className="flex flex-1 flex-col gap-4 lg:flex-row">
+    <main className="flex max-h-full-content flex-1 flex-col gap-4 lg:flex-row">
       <aside className="w-full lg:w-1/2">
         <BankAccountsResume />
       </aside>

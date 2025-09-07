@@ -6,6 +6,7 @@ import type {
 } from 'axios';
 import axios from 'axios';
 import { type IAuthResponse, tokensUtil } from '@/features/auth';
+import { sleep } from '@/shared';
 import { env } from '../config/env';
 import {
   type HttpFailedQueue,
@@ -27,13 +28,15 @@ export class HttpClientService {
       baseURL: this.BASE_URL,
     });
 
-    this.instance.interceptors.request.use(config => {
+    this.instance.interceptors.request.use(async config => {
       const { accessToken } = tokensUtil.getTokens();
 
       if (useCredentials && accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
 
+      // biome-ignore lint/style/noMagicNumbers: test
+      await sleep(1200);
       return config;
     });
 

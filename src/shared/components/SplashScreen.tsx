@@ -17,10 +17,9 @@ export function SplashScreen({ isLoading = false }: SplashScreenProps) {
       leaveTo="opacity-0"
       show={isLoading}
     >
-      <div className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-teal-9">
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-teal-9">
         <Logo className="h-10 translate-y-14 text-white" />
         <LoaderAnimated />
-        {/* <Spinner className="size-10 fill-white text-teal-8/30" /> */}
       </div>
     </Transition>
   );
