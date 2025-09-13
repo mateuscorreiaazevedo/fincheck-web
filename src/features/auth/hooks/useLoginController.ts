@@ -51,8 +51,8 @@ export function useLoginController() {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: authQueryKeys.loginKey(),
     mutationFn: (data: LoginSchemaType) => authService.login(data),
-    onSuccess: ({ accessToken, refreshToken }) => {
-      signin(accessToken, refreshToken);
+    onSuccess: () => {
+      signin();
     },
   });
 
@@ -63,7 +63,7 @@ export function useLoginController() {
   const handleSubmit = form.handleSubmit(async data => {
     await toast.promise(mutateAsync(data), {
       loading: 'Entrando...',
-      success: 'Bem-vindo!',
+      success: ({ message }) => message,
       error: error => authErrorsMessage[throwException(error)],
     });
   });

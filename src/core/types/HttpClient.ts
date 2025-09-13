@@ -29,6 +29,11 @@ export enum HttpStatusCode {
   INTERNAL_SERVER_ERROR = 500,
 }
 
+export interface HttpInstance {
+  baseUrl?: string;
+  useCredentials?: boolean;
+}
+
 export interface HttpFailedQueue {
   resolve: (value?: unknown) => void;
   reject: (value?: unknown) => void;
