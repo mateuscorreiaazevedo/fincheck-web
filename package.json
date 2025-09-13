@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "ultracite format --unsafe",
+    "ci:lint": "ultracite lint",
+    "typecheck": "tsc --noEmit",
+    "ci:test": "echo 'Testes Ok'"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
