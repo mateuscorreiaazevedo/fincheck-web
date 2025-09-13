@@ -5,11 +5,10 @@ import type {
   AxiosResponse,
 } from 'axios';
 import axios from 'axios';
-import { type IAuthResponse, tokensUtil } from '@/features/auth';
-import { sleep } from '@/shared';
 import { env } from '../config/env';
 import {
   type HttpFailedQueue,
+  type HttpInstance,
   type HttpRequest,
   type HttpResponse,
   HttpStatusCode,
@@ -20,24 +19,12 @@ export class HttpClientService {
   private isRefreshing = false;
   private failedQueue: HttpFailedQueue[] = [];
 
-  constructor(
-    private readonly BASE_URL: string = env.VITE_APP_API_BASE_URL,
-    useCredentials = true
-  ) {
+  constructor(args: HttpInstance = {}) {
+    const { baseUrl = env.VITE_APP_API_BASE_URL, useCredentials = true } = args;
+
     this.instance = axios.create({
-      baseURL: this.BASE_URL,
-    });
-
-    this.instance.interceptors.request.use(async config => {
-      const { accessToken } = tokensUtil.getTokens();
-
-      if (useCredentials && accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
-
-      // biome-ignore lint/style/noMagicNumbers: test
-      await sleep(1200);
-      return config;
+      baseURL: baseUrl,
+      withCredentials: useCredentials,
     });
 
     this.instance.interceptors.response.use(
@@ -48,7 +35,6 @@ export class HttpClientService {
         };
 
         if (originalRequest.url?.startsWith('/auth')) {
-          tokensUtil.removeTokens();
           return Promise.reject(error);
         }
 
@@ -71,12 +57,7 @@ export class HttpClientService {
           this.isRefreshing = true;
 
           try {
-            const { accessToken, refreshToken } = await this.refreshToken();
-
-            tokensUtil.setTokens({
-              accessToken,
-              refreshToken,
-            });
+            await this.refreshToken();
 
             this.failedQueue.forEach(({ config, resolve }) => {
               resolve(this.instance(config));
@@ -85,7 +66,6 @@ export class HttpClientService {
 
             return this.instance(originalRequest);
           } catch (refreshError) {
-            tokensUtil.removeTokens();
             this.failedQueue.forEach(({ reject }) => {
               reject(refreshError);
             });
@@ -131,14 +111,9 @@ export class HttpClientService {
   }
 
   private async refreshToken() {
-    const { refreshToken } = tokensUtil.getTokens();
-
-    const response = await this.request<IAuthResponse>({
+    await this.request({
       url: '/auth/refresh',
       method: 'POST',
-      body: { refreshToken },
     });
-
-    return response.data!;
   }
 }

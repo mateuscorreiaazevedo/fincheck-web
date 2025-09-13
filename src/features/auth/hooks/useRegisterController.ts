@@ -53,8 +53,8 @@ export function useRegisterController() {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: authQueryKeys.registerKey(),
     mutationFn: (data: RegisterSchemaType) => authService.register(data),
-    onSuccess: ({ accessToken, refreshToken }) => {
-      signin(accessToken, refreshToken);
+    onSuccess: () => {
+      signin();
     },
   });
 
@@ -65,7 +65,7 @@ export function useRegisterController() {
   const handleSubmit = form.handleSubmit(async data => {
     await toast.promise(mutateAsync(data), {
       loading: 'Criando sua conta...',
-      success: 'Bem-vindo ao Fincheck!',
+      success: ({ message }) => message,
       error: err => authErrorsMessage[throwException(err)],
     });
   });
