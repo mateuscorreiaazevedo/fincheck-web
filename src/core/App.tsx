@@ -17,7 +17,6 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        teste
         <Router />
         <Toaster />
       </AuthProvider>
