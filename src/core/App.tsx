@@ -14,7 +14,6 @@ const queryClient = new QueryClient({
 });
 
 export function App() {
-  console.log('teste');
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
