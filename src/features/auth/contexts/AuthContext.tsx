@@ -3,16 +3,16 @@ import {
   type PropsWithChildren,
   useCallback,
   useEffect,
-  useState,
 } from 'react';
 import toast from 'react-hot-toast';
 import { type IMeResponse, useGetMe } from '@/features/users';
 import { SplashScreen } from '@/shared';
-import { tokensUtil } from '../utils/tokensUtil';
+import { authService } from '../services/httpClientAuthService';
+import { useIsAuthenticatedStore } from '../stores/useIsAuthenticatedStore';
 
 interface AuthContextValue {
   signedIn: boolean;
-  signin(accessToken: string, refreshToken: string): void;
+  signin(): void;
   signout(): void;
   loggedUser?: IMeResponse;
 }
@@ -20,26 +20,20 @@ interface AuthContextValue {
 export const AuthContext = createContext({} as AuthContextValue);
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const { accessToken } = tokensUtil.getTokens();
-  const [signedIn, setSignedIn] = useState(() => {
-    return !!accessToken;
-  });
+  const { isAuthenticated, setIsAuthenticated } = useIsAuthenticatedStore();
 
   const { user, isFetching, isSuccess, isError, removeQuery } = useGetMe({
-    enabled: signedIn,
+    enabled: isAuthenticated,
   });
 
-  const signin = useCallback((access_token: string, refresh_token: string) => {
-    setSignedIn(true);
-    tokensUtil.setTokens({
-      accessToken: access_token,
-      refreshToken: refresh_token,
-    });
+  const signin = useCallback(() => {
+    setIsAuthenticated(true);
   }, []);
 
-  const signout = useCallback(() => {
-    setSignedIn(false);
-    tokensUtil.removeTokens();
+  const signout = useCallback(async () => {
+    await authService.logout();
+
+    setIsAuthenticated(false);
     removeQuery();
   }, []);
 
@@ -53,7 +47,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   return (
     <AuthContext.Provider
       value={{
-        signedIn: isSuccess && signedIn,
+        signedIn: isSuccess && isAuthenticated,
         signin,
         signout,
         loggedUser: user,
