@@ -18,7 +18,6 @@ export function BankAccountsSliderNavigation({
         className="py-3 pr-3.5 pl-2.5 disabled:bg-transparent disabled:opacity-40"
         disabled={isBeginning}
         onClick={() => swiper.slidePrev()}
-        radius="pill"
         size="icon"
         variant="ghostTeal"
       >
@@ -28,7 +27,6 @@ export function BankAccountsSliderNavigation({
         className="py-3 pr-2.5 pl-3.5 disabled:bg-transparent disabled:opacity-40"
         disabled={isEnd}
         onClick={() => swiper.slideNext()}
-        radius="pill"
         size="icon"
         variant="ghostTeal"
       >
