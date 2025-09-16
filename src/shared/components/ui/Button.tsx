@@ -6,6 +6,7 @@ const buttonVariants = tv({
   base: 'flex items-center justify-center gap-2 px-6 transition-all disabled:cursor-not-allowed disabled:bg-gray-1 disabled:text-gray-4',
   variants: {
     variant: {
+      none: 'bg-transparent',
       default:
         'bg-teal-8 font-medium text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-7',
       ghostGray:

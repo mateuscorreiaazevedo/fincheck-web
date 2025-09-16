@@ -16,10 +16,10 @@ export function SliderItem({ isActive, item, index }: SliderItemProps) {
 
   return (
     <Button
-      className={cn('w-full', isActive && 'bg-white hover:bg-white/80')}
+      className={cn('w-full bg-transparent', isActive && 'bg-white')}
       onClick={handleSelectMonth}
       radius="pill"
-      variant="secondary"
+      variant="none"
     >
       {item}
     </Button>
