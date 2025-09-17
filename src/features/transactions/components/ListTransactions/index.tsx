@@ -6,11 +6,11 @@ import {
   FilterIcon,
   TransactionsIcon,
 } from '@/shared';
-import { useListTransactions } from '../hooks/useListTransactions';
-import { generateDateKey } from '../utils/generateDateKey';
-import { listMonths } from '../utils/listMonths';
-import { SliderItem } from './SliderItem';
-import { SliderNavigation } from './SliderNavigation';
+import { useListTransactions } from '../../hooks/useListTransactions';
+import { generateDateKey } from '../../utils/generateDateKey';
+import { listMonths } from '../../utils/listMonths';
+import { SliderItem } from '../SliderItem';
+import { SliderNavigation } from '../SliderNavigation';
 import { TransactionCard } from './TransactionCard';
 
 export function ListTransactions() {
@@ -49,9 +49,10 @@ export function ListTransactions() {
           </Swiper>
         </div>
       </header>
+
       <div className="mt-4 flex-1 space-y-2 overflow-y-auto">
-        {Array.from({ length: 15 }).map(item => (
-          <TransactionCard key={String(item)} />
+        {Array.from({ length: 2 }).map((_, index) => (
+          <TransactionCard key={String(index)} />
         ))}
       </div>
     </ContentView>

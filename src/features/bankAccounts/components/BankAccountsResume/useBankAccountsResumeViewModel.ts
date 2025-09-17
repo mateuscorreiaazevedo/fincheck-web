@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import type { Swiper } from 'swiper/types';
-import type { ISliderStateType } from '@/shared';
+import { type ISliderStateType, numberKeys } from '@/shared';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 
-const MAX_MOBILE_DISPLAY = 500;
-
-export function useBankAccountsResume() {
+export function useBankAccountsResumeViewModel() {
   const [sliderState, setSliderState] = useState<ISliderStateType>({
     isBeginning: true,
     isEnd: false,
@@ -19,11 +17,12 @@ export function useBankAccountsResume() {
     });
   }
 
-  const isMobileDisplay = windowWidth <= MAX_MOBILE_DISPLAY;
+  const isMobileDisplay = windowWidth <= numberKeys.MAX_MOBILE_DISPLAY;
 
   return {
     sliderState,
     onChangeSliderState,
     isMobileDisplay,
+    isLoading: false,
   };
 }

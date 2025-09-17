@@ -5,4 +5,5 @@ export * from './Input';
 export * from './icons';
 export * from './Logo';
 export * from './RoundedIcon';
+export * from './Skeleton';
 export * from './Spinner';

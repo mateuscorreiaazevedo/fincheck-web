@@ -6,3 +6,4 @@ export * from './sleep';
 export * from './storageUtil';
 export * from './stringBuilder';
 export * from './throwException';
+export * from './transformIndexKey';

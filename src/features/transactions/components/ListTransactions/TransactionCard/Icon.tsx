@@ -1,7 +1,7 @@
 import { tv } from 'tailwind-variants';
-import type { IconNames } from '../../types/IconNames';
-import type { TransactionType } from '../../types/TransactionType';
-import { iconsMap } from '../../utils/iconsMap';
+import type { IconNames } from '../../../types/IconNames';
+import type { TransactionType } from '../../../types/TransactionType';
+import { iconsMap } from '../../../utils/iconsMap';
 
 interface IconProps {
   icon: IconNames;

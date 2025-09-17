@@ -9,7 +9,6 @@ export default defineConfig({
     viteTsConfigPaths()
   ],
   server: {
-    open: true,
     port: 3000
   }
 })
