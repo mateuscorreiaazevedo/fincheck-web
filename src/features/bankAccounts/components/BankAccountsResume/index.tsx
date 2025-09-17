@@ -1,12 +1,6 @@
-import { useId } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import {
-  ContentView,
-  LoadingSkeleton,
-  numberKeys,
-  Skeleton,
-  transformIndexKey,
-} from '@/shared';
+import { generateDateKey } from '@/features/transactions/utils/generateDateKey';
+import { ContentView, LoadingSkeleton, numberKeys, Skeleton } from '@/shared';
 import { bankAccountsSliderConstants } from '../../constants/bankAccountsSliderConstants';
 import { BankAccountCard } from '../BankAccountCard';
 import { BankAccountsSliderNavigation } from '../BankAccountsSliderNavigation';
@@ -14,7 +8,6 @@ import { BankAccountsResumeHeader } from './ResumeHeader';
 import { useBankAccountsResumeViewModel } from './useBankAccountsResumeViewModel';
 
 export function BankAccountsResume() {
-  const keyId = useId();
   const { onChangeSliderState, sliderState, isMobileDisplay, isLoading } =
     useBankAccountsResumeViewModel();
 
@@ -53,7 +46,7 @@ export function BankAccountsResume() {
             <div>
               {isLoading &&
                 Array.from({ length: 4 }).map((_, index) => (
-                  <SwiperSlide key={`${keyId}-${transformIndexKey(index)}`}>
+                  <SwiperSlide key={generateDateKey(index)}>
                     <Skeleton className="h-[200px] rounded-2xl" />
                   </SwiperSlide>
                 ))}

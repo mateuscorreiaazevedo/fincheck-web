@@ -23,5 +23,6 @@ export function useListTransactionsViewModel() {
     sliderState,
     onChangeSliderState,
     isMobileDisplay,
+    isLoading: false,
   };
 }

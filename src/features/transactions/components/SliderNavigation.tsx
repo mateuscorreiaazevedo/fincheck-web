@@ -7,7 +7,12 @@ import {
   RightIcon,
 } from '@/shared';
 
-export function SliderNavigation({ isBeginning, isEnd }: ISliderStateType) {
+interface ISliderNavigationProps extends ISliderStateType {}
+
+export function SliderNavigation({
+  isBeginning,
+  isEnd,
+}: ISliderNavigationProps) {
   const swiper = useSwiper();
 
   return (
