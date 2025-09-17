@@ -1,22 +1,27 @@
 export class StringBuilder {
   private value = '';
+  private listValue: string[] = [];
 
-  static parse(raw: string): StringBuilder {
+  static parse(raw: string | string[]): StringBuilder {
     const builder = new StringBuilder();
-    builder.value = raw;
+    if (Array.isArray(raw)) {
+      builder.listValue = raw;
+    } else {
+      builder.value = raw;
+    }
 
     return builder;
   }
 
-  fallbackLetters(): StringBuilder {
+  fallback(): StringBuilder {
     const words = this.value.split(' ');
 
-    if (words.length > 1) {
-      this.value = words.map(item => item[0]).join('');
+    this.value = words.map(item => item.charAt(0)).join('');
 
-      return this;
-    }
-    this.value = this.value[0];
+    return this;
+  }
+  listFallback(): StringBuilder {
+    this.value = this.listValue.map(item => item.charAt(0)).join('');
 
     return this;
   }

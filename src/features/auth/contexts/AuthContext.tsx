@@ -5,16 +5,17 @@ import {
   useEffect,
 } from 'react';
 import toast from 'react-hot-toast';
-import { type IMeResponse, useGetMe } from '@/features/users';
 import { SplashScreen } from '@/shared';
-import { authService } from '../services/httpClientAuthService';
+import { useGetMe } from '../hooks/useGetMe';
+import { authService } from '../services/HttpClientAuthService';
 import { useIsAuthenticatedStore } from '../stores/useIsAuthenticatedStore';
+import type { IMeResponse } from '../types/HttpGetMeResponse';
 
 interface AuthContextValue {
   signedIn: boolean;
   signin(): void;
   signout(): void;
-  loggedUser?: IMeResponse;
+  authenticatedUser?: IMeResponse;
 }
 
 export const AuthContext = createContext({} as AuthContextValue);
@@ -22,9 +23,10 @@ export const AuthContext = createContext({} as AuthContextValue);
 export function AuthProvider({ children }: PropsWithChildren) {
   const { isAuthenticated, setIsAuthenticated } = useIsAuthenticatedStore();
 
-  const { user, isFetching, isSuccess, isError, removeQuery } = useGetMe({
-    enabled: isAuthenticated,
-  });
+  const { authenticatedUser, isFetching, isSuccess, isError, removeQuery } =
+    useGetMe({
+      enabled: isAuthenticated,
+    });
 
   const signin = useCallback(() => {
     setIsAuthenticated(true);
@@ -50,7 +52,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         signedIn: isSuccess && isAuthenticated,
         signin,
         signout,
-        loggedUser: user,
+        authenticatedUser,
       }}
     >
       {!isFetching && children}

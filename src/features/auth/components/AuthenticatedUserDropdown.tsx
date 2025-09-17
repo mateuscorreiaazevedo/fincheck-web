@@ -1,13 +1,14 @@
 import { useAuth } from '@/features/auth';
 import { StringBuilder } from '@/shared';
 
-export function UserMenu() {
-  const { loggedUser, signout } = useAuth();
+export function AuthenticatedUserDropdown() {
+  const { authenticatedUser, signout } = useAuth();
 
-  const fallbackUser = StringBuilder.parse(
-    `${loggedUser?.firstName} ${loggedUser?.lastName}`
-  )
-    .fallbackLetters()
+  const fallbackUser = StringBuilder.parse([
+    authenticatedUser?.firstName ?? '',
+    authenticatedUser?.lastName ?? '',
+  ])
+    .listFallback()
     .build();
 
   return (

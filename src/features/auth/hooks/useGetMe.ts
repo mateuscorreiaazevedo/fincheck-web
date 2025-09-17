@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { usersQueryKeys } from '../constants/usersQueryKeys';
-import { usersService } from '../services/httpClientUsersService';
+import { authQueryKeys } from '../constants/authQueryKeys';
+import { authService } from '../services/HttpClientAuthService';
 
 type UseQueryMeProps = {
   enabled?: boolean;
@@ -11,18 +11,18 @@ export function useGetMe(props: UseQueryMeProps = {}) {
   const queryClient = useQueryClient();
 
   const { data, isFetching, isError, isSuccess } = useQuery({
-    queryKey: usersQueryKeys.getMeKey(),
-    queryFn: () => usersService.getMe(),
+    queryKey: authQueryKeys.getMeKey(),
+    queryFn: () => authService.getMe(),
     staleTime: Number.POSITIVE_INFINITY,
     enabled,
   });
 
   function removeQuery() {
-    queryClient.removeQueries({ queryKey: usersQueryKeys.getMeKey() });
+    queryClient.removeQueries({ queryKey: authQueryKeys.getMeKey() });
   }
 
   return {
-    user: data,
+    authenticatedUser: data,
     isSuccess,
     isFetching,
     isError,
