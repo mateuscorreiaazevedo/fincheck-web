@@ -24,5 +24,6 @@ export function useBankAccountsResumeViewModel() {
     onChangeSliderState,
     isMobileDisplay,
     isLoading: false,
+    bankAccounts: [],
   };
 }
