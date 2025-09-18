@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import type { Swiper } from 'swiper/types';
-import { type ISliderStateType, numberKeys } from '@/shared';
-import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
+import type { ISliderStateType } from '@/shared';
+import { useGetTransactions } from '../../hooks/useGetTransactions';
 
 export function useListTransactionsViewModel() {
   const [sliderState, setSliderState] = useState<ISliderStateType>({
     isBeginning: true,
     isEnd: false,
   });
-  const windowWidth = useMediaQuery();
+
+  const { data: transactions, isLoading: isInitialLoading } =
+    useGetTransactions();
 
   function onChangeSliderState(swiper: Swiper) {
     setSliderState({
@@ -17,12 +19,15 @@ export function useListTransactionsViewModel() {
     });
   }
 
-  const isMobileDisplay = windowWidth <= numberKeys.MAX_MOBILE_DISPLAY;
+  const hasTransactions = !!transactions?.length && transactions.length > 0;
+  const loading = false;
 
   return {
     sliderState,
     onChangeSliderState,
-    isMobileDisplay,
-    isLoading: false,
+    isInitialLoading,
+    transactions,
+    hasTransactions,
+    isLoading: isInitialLoading || loading,
   };
 }

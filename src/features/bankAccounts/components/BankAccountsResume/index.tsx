@@ -1,6 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { generateDateKey } from '@/features/transactions/utils/generateDateKey';
-import { ContentView, numberKeys, Skeleton } from '@/shared';
+import { ContentView, numberKeys } from '@/shared';
 import { bankAccountsSliderConstants } from '../../constants/bankAccountsSliderConstants';
 import { BankAccountCard } from '../BankAccountCard';
 import { BankAccountsSliderNavigation } from '../BankAccountsSliderNavigation';
@@ -25,10 +24,10 @@ export function BankAccountsResume() {
         totalBalanceInCents={numberKeys.MOCK_TOTAL_BALANCE}
       />
       <main className="flex flex-1 flex-col justify-end">
-        {!bankAccounts.length && (
+        {!bankAccounts?.length && (
           <BankAccountsResumeEmptyState isLoading={isLoading} />
         )}
-        {bankAccounts.length > 0 && (
+        {!!bankAccounts?.length && (
           <div>
             <Swiper
               onSlideChange={onChangeSliderState}
@@ -49,40 +48,30 @@ export function BankAccountsResume() {
               </div>
 
               <div>
-                {isLoading &&
-                  Array.from({ length: 4 }).map((_, index) => (
-                    <SwiperSlide key={generateDateKey(index)}>
-                      <Skeleton className="h-[200px] rounded-2xl" />
-                    </SwiperSlide>
-                  ))}
-                {!isLoading && (
-                  <>
-                    <SwiperSlide>
-                      <BankAccountCard
-                        accountType="CHECKING"
-                        balanceInCents={123_620}
-                        color="#3498d8"
-                        name="Nubank"
-                      />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <BankAccountCard
-                        accountType="INVESTMENT"
-                        balanceInCents={1_000_000}
-                        color="#242424"
-                        name="XP Investimentos"
-                      />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <BankAccountCard
-                        accountType="CASH"
-                        balanceInCents={10_000}
-                        color="#090"
-                        name="Carteira"
-                      />
-                    </SwiperSlide>
-                  </>
-                )}
+                <SwiperSlide>
+                  <BankAccountCard
+                    accountType="CHECKING"
+                    balanceInCents={123_620}
+                    color="#3498d8"
+                    name="Nubank"
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <BankAccountCard
+                    accountType="INVESTMENT"
+                    balanceInCents={1_000_000}
+                    color="#242424"
+                    name="XP Investimentos"
+                  />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <BankAccountCard
+                    accountType="CASH"
+                    balanceInCents={10_000}
+                    color="#090"
+                    name="Carteira"
+                  />
+                </SwiperSlide>
               </div>
             </Swiper>
           </div>

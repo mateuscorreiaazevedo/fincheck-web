@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Swiper } from 'swiper/types';
 import { type ISliderStateType, numberKeys } from '@/shared';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
+import { useGetBankAccounts } from '../../hooks/useGetBankAccounts';
 
 export function useBankAccountsResumeViewModel() {
   const [sliderState, setSliderState] = useState<ISliderStateType>({
@@ -9,6 +10,8 @@ export function useBankAccountsResumeViewModel() {
     isEnd: false,
   });
   const windowWidth = useMediaQuery();
+
+  const { data: bankAccounts, isLoading } = useGetBankAccounts();
 
   function onChangeSliderState(swiper: Swiper) {
     setSliderState({
@@ -23,7 +26,7 @@ export function useBankAccountsResumeViewModel() {
     sliderState,
     onChangeSliderState,
     isMobileDisplay,
-    isLoading: false,
-    bankAccounts: [],
+    isLoading,
+    bankAccounts,
   };
 }
