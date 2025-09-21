@@ -32,7 +32,7 @@ function DropdownMenuItem({
     <Dropdown.Item
       {...props}
       className={cn(
-        'flex min-h-12 cursor-pointer items-center gap-2 rounded-lg px-2 text-gray-8 text-sm outline-none transition-all data-[highlighted]:bg-gray-1/50',
+        'flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-gray-8 text-sm outline-none transition-all data-[highlighted]:bg-gray-1/50',
         className
       )}
     />

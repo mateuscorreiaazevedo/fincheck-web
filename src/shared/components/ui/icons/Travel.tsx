@@ -1,9 +1,10 @@
 import type { IconProps } from '@/shared/types';
+import { cn } from '@/shared/utils';
 
 export function TravelIcon({ className }: IconProps) {
   return (
     <svg
-      className={className}
+      className={cn('size-6', className)}
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"

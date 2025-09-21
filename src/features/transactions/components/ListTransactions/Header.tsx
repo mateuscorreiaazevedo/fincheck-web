@@ -1,15 +1,14 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper/types';
 import {
-  BottomIcon,
   Button,
   FilterIcon,
   type ISliderStateType,
   LoadingSkeleton,
-  TransactionsIcon,
 } from '@/shared';
 import { generateDateKey } from '../../utils/generateDateKey';
 import { listMonths } from '../../utils/listMonths';
+import { FilterTransactionType } from '../FilterTransactionType';
 import { SliderItem } from '../SliderItem';
 import { SliderNavigation } from '../SliderNavigation';
 
@@ -28,13 +27,7 @@ export function ListTransactionsHeader({
     <header>
       <div className="flex items-center justify-between">
         <LoadingSkeleton className="h-6 w-36 bg-gray-3" isLoading={isLoading}>
-          <button className="flex items-center gap-2 text-gray-9" type="button">
-            <TransactionsIcon className="size-6" />
-            <span className="font-medium text-gray-8 text-sm tracking-[-0.5px]">
-              Transações
-            </span>
-            <BottomIcon className="size-6" />
-          </button>
+          <FilterTransactionType />
         </LoadingSkeleton>
         <LoadingSkeleton
           className="size-12 rounded-2xl bg-gray-3"

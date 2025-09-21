@@ -1,5 +1,6 @@
 import { BankAccountsResume } from '@/features/bankAccounts';
 import { ListTransactions } from '@/features/transactions';
+import { DashboardFab } from './components/Fab';
 
 export default function DashboardPage() {
   return (
@@ -10,6 +11,7 @@ export default function DashboardPage() {
       <article className="w-full lg:w-1/2">
         <ListTransactions />
       </article>
+      <DashboardFab />
     </main>
   );
 }
