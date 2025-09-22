@@ -3,10 +3,12 @@ import { BankAccountsSliderHeader } from './SliderHeader';
 
 interface IEmptyStateProps {
   isLoading?: boolean;
+  onOpenModalCreateBankAccount?(): void;
 }
 
 export function BankAccountsResumeEmptyState({
   isLoading = false,
+  onOpenModalCreateBankAccount,
 }: IEmptyStateProps) {
   return (
     <div className="flex flex-col">
@@ -17,6 +19,7 @@ export function BankAccountsResumeEmptyState({
       >
         <button
           className="flex h-52 flex-col items-center justify-center gap-4 rounded-2xl border-2 border-teal-6 border-dashed text-white"
+          onClick={onOpenModalCreateBankAccount}
           type="button"
         >
           <div className="flex size-11 items-center justify-center rounded-full border-2 border-white border-dashed">

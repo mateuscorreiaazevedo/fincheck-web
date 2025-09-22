@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   BankIcon,
   Button,
@@ -9,9 +8,11 @@ import {
   PlusIcon,
   RoundedIcon,
 } from '@/shared';
+import { useDashboardFABViewModel } from './viewModel';
 
 export function DashboardFab() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen, handleOpenModalCreateBankAccount } =
+    useDashboardFABViewModel();
 
   return (
     <DropdownMenu onOpenChange={setIsOpen} open={isOpen}>
@@ -47,7 +48,7 @@ export function DashboardFab() {
             </RoundedIcon>
             Nova Receita
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={handleOpenModalCreateBankAccount}>
             <RoundedIcon className="size-8 bg-blue-0 text-blue-9">
               <BankIcon className="stroke-[1.5px]" />
             </RoundedIcon>

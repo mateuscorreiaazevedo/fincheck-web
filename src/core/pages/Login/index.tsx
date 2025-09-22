@@ -28,6 +28,7 @@ export default function LoginPage() {
           {...register('email')}
           error={fieldErrors.email?.message}
           placeholder="Email"
+          type="email"
         />
         <Input
           type={showPassword ? 'text' : 'password'}

@@ -15,6 +15,7 @@ export function BankAccountsResume() {
     isMobileDisplay,
     isLoading,
     bankAccounts,
+    handleOpenModalCreateBankAccount,
   } = useBankAccountsResumeViewModel();
 
   return (
@@ -25,7 +26,10 @@ export function BankAccountsResume() {
       />
       <main className="flex flex-1 flex-col justify-end">
         {!bankAccounts?.length && (
-          <BankAccountsResumeEmptyState isLoading={isLoading} />
+          <BankAccountsResumeEmptyState
+            isLoading={isLoading}
+            onOpenModalCreateBankAccount={handleOpenModalCreateBankAccount}
+          />
         )}
         {!!bankAccounts?.length && (
           <div>

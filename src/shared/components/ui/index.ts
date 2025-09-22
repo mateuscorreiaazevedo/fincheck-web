@@ -3,6 +3,7 @@ export * from './ContentView';
 export * from './DropdownMenu';
 export * from './ErrorUI';
 export * from './Input';
+export * from './InputCurrency';
 export * from './icons';
 export * from './Logo';
 export * from './Modal';

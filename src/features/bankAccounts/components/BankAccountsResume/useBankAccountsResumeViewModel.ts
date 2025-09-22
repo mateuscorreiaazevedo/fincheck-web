@@ -3,6 +3,7 @@ import type { Swiper } from 'swiper/types';
 import { type ISliderStateType, numberKeys } from '@/shared';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 import { useGetBankAccounts } from '../../hooks/useGetBankAccounts';
+import { useVisibilityModalCreateBankAccountStore } from '../../hooks/useVisibilityModalCreateBankAccountStore';
 
 export function useBankAccountsResumeViewModel() {
   const [sliderState, setSliderState] = useState<ISliderStateType>({
@@ -11,6 +12,7 @@ export function useBankAccountsResumeViewModel() {
   });
   const windowWidth = useMediaQuery();
 
+  const { setVisibility } = useVisibilityModalCreateBankAccountStore();
   const { data: bankAccounts, isLoading } = useGetBankAccounts();
 
   function onChangeSliderState(swiper: Swiper) {
@@ -18,6 +20,10 @@ export function useBankAccountsResumeViewModel() {
       isBeginning: swiper.isBeginning,
       isEnd: swiper.isEnd,
     });
+  }
+
+  function handleOpenModalCreateBankAccount() {
+    setVisibility(true);
   }
 
   const isMobileDisplay = windowWidth <= numberKeys.MAX_MOBILE_DISPLAY;
@@ -28,5 +34,6 @@ export function useBankAccountsResumeViewModel() {
     isMobileDisplay,
     isLoading,
     bankAccounts,
+    handleOpenModalCreateBankAccount,
   };
 }
