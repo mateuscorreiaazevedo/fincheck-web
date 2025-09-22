@@ -2,12 +2,15 @@ import { useState } from 'react';
 import type { Swiper } from 'swiper/types';
 import type { ISliderStateType } from '@/shared';
 import { useGetTransactions } from '../../hooks/useGetTransactions';
+import { useVisibleTransactionFiltersStore } from '../../stores/useVisibleTransactionFiltersStore';
 
 export function useListTransactionsViewModel() {
   const [sliderState, setSliderState] = useState<ISliderStateType>({
     isBeginning: true,
     isEnd: false,
   });
+
+  const { setVisibility } = useVisibleTransactionFiltersStore();
 
   const { data: transactions, isLoading: isInitialLoading } =
     useGetTransactions();
@@ -22,6 +25,10 @@ export function useListTransactionsViewModel() {
   const hasTransactions = !!transactions?.length && transactions.length > 0;
   const loading = false;
 
+  function handleOpenModalFilters() {
+    return setVisibility(true);
+  }
+
   return {
     sliderState,
     onChangeSliderState,
@@ -29,5 +36,6 @@ export function useListTransactionsViewModel() {
     transactions,
     hasTransactions,
     isLoading: isInitialLoading || loading,
+    handleOpenModalFilters,
   };
 }

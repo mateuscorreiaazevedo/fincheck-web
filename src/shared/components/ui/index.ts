@@ -5,6 +5,7 @@ export * from './ErrorUI';
 export * from './Input';
 export * from './icons';
 export * from './Logo';
+export * from './Modal';
 export * from './RoundedIcon';
 export * from './Skeleton';
 export * from './Spinner';

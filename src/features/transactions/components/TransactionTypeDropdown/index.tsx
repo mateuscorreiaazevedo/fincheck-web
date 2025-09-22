@@ -6,7 +6,7 @@ import {
   TransactionsIcon,
 } from '@/shared';
 
-export function FilterTransactionType() {
+export function TransactionTypeDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenu.Trigger asChild>

@@ -8,26 +8,28 @@ import {
 } from '@/shared';
 import { generateDateKey } from '../../utils/generateDateKey';
 import { listMonths } from '../../utils/listMonths';
-import { FilterTransactionType } from '../FilterTransactionType';
 import { SliderItem } from '../SliderItem';
 import { SliderNavigation } from '../SliderNavigation';
+import { TransactionTypeDropdown } from '../TransactionTypeDropdown';
 
 interface IHeaderProps {
   sliderState: ISliderStateType;
   onChangeSliderState: (swiper: SwiperType) => void;
   isLoading?: boolean;
+  onOpenModalFilters(): void;
 }
 
 export function ListTransactionsHeader({
   onChangeSliderState,
   sliderState,
   isLoading = false,
+  onOpenModalFilters,
 }: IHeaderProps) {
   return (
     <header>
       <div className="flex items-center justify-between">
         <LoadingSkeleton className="h-6 w-36 bg-gray-3" isLoading={isLoading}>
-          <FilterTransactionType />
+          <TransactionTypeDropdown />
         </LoadingSkeleton>
         <LoadingSkeleton
           className="size-12 rounded-2xl bg-gray-3"
@@ -35,6 +37,7 @@ export function ListTransactionsHeader({
         >
           <Button
             className="p-3 hover:bg-gray-3"
+            onClick={onOpenModalFilters}
             radius="default"
             size="icon"
             variant="none"
