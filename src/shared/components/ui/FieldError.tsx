@@ -6,7 +6,7 @@ type ErrorProps = {
   className?: string;
 };
 
-export function ErrorUI({ error, className }: ErrorProps) {
+export function FieldError({ error, className }: ErrorProps) {
   return (
     <div
       className={cn('mt-2 flex items-center gap-2 pl-2 text-red-9', className)}

@@ -49,6 +49,14 @@ export default {
           '100%': {
             left: '100%'
           }
+        },
+        overlayHidden: {
+          from: {
+            opacity: '100'
+          },
+          to: {
+            opacity: '0'
+          }
         }
 			},
 			animation: {
@@ -56,6 +64,7 @@ export default {
 					"slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
 				slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        overlayHidden: "overlayHidden 150ms cubic-bezier(0.16, 1, 0.3, 1)",
 				contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         skeleton: 'skeleton 800ms infinite'
 			},

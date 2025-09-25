@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/shared/utils';
-import { ErrorUI } from './ErrorUI';
+import { FieldError } from './FieldError';
 
 type InputProps = ComponentProps<'input'> & {
   name: string;
@@ -52,7 +52,7 @@ export function Input({
           </div>
         )}
       </div>
-      {!!error && <ErrorUI error={error} />}
+      {!!error && <FieldError error={error} />}
     </div>
   );
 }

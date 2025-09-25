@@ -1,4 +1,5 @@
-import { Input, InputCurrency, Modal } from '@/shared';
+import { Input, InputCurrency, Modal, Select } from '@/shared';
+import { bankAccountTypeOptions } from '../../constants/bankAccountsTypeOptions';
 import { useModalCreateBankAccountViewModel } from './viewModel';
 
 export function ModalCreateBankAccount() {
@@ -14,8 +15,9 @@ export function ModalCreateBankAccount() {
             <InputCurrency />
           </div>
         </div>
-        <div>
+        <div className="space-y-4">
           <Input name="name" placeholder="Nome da conta" />
+          <Select options={bankAccountTypeOptions} placeholder="Tipo" />
         </div>
       </form>
     </Modal>
