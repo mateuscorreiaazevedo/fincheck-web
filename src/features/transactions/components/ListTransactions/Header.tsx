@@ -28,11 +28,14 @@ export function ListTransactionsHeader({
   return (
     <header>
       <div className="flex items-center justify-between">
-        <LoadingSkeleton className="h-6 w-36 bg-gray-3" isLoading={isLoading}>
+        <LoadingSkeleton
+          className="h-6 w-36 bg-gray-3 after:via-white/40"
+          isLoading={isLoading}
+        >
           <TransactionTypeDropdown />
         </LoadingSkeleton>
         <LoadingSkeleton
-          className="size-12 rounded-2xl bg-gray-3"
+          className="size-12 rounded-2xl bg-gray-3 after:via-white/40"
           isLoading={isLoading}
         >
           <Button

@@ -45,6 +45,11 @@ export default {
 					},
 					to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
 				},
+        skeleton: {
+          '100%': {
+            left: '100%'
+          }
+        }
 			},
 			animation: {
 				slideDownAndFade:
@@ -52,6 +57,7 @@ export default {
 				slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
 				contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        skeleton: 'skeleton 800ms infinite'
 			},
     },
   },

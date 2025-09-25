@@ -21,7 +21,9 @@ export function SliderItem({
   }
 
   if (isLoading) {
-    return <Skeleton className="h-12 w-full rounded-full bg-gray-3" />;
+    return (
+      <Skeleton className="h-12 w-full rounded-full bg-gray-3 after:via-white/40" />
+    );
   }
 
   return (

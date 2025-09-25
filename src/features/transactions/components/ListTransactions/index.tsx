@@ -31,7 +31,7 @@ export function ListTransactions() {
           {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
               <Skeleton
-                className="h-[77px] w-full rounded-2xl bg-gray-3"
+                className="h-[77px] w-full rounded-2xl bg-gray-3 after:via-white/40"
                 key={generateDateKey(index)}
               />
             ))}
