@@ -1,5 +1,6 @@
-import { Input, InputCurrency, Modal, Select } from '@/shared';
+import { Button, Input, InputCurrency, Modal, Select } from '@/shared';
 import { bankAccountTypeOptions } from '../../constants/bankAccountsTypeOptions';
+import { ColorDropdownInput } from './ColorDropdownInput';
 import { useModalCreateBankAccountViewModel } from './viewModel';
 
 export function ModalCreateBankAccount() {
@@ -18,6 +19,10 @@ export function ModalCreateBankAccount() {
         <div className="space-y-4">
           <Input name="name" placeholder="Nome da conta" />
           <Select options={bankAccountTypeOptions} placeholder="Tipo" />
+          <ColorDropdownInput />
+          <Button className="w-full" type="submit">
+            Salvar
+          </Button>
         </div>
       </form>
     </Modal>

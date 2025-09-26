@@ -2,16 +2,10 @@
 import * as RdxSelect from '@radix-ui/react-select';
 import { useId, useState } from 'react';
 import noDataImage from '@/assets/images/no-data.svg';
-import type { SelectOption } from '@/shared/types';
+import type { ClassNames, SelectOption } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { FieldError } from './FieldError';
 import { BottomIcon } from './icons';
-
-type ClassNames = {
-  trigger?: string;
-  content?: string;
-  item?: string;
-};
 
 interface ISelectProps {
   classNames?: ClassNames;

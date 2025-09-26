@@ -7,7 +7,7 @@ interface StoreProps {
 
 export const useVisibilityModalCreateBankAccountStore = create<StoreProps>(
   set => ({
-    visible: true,
+    visible: false,
     setVisibility(value: boolean) {
       set({ visible: value });
     },
