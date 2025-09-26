@@ -21,7 +21,7 @@ export function TransactionTypeDropdown() {
           <BottomIcon />
         </button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content align="start" className="z-50 w-[280px]">
+      <DropdownMenu.Content align="start" className="z-50 w-fit">
         <DropdownMenu.Body>
           <DropdownMenu.Item>
             <IncomeIcon />

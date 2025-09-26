@@ -43,7 +43,7 @@ export function ColorDropdownInput({
           {!selectedColor && <BottomIcon />}
           {selectedColor && <ColorDropdownInputIconItem {...selectedColor} />}
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="z-50 flex flex-row flex-wrap gap-x-0 gap-y-4 p-2 data-[side=bottom]:mt-2">
+        <DropdownMenu.Content className="z-50 flex w-trigger flex-row flex-wrap gap-x-0 gap-y-4 p-2 data-[side=bottom]:mt-2">
           {colorOptions.map(color => {
             return (
               <DropdownMenu.Item

@@ -23,7 +23,8 @@ export default {
         pill: '100%'
       },
       spacing: {
-        'full-content': 'calc(100% - 64px)'
+        'full-content': 'calc(100% - 64px)',
+        'trigger': 'var(--radix-dropdown-menu-trigger-width)'
       },
       keyframes: {
 				slideDownAndFade: {

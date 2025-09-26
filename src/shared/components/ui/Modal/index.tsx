@@ -47,7 +47,11 @@ function Modal({
               <h3 className="font-bold text-lg tracking-[-1px]">{title}</h3>
             </Dialog.Title>
             <button
-              className="flex size-12 items-center justify-center"
+              className={cn(
+                'pointer-events-none flex size-12 items-center justify-center outline-none',
+                !!rightIconAction &&
+                  'pointer-events-auto outline outline-teal-9'
+              )}
               onClick={rightIconAction}
               type="button"
             >

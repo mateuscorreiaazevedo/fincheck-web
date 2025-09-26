@@ -11,8 +11,13 @@ import {
 import { useDashboardFABViewModel } from './viewModel';
 
 export function DashboardFab() {
-  const { isOpen, setIsOpen, handleOpenModalCreateBankAccount } =
-    useDashboardFABViewModel();
+  const {
+    isOpen,
+    setIsOpen,
+    handleOpenModalCreateBankAccount,
+    handleOpenModalCreateExpenseTransaction,
+    handleOpenModalCreateIncomeTransaction,
+  } = useDashboardFABViewModel();
 
   return (
     <DropdownMenu onOpenChange={setIsOpen} open={isOpen}>
@@ -36,13 +41,13 @@ export function DashboardFab() {
         side="top"
       >
         <DropdownMenu.Body>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={handleOpenModalCreateExpenseTransaction}>
             <RoundedIcon className="size-8 bg-red-0 text-red-9">
               <ExpenseIcon className="stroke-[1.5px]" />
             </RoundedIcon>
             Nova Despesa
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={handleOpenModalCreateIncomeTransaction}>
             <RoundedIcon className="size-8 bg-green-0 text-green-9">
               <IncomeIcon className="stroke-[1.5px]" />
             </RoundedIcon>
