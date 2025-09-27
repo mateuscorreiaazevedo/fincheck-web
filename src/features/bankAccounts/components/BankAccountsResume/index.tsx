@@ -55,14 +55,9 @@ export function BankAccountsResume() {
               </div>
 
               <div>
-                {bankAccounts?.map(item => (
-                  <SwiperSlide key={item.id}>
-                    <BankAccountCard
-                      accountType={item.accountType}
-                      balanceInCents={item.currentBalanceInCents}
-                      color={item.color}
-                      name={item.name}
-                    />
+                {bankAccounts?.map(bankAccount => (
+                  <SwiperSlide key={bankAccount.id}>
+                    <BankAccountCard {...bankAccount} />
                   </SwiperSlide>
                 ))}
                 <SwiperSlide>

@@ -48,9 +48,9 @@ function Modal({
             </Dialog.Title>
             <button
               className={cn(
-                'pointer-events-none flex size-12 items-center justify-center outline-none',
+                'flex size-12 cursor-default items-center justify-center outline-none',
                 !!rightIconAction &&
-                  'pointer-events-auto outline outline-teal-9'
+                  'cursor-pointer rounded-2xl transition-colors hover:bg-gray-1 focus:outline focus:outline-teal-9'
               )}
               onClick={rightIconAction}
               type="button"

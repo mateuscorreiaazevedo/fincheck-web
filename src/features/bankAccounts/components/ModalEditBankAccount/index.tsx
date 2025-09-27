@@ -1,25 +1,43 @@
 import { Controller } from 'react-hook-form';
-import { Button, Input, InputCurrency, Modal, Select } from '@/shared';
+import {
+  Button,
+  Input,
+  InputCurrency,
+  Modal,
+  Select,
+  TrashIcon,
+} from '@/shared';
 import { bankAccountTypeOptions } from '../../constants/bankAccountsTypeOptions';
 import { ColorDropdownInput } from '../ColorDropdownInput';
-import { useModalCreateBankAccountViewModel } from './viewModel';
+import { useModalEditBankAccountViewModel } from './viewModel';
 
-export function ModalCreateBankAccount() {
+export function ModalEditBankAccount() {
   const {
-    setVisibility,
+    handleCloseModalEditBankAccount,
     visible,
     control,
     fieldErrors,
     onSubmit,
     register,
     isPending,
-  } = useModalCreateBankAccountViewModel();
+    bankAccount,
+  } = useModalEditBankAccountViewModel();
+
+  if (!bankAccount) {
+    return null;
+  }
 
   return (
-    <Modal onChangeOpen={setVisibility} open={visible} title="Nova conta">
+    <Modal
+      onChangeOpen={handleCloseModalEditBankAccount}
+      open={visible && !!bankAccount}
+      rightIcon={() => <TrashIcon className="text-red-9" />}
+      rightIconAction={() => alert(bankAccount.id)}
+      title="Conta"
+    >
       <form className="space-y-10" onSubmit={onSubmit}>
         <div className="flex flex-col">
-          <span className="w-full text-gray-6 text-xs">Saldo inicial</span>
+          <span className="w-full text-gray-6 text-xs">Saldo</span>
           <div className="flex h-8 items-center gap-2">
             <span className="text-gray-6 text-lg tracking-[-0.5px]">R$</span>
             <Controller

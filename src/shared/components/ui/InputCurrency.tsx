@@ -1,6 +1,4 @@
-import NumberFormat, {
-  type FormatInputValueFunction,
-} from 'react-number-format';
+import NumberFormat from 'react-number-format';
 import { numberKeys, regexConstants } from '@/shared/constants';
 import { defaultStringsConstants } from '@/shared/constants/defaultStrings';
 import { cn } from '@/shared/utils';
@@ -13,7 +11,7 @@ interface InputCurrencyProps {
 }
 
 export function InputCurrency({ onChange, value, error }: InputCurrencyProps) {
-  const currencyFormat: FormatInputValueFunction = (valueStr: string) => {
+  const currencyFormat = (valueStr: string) => {
     if (!valueStr) {
       return '';
     }

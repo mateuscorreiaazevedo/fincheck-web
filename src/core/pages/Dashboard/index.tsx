@@ -1,6 +1,7 @@
 import {
   BankAccountsResume,
   ModalCreateBankAccount,
+  ModalEditBankAccount,
 } from '@/features/bankAccounts';
 import {
   ListTransactions,
@@ -19,6 +20,7 @@ export default function DashboardPage() {
       </article>
       <DashboardFab />
       <ModalCreateBankAccount />
+      <ModalEditBankAccount />
       <ModalCreateTransaction />
     </main>
   );
