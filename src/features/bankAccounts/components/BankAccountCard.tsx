@@ -21,7 +21,7 @@ export function BankAccountCard({
 }: IBankAccountCardProps) {
   return (
     <div
-      className="flex h-[200px] flex-col justify-between rounded-2xl border-teal-4 border-r-4 border-b-4 bg-white p-4"
+      className="flex h-[200px] flex-col justify-between rounded-2xl border-teal-4 border-b-4 bg-white p-4"
       style={{
         borderColor: color,
       }}

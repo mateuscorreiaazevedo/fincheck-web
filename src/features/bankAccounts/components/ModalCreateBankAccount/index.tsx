@@ -1,0 +1,30 @@
+import { Button, Input, InputCurrency, Modal, Select } from '@/shared';
+import { bankAccountTypeOptions } from '../../constants/bankAccountsTypeOptions';
+import { ColorDropdownInput } from './ColorDropdownInput';
+import { useModalCreateBankAccountViewModel } from './viewModel';
+
+export function ModalCreateBankAccount() {
+  const { setVisibility, visible } = useModalCreateBankAccountViewModel();
+
+  return (
+    <Modal onChangeOpen={setVisibility} open={visible} title="Nova conta">
+      <form className="space-y-10">
+        <div className="flex flex-col">
+          <span className="w-full text-gray-6 text-xs">Saldo</span>
+          <div className="flex h-8 items-center gap-2">
+            <span className="text-gray-6 text-lg tracking-[-0.5px]">R$</span>
+            <InputCurrency />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <Input name="name" placeholder="Nome da conta" />
+          <Select options={bankAccountTypeOptions} placeholder="Tipo" />
+          <ColorDropdownInput />
+          <Button className="w-full" type="submit">
+            Salvar
+          </Button>
+        </div>
+      </form>
+    </Modal>
+  );
+}

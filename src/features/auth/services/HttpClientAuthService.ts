@@ -1,6 +1,7 @@
 import { HttpClientService } from '@/core/services/HttpClientService';
 import { httpResponseHandler } from '@/shared';
 import type { IAuthMessage } from '../types/HttpAuthResponse';
+import type { IMeResponse } from '../types/HttpGetMeResponse';
 import type { ILoginRequest } from '../types/HttpLoginInterfaces';
 import type { IRegisterRequest } from '../types/HttpRegisterInterfaces';
 
@@ -34,6 +35,17 @@ class HttpClientAuthService extends HttpClientService {
       url: '/auth/signout',
       method: 'POST',
     });
+  }
+
+  async getMe(): Promise<IMeResponse> {
+    const response = await this.request<IMeResponse>({
+      url: '/users/me',
+      method: 'GET',
+    });
+
+    const result = httpResponseHandler(response);
+
+    return result;
   }
 }
 

@@ -1,25 +1,37 @@
 import { useSwiper } from 'swiper/react';
-import { Button, cn } from '@/shared';
+import { Button, cn, Skeleton } from '@/shared';
 
 interface SliderItemProps {
   isActive: boolean;
   item: string;
   index: number;
+  isLoading?: boolean;
 }
 
-export function SliderItem({ isActive, item, index }: SliderItemProps) {
+export function SliderItem({
+  isActive,
+  item,
+  index,
+  isLoading,
+}: SliderItemProps) {
   const swiper = useSwiper();
 
   function handleSelectMonth() {
     swiper.slideTo(index);
   }
 
+  if (isLoading) {
+    return (
+      <Skeleton className="h-12 w-full rounded-full bg-gray-3 after:via-white/40" />
+    );
+  }
+
   return (
     <Button
-      className={cn('w-full', isActive && 'bg-white hover:bg-white/80')}
+      className={cn('w-full bg-transparent', isActive && 'bg-white')}
       onClick={handleSelectMonth}
       radius="pill"
-      variant="secondary"
+      variant="none"
     >
       {item}
     </Button>

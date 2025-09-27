@@ -1,12 +1,16 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { AuthGuard } from './AuthGuard';
-import { privateRoutes } from './privateRoutes';
-import { publicRoutes } from './publicRoutes';
 
 // Layouts
 const AuthLayout = lazy(() => import('@/shared/components/layouts/AuthLayout'));
 const AppLayout = lazy(() => import('@/shared/components/layouts/AppLayout'));
+
+// Pages
+const DashboardPage = lazy(() => import('../pages/Dashboard'));
+
+const LoginPage = lazy(() => import('../pages/Login'));
+const RegisterPage = lazy(() => import('../pages/Register'));
 
 export function Router() {
   return (
@@ -15,18 +19,15 @@ export function Router() {
         {/* Public Routes */}
         <Route element={<AuthGuard isPrivate={false} />}>
           <Route element={<AuthLayout />}>
-            {publicRoutes.map(item => (
-              <Route key={item.path} {...item} />
-            ))}
+            <Route element={<LoginPage />} path="/login" />
+            <Route element={<RegisterPage />} path="/register" />
           </Route>
         </Route>
 
         {/* Private Routes */}
         <Route element={<AuthGuard isPrivate />}>
           <Route element={<AppLayout />}>
-            {privateRoutes.map(item => (
-              <Route key={item.path} {...item} />
-            ))}
+            <Route element={<DashboardPage />} path="/" />
           </Route>
         </Route>
       </Routes>

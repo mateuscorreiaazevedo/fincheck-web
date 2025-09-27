@@ -1,4 +1,4 @@
-import { ErrorUI } from './ui';
+import { FieldError } from './ui';
 
 interface ErrorMessageProps {
   error: Error | null;
@@ -10,5 +10,5 @@ export function ErrorMessage({ error, className }: ErrorMessageProps) {
     return null;
   }
 
-  return <ErrorUI className={className} error={error.message} />;
+  return <FieldError className={className} error={error.message} />;
 }
