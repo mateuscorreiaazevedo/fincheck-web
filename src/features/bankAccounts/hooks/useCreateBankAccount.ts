@@ -11,7 +11,8 @@ export function useCreateBankAccount() {
     mutationFn: async (data: HttpCreateBankAccountRequest) => {
       await bankAccountsService.create(data);
     },
-    onSuccess: () => {
+    onSuccess: (_, { name }) => {
+      toast.success(`A conta ${name} foi cadastrada com sucesso!`);
       queryClient.invalidateQueries({
         queryKey: bankAccountsQueryKeys.getBankAccounts(),
       });

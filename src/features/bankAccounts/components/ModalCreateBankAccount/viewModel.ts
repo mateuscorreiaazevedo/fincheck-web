@@ -20,7 +20,7 @@ type CreateBankAccountSchema = z.infer<typeof schema>;
 export function useModalCreateBankAccountViewModel() {
   const visibility = useVisibilityModalCreateBankAccountStore();
   const { handleCreateBankAccount, isPending } = useCreateBankAccount();
-  const { control, register, formState, handleSubmit } =
+  const { control, register, formState, handleSubmit, reset } =
     useForm<CreateBankAccountSchema>({
       resolver: zodResolver(schema),
       defaultValues: {
@@ -39,6 +39,7 @@ export function useModalCreateBankAccountViewModel() {
       {
         onSuccess() {
           visibility.setVisibility(false);
+          reset();
         },
       }
     );
