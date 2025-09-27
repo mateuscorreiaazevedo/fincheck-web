@@ -10,6 +10,8 @@ export function useListTransactionsViewModel() {
     isEnd: false,
   });
 
+  const currentMonth = new Date().getMonth();
+
   const { setVisibility } = useVisibleTransactionFiltersStore();
 
   const { data: transactions, isLoading: isInitialLoading } =
@@ -37,5 +39,6 @@ export function useListTransactionsViewModel() {
     hasTransactions,
     isLoading: isInitialLoading || loading,
     handleOpenModalFilters,
+    currentMonth,
   };
 }

@@ -15,12 +15,14 @@ export function ListTransactions() {
     isLoading,
     hasTransactions,
     handleOpenModalFilters,
+    currentMonth,
   } = useListTransactionsViewModel();
 
   return (
     <>
       <ContentView className="flex flex-col bg-gray-1">
         <ListTransactionsHeader
+          currentSlider={currentMonth}
           isLoading={isInitialLoading}
           onChangeSliderState={onChangeSliderState}
           onOpenModalFilters={handleOpenModalFilters}

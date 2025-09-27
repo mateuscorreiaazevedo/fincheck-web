@@ -17,6 +17,7 @@ interface IHeaderProps {
   onChangeSliderState: (swiper: SwiperType) => void;
   isLoading?: boolean;
   onOpenModalFilters(): void;
+  currentSlider: number;
 }
 
 export function ListTransactionsHeader({
@@ -24,6 +25,7 @@ export function ListTransactionsHeader({
   sliderState,
   isLoading = false,
   onOpenModalFilters,
+  currentSlider,
 }: IHeaderProps) {
   return (
     <header>
@@ -52,6 +54,7 @@ export function ListTransactionsHeader({
       <div className="relative mt-6">
         <Swiper
           centeredSlides
+          initialSlide={currentSlider}
           onSlideChange={onChangeSliderState}
           slidesPerView={3}
           spaceBetween={16}
