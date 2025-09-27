@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Swiper } from 'swiper/types';
 import { type ISliderStateType, numberKeys } from '@/shared';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
@@ -27,12 +27,23 @@ export function useBankAccountsResumeViewModel() {
   }
 
   const isMobileDisplay = windowWidth <= numberKeys.MAX_MOBILE_DISPLAY;
+  const hasBankAccounts = !!bankAccounts?.length;
+
+  const totalBalance = useMemo(() => {
+    return (
+      bankAccounts?.reduce((acc, item) => {
+        return acc + item.currentBalanceInCents;
+      }, 0) ?? 0
+    );
+  }, [bankAccounts]);
 
   return {
     sliderState,
     onChangeSliderState,
     isMobileDisplay,
     isLoading,
+    hasBankAccounts,
+    totalBalance,
     bankAccounts,
     handleOpenModalCreateBankAccount,
   };
