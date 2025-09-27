@@ -8,7 +8,7 @@ export function useGetBankAccounts() {
     queryFn: async () => {
       await sleep();
 
-      return [];
+      return [2];
     },
   });
 
