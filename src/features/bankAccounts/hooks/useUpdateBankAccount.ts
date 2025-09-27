@@ -2,17 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { bankAccountsQueryKeys } from '../constants/bankAccountsQueryKeys';
 import { bankAccountsService } from '../services/httpBankAccountsService';
-import type { HttpCreateAndUpdateBankAccountRequest } from '../types/HttpCreateAndUpdateBankAccountRequest';
+import type { HttpUpdateBankAccountRequest } from '../types/HttpUpdateBankAccountRequest';
 
-export function useCreateBankAccount() {
+export function useUpdateBankAccount() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: HttpCreateAndUpdateBankAccountRequest) => {
-      await bankAccountsService.create(data);
+    mutationFn: async (data: HttpUpdateBankAccountRequest) => {
+      await bankAccountsService.update(data);
     },
-    onSuccess: (_, { name }) => {
-      toast.success(`A conta ${name} foi cadastrada com sucesso!`);
+    onSuccess: (_, { body: { name } }) => {
+      toast.success(`A conta ${name} foi atualizada com sucesso!`);
       queryClient.invalidateQueries({
         queryKey: bankAccountsQueryKeys.getBankAccounts(),
       });
@@ -23,7 +23,7 @@ export function useCreateBankAccount() {
   });
 
   return {
-    handleCreateBankAccount: mutateAsync,
+    handleUpdateBankAccount: mutateAsync,
     isPending,
   };
 }

@@ -2,10 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { transformCurrencyString } from '@/shared';
+import { useUpdateBankAccount } from '../../hooks/useUpdateBankAccount';
 import { useVisibilityModalEditBankAccountStore } from '../../hooks/useVisibilityModalEditBankAccountStore';
 
 const schema = z.object({
-  initialBalanceInCents: z.string('Saldo inicial é obrigatório'),
+  initialBalanceInCents: z.union(
+    [z.string(), z.number()],
+    'Saldo inicial é obrigatório'
+  ),
   name: z.string().min(1, 'Nome da conta bancária é obritagório.'),
   accountType: z.enum(
     ['CHECKING', 'INVESTMENT', 'CASH'],
@@ -20,21 +25,17 @@ export function useModalEditBankAccountViewModel() {
   const { bankAccount, visible, setVisibility } =
     useVisibilityModalEditBankAccountStore();
 
-  const { control, register, formState, handleSubmit } =
+  const { handleUpdateBankAccount, isPending } = useUpdateBankAccount();
+  const { control, register, formState, handleSubmit, reset } =
     useForm<CreateBankAccountSchema>({
       resolver: zodResolver(schema),
       defaultValues: {
-        initialBalanceInCents: bankAccount?.initialBalanceInCents.toString(),
+        initialBalanceInCents: bankAccount?.initialBalanceInCents,
         accountType: bankAccount?.accountType,
         color: bankAccount?.color,
         name: bankAccount?.name,
       },
     });
-
-  const onSubmit = handleSubmit(data => {
-    // biome-ignore lint/suspicious/noConsole: for test
-    console.log(data);
-  });
 
   const handleCloseModalEditBankAccount = useCallback(() => {
     setVisibility({
@@ -42,6 +43,26 @@ export function useModalEditBankAccountViewModel() {
       visible: false,
     });
   }, []);
+
+  const onSubmit = handleSubmit(async data => {
+    await handleUpdateBankAccount(
+      {
+        bankAccountId: bankAccount?.id,
+        body: {
+          ...data,
+          initialBalanceInCents: transformCurrencyString(
+            data.initialBalanceInCents
+          ),
+        },
+      },
+      {
+        onSuccess() {
+          reset();
+          handleCloseModalEditBankAccount();
+        },
+      }
+    );
+  });
 
   return {
     bankAccount,
@@ -51,6 +72,6 @@ export function useModalEditBankAccountViewModel() {
     fieldErrors: formState.errors,
     onSubmit,
     handleCloseModalEditBankAccount,
-    isPending: false,
+    isPending,
   };
 }

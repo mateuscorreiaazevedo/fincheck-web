@@ -2,6 +2,7 @@ import { HttpClientService } from '@/core/services/HttpClientService';
 import { httpResponseHandler } from '@/shared';
 import type { BankAccount } from '../types/BankAccount';
 import type { HttpCreateBankAccountRequest } from '../types/HttpCreateBankAccountRequest';
+import type { HttpUpdateBankAccountRequest } from '../types/HttpUpdateBankAccountRequest';
 
 class HttpBankAccountsService extends HttpClientService {
   async create(body: HttpCreateBankAccountRequest): Promise<void> {
@@ -21,6 +22,19 @@ class HttpBankAccountsService extends HttpClientService {
     });
 
     return httpResponseHandler(response);
+  }
+
+  async update({
+    body,
+    bankAccountId,
+  }: HttpUpdateBankAccountRequest): Promise<void> {
+    const response = await this.request({
+      url: `/bank-accounts/${bankAccountId}`,
+      method: 'PUT',
+      body,
+    });
+
+    httpResponseHandler(response);
   }
 }
 
