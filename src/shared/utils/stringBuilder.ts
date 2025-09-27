@@ -37,7 +37,7 @@ export class StringBuilder {
 
     this.value = words
       .map(item => {
-        const firstLetter = item[0];
+        const firstLetter = item.charAt(0);
         const restOfWord = item.slice(1);
 
         return `${firstLetter.toUpperCase()}${restOfWord.toLowerCase()}`;

@@ -24,7 +24,8 @@ export default {
       },
       spacing: {
         'full-content': 'calc(100% - 64px)',
-        'trigger': 'var(--radix-dropdown-menu-trigger-width)'
+        'trigger-dropdown': 'var(--radix-dropdown-menu-trigger-width)',
+        'trigger-popover': 'var(--radix-popover-trigger-width)'
       },
       keyframes: {
 				slideDownAndFade: {
@@ -73,4 +74,3 @@ export default {
   },
   plugins: [],
 }
-
