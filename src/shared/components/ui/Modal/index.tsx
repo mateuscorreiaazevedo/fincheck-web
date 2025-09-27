@@ -13,6 +13,7 @@ interface ModalProps {
   title: string;
   rightIcon?: ComponentType<IconProps>;
   rightIconAction?: VoidFunction;
+  noOverlay?: boolean;
 }
 
 function Modal({
@@ -22,16 +23,19 @@ function Modal({
   title,
   rightIcon: RightIcon,
   rightIconAction,
+  noOverlay = false,
 }: ModalProps) {
   return (
     <Dialog.Root onOpenChange={onChangeOpen} open={open}>
       <Dialog.Portal>
-        <Dialog.Overlay
-          className={cn(
-            'fixed inset-0 z-40 bg-black/80 backdrop-blur-sm',
-            'data-[state=open]:animate-overlayShow'
-          )}
-        />
+        {!noOverlay && (
+          <Dialog.Overlay
+            className={cn(
+              'fixed inset-0 z-40 bg-black/80 backdrop-blur-sm',
+              'data-[state=open]:animate-overlayShow'
+            )}
+          />
+        )}
         <Dialog.Content
           className={cn(
             '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 outline-none',
@@ -67,5 +71,7 @@ function Modal({
 }
 
 Modal.Content = ModalContent;
+
+Modal.Close = Dialog.Close;
 
 export { Modal };

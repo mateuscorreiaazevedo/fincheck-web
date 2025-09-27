@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { transformCurrencyString } from '@/shared';
@@ -24,7 +24,8 @@ type CreateBankAccountSchema = z.infer<typeof schema>;
 export function useModalEditBankAccountViewModel() {
   const { bankAccount, visible, setVisibility } =
     useVisibilityModalEditBankAccountStore();
-
+  const [isOpenModalDeleteBankAccount, setIsOpenModalDeleteBankAccount] =
+    useState(false);
   const { handleUpdateBankAccount, isPending } = useUpdateBankAccount();
   const { control, register, formState, handleSubmit, reset } =
     useForm<CreateBankAccountSchema>({
@@ -64,6 +65,22 @@ export function useModalEditBankAccountViewModel() {
     );
   });
 
+  const handleOpenModalDelete = useCallback(() => {
+    setIsOpenModalDeleteBankAccount(true);
+    setVisibility({
+      bankAccount,
+      visible: false,
+    });
+  }, []);
+
+  const handleCloseModalDelete = useCallback(() => {
+    setIsOpenModalDeleteBankAccount(false);
+    setVisibility({
+      bankAccount,
+      visible: true,
+    });
+  }, []);
+
   return {
     bankAccount,
     visible,
@@ -71,7 +88,10 @@ export function useModalEditBankAccountViewModel() {
     register,
     fieldErrors: formState.errors,
     onSubmit,
-    handleCloseModalEditBankAccount,
     isPending,
+    handleCloseModalEditBankAccount,
+    isOpenModalDeleteBankAccount,
+    handleOpenModalDelete,
+    handleCloseModalDelete,
   };
 }

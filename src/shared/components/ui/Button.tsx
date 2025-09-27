@@ -7,6 +7,8 @@ const buttonVariants = tv({
   variants: {
     variant: {
       none: 'bg-transparent',
+      danger:
+        'bg-red-9 font-medium text-white outline-red-7 active:bg-red-8 enabled:hover:bg-red-7',
       default:
         'bg-teal-8 font-medium text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-7',
       ghostGray:
