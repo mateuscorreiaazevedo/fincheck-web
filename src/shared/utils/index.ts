@@ -1,6 +1,7 @@
 export * from './cn';
 export * from './DateHelper';
 export * from './formatCurrencyHelper';
+export * from './handleListOptions';
 export * from './httpResponseHandler';
 export * from './sleep';
 export * from './storageUtil';
