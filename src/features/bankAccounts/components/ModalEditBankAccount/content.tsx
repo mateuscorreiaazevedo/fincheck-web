@@ -25,6 +25,8 @@ export function ModalEditBankAccountContent() {
     handleCloseModalDelete,
     handleOpenModalDelete,
     isOpenModalDeleteBankAccount,
+    isDeleting,
+    onDeleteBankAccount,
   } = useModalEditBankAccountViewModel();
 
   if (!bankAccount) {
@@ -34,6 +36,7 @@ export function ModalEditBankAccountContent() {
   return (
     <>
       <Modal
+        noContent={isOpenModalDeleteBankAccount}
         onChangeOpen={handleCloseModalEditBankAccount}
         open={visible && !!bankAccount}
         rightIcon={() => <TrashIcon className="text-red-9" />}
@@ -98,8 +101,9 @@ export function ModalEditBankAccountContent() {
       <ModalDeleteItem
         caption="Ao excluir a conta, também serão excluídos todos os registros de receitas e despesas relacionados."
         description="Tem certeza que deseja exluir esta conta?"
+        isPending={isDeleting}
         onClose={handleCloseModalDelete}
-        onSubmit={() => alert('olá')}
+        onSubmit={onDeleteBankAccount}
         open={isOpenModalDeleteBankAccount}
       />
     </>

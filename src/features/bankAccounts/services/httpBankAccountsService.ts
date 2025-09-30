@@ -2,6 +2,7 @@ import { HttpClientService } from '@/core/services/HttpClientService';
 import { httpResponseHandler } from '@/shared';
 import type { BankAccount } from '../types/BankAccount';
 import type { HttpCreateBankAccountRequest } from '../types/HttpCreateBankAccountRequest';
+import type { HttpDeleteBankAccountRequest } from '../types/HttpDeleteBankAccountRequest';
 import type { HttpUpdateBankAccountRequest } from '../types/HttpUpdateBankAccountRequest';
 
 class HttpBankAccountsService extends HttpClientService {
@@ -32,6 +33,15 @@ class HttpBankAccountsService extends HttpClientService {
       url: `/bank-accounts/${bankAccountId}`,
       method: 'PUT',
       body,
+    });
+
+    httpResponseHandler(response);
+  }
+
+  async delete({ bankAccountId }: HttpDeleteBankAccountRequest): Promise<void> {
+    const response = await this.request({
+      url: `/bank-accounts/${bankAccountId}`,
+      method: 'DELETE',
     });
 
     httpResponseHandler(response);

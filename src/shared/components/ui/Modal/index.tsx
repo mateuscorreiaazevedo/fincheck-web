@@ -14,6 +14,7 @@ interface ModalProps {
   rightIcon?: ComponentType<IconProps>;
   rightIconAction?: VoidFunction;
   noOverlay?: boolean;
+  noContent?: boolean;
 }
 
 function Modal({
@@ -24,6 +25,7 @@ function Modal({
   rightIcon: RightIcon,
   rightIconAction,
   noOverlay = false,
+  noContent = false,
 }: ModalProps) {
   return (
     <Dialog.Root onOpenChange={onChangeOpen} open={open}>
@@ -36,35 +38,37 @@ function Modal({
             )}
           />
         )}
-        <Dialog.Content
-          className={cn(
-            '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 outline-none',
-            'data-[state=open]:animate-contentShow',
-            'w-full max-w-[400px] space-y-10 rounded-2xl bg-white p-6 shadow-default'
-          )}
-        >
-          <header className="flex h-12 items-center justify-between text-gray-8">
-            <Dialog.Close className="flex size-12 items-center justify-center outline-none">
-              <CrossIcon />
-            </Dialog.Close>
-            <Dialog.Title asChild>
-              <h3 className="font-bold text-lg tracking-[-1px]">{title}</h3>
-            </Dialog.Title>
-            <button
-              className={cn(
-                'flex size-12 cursor-default items-center justify-center outline-none',
-                !!rightIconAction &&
-                  'cursor-pointer rounded-2xl transition-colors hover:bg-gray-1 focus:outline focus:outline-teal-9'
-              )}
-              onClick={rightIconAction}
-              type="button"
-            >
-              {RightIcon && <RightIcon />}
-            </button>
-          </header>
+        {!noContent && (
+          <Dialog.Content
+            className={cn(
+              '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 outline-none',
+              'data-[state=open]:animate-contentShow',
+              'w-full max-w-[400px] space-y-10 rounded-2xl bg-white p-6 shadow-default'
+            )}
+          >
+            <header className="flex h-12 items-center justify-between text-gray-8">
+              <Dialog.Close className="flex size-12 items-center justify-center outline-none">
+                <CrossIcon />
+              </Dialog.Close>
+              <Dialog.Title asChild>
+                <h3 className="font-bold text-lg tracking-[-1px]">{title}</h3>
+              </Dialog.Title>
+              <button
+                className={cn(
+                  'flex size-12 cursor-default items-center justify-center outline-none',
+                  !!rightIconAction &&
+                    'cursor-pointer rounded-2xl transition-colors hover:bg-gray-1 focus:outline focus:outline-teal-9'
+                )}
+                onClick={rightIconAction}
+                type="button"
+              >
+                {RightIcon && <RightIcon />}
+              </button>
+            </header>
 
-          {children}
-        </Dialog.Content>
+            {children}
+          </Dialog.Content>
+        )}
       </Dialog.Portal>
     </Dialog.Root>
   );

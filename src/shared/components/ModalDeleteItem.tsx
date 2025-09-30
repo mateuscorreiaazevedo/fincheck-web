@@ -4,6 +4,7 @@ interface Props {
   open: boolean;
   onClose(): void;
   onSubmit(): void;
+  isPending?: boolean;
   description: string;
   caption?: string;
 }
@@ -14,9 +15,10 @@ export function ModalDeleteItem({
   onSubmit,
   open,
   caption,
+  isPending,
 }: Props) {
   return (
-    <Modal onChangeOpen={onClose} open={open} title="Excluir">
+    <Modal noOverlay onChangeOpen={onClose} open={open} title="Excluir">
       <main className="flex flex-col items-center justify-center gap-6">
         <RoundedIcon className="bg-red-0">
           <TrashIcon className="text-red-9" />
@@ -31,7 +33,12 @@ export function ModalDeleteItem({
         )}
       </main>
       <footer className="flex flex-col gap-4">
-        <Button onClick={onSubmit} variant="danger">
+        <Button
+          isLoading={isPending}
+          isLoadingLabel="Excluindo..."
+          onClick={onSubmit}
+          variant="danger"
+        >
           Sim, desejo excluir
         </Button>
         <Modal.Close asChild>

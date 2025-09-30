@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { transformCurrencyString } from '@/shared';
+import { useDeleteBankAccount } from '../../hooks/useDeleteBankAccount';
 import { useUpdateBankAccount } from '../../hooks/useUpdateBankAccount';
 import { useVisibilityModalEditBankAccountStore } from '../../hooks/useVisibilityModalEditBankAccountStore';
 
@@ -27,6 +28,9 @@ export function useModalEditBankAccountViewModel() {
   const [isOpenModalDeleteBankAccount, setIsOpenModalDeleteBankAccount] =
     useState(false);
   const { handleUpdateBankAccount, isPending } = useUpdateBankAccount();
+  const { handleDeleteBankAccount, isPending: isDeleting } =
+    useDeleteBankAccount();
+
   const { control, register, formState, handleSubmit, reset } =
     useForm<CreateBankAccountSchema>({
       resolver: zodResolver(schema),
@@ -67,19 +71,23 @@ export function useModalEditBankAccountViewModel() {
 
   const handleOpenModalDelete = useCallback(() => {
     setIsOpenModalDeleteBankAccount(true);
-    setVisibility({
-      bankAccount,
-      visible: false,
-    });
   }, []);
 
   const handleCloseModalDelete = useCallback(() => {
     setIsOpenModalDeleteBankAccount(false);
-    setVisibility({
-      bankAccount,
-      visible: true,
-    });
   }, []);
+
+  async function onDeleteBankAccount() {
+    await handleDeleteBankAccount(
+      { bankAccountId: bankAccount?.id },
+      {
+        onSuccess() {
+          handleCloseModalDelete();
+          handleCloseModalEditBankAccount();
+        },
+      }
+    );
+  }
 
   return {
     bankAccount,
@@ -93,5 +101,7 @@ export function useModalEditBankAccountViewModel() {
     isOpenModalDeleteBankAccount,
     handleOpenModalDelete,
     handleCloseModalDelete,
+    isDeleting,
+    onDeleteBankAccount,
   };
 }
