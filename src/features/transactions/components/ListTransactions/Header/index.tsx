@@ -6,11 +6,11 @@ import {
   type ISliderStateType,
   LoadingSkeleton,
 } from '@/shared';
-import { generateDateKey } from '../../utils/generateDateKey';
-import { listMonths } from '../../utils/listMonths';
-import { SliderItem } from '../SliderItem';
-import { SliderNavigation } from '../SliderNavigation';
-import { TransactionTypeDropdown } from '../TransactionTypeDropdown';
+import { generateDateKey } from '../../../utils/generateDateKey';
+import { listMonths } from '../../../utils/listMonths';
+import { TransactionTypeDropdown } from '../../TransactionTypeDropdown';
+import { SliderItem } from './SliderItem';
+import { SliderNavigation } from './SliderNavigation';
 
 interface IHeaderProps {
   sliderState: ISliderStateType;

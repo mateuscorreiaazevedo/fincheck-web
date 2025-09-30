@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ContentView } from '@/shared';
 import { bankAccountsSliderConstants } from '../../constants/bankAccountsSliderConstants';
-import { BankAccountCard } from '../BankAccountCard';
-import { BankAccountsSliderNavigation } from '../BankAccountsSliderNavigation';
+import { BankAccountCard } from './BankAccountCard';
+import { BankAccountsSliderNavigation } from './BankAccountsSliderNavigation';
 import { ButtonOpenModalCreateBankAccount } from './ButtonOpenModalCreateBankAccount';
 import { BankAccountsResumeEmptyState } from './EmptyState';
 import { BankAccountsResumeHeader } from './ResumeHeader';

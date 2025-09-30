@@ -4,8 +4,8 @@ import {
   RoundedIcon,
   VisibilityToggleContent,
 } from '@/shared';
-import { useVisibilityModalEditBankAccountStore } from '../hooks/useVisibilityModalEditBankAccountStore';
-import type { BankAccount } from '../types/BankAccount';
+import { useVisibilityModalEditBankAccountStore } from '../../../hooks/useVisibilityModalEditBankAccountStore';
+import type { BankAccount } from '../../../types/BankAccount';
 import { BankAccountCardIcon } from './BankAccountCardIcon';
 
 export function BankAccountCard(bankAccount: BankAccount) {

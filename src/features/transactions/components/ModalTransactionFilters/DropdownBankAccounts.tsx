@@ -3,7 +3,7 @@ import type { BankAccount } from '@/features/bankAccounts';
 import { BottomIcon, cn, DropdownMenu } from '@/shared';
 
 interface Props {
-  data: BankAccount[];
+  data?: BankAccount[];
   onSelect(value: string): void;
   value: string | null;
 }
@@ -29,7 +29,7 @@ export function DropdownBankAccounts({ data, onSelect, value }: Props) {
         <BottomIcon className="-translate-y-1/2 absolute top-1/2 right-3" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="z-50 w-trigger-dropdown bg-opacity-80 p-2 backdrop-blur-sm">
-        {data.map(item => (
+        {data?.map(item => (
           <DropdownMenu.Item
             className={cn(
               'w-full rounded-xl p-2 text-left text-gray-8 transition-colors hover:bg-gray-1',

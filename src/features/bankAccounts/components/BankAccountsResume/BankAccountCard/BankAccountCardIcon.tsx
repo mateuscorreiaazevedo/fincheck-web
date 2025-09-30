@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import { CardIcon, CashIcon, type IconProps, MixerIcon } from '@/shared';
-import type { BankAccountType } from '../types/BankAccountType';
+import type { BankAccountType } from '../../../types/BankAccountType';
 
 interface IBankAccountCardIconProps extends IconProps {
   type: BankAccountType;
