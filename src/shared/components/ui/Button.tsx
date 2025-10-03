@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import { type ComponentProps, memo } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { Spinner } from './Spinner';
 
@@ -42,18 +42,18 @@ type ButtonProps = ComponentProps<'button'> &
     isLoadingLabel?: string;
   };
 
-export function Button({
-  className,
-  variant,
-  size,
-  radius,
-  disabled,
-  isLoading,
-  children,
-  isLoadingLabel,
-  ...props
-}: ButtonProps) {
-  return (
+export const Button = memo(
+  ({
+    className,
+    variant,
+    size,
+    radius,
+    disabled,
+    isLoading,
+    children,
+    isLoadingLabel,
+    ...props
+  }: ButtonProps) => (
     <button
       {...props}
       className={buttonVariants({ size, className, variant, radius })}
@@ -70,5 +70,5 @@ export function Button({
       )}
       {!isLoading && children}
     </button>
-  );
-}
+  )
+);
