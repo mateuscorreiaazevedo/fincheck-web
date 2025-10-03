@@ -1,5 +1,6 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import { SplashScreen } from '@/shared';
 import { AuthGuard } from './AuthGuard';
 
 // Layouts
@@ -15,22 +16,24 @@ const RegisterPage = lazy(() => import('../pages/Register'));
 export function Router() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route element={<AuthGuard isPrivate={false} />}>
-          <Route element={<AuthLayout />}>
-            <Route element={<LoginPage />} path="/login" />
-            <Route element={<RegisterPage />} path="/register" />
+      <Suspense fallback={<SplashScreen />}>
+        <Routes>
+          {/* Public Routes */}
+          <Route element={<AuthGuard isPrivate={false} />}>
+            <Route element={<AuthLayout />}>
+              <Route element={<LoginPage />} path="/login" />
+              <Route element={<RegisterPage />} path="/register" />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Private Routes */}
-        <Route element={<AuthGuard isPrivate />}>
-          <Route element={<AppLayout />}>
-            <Route element={<DashboardPage />} path="/" />
+          {/* Private Routes */}
+          <Route element={<AuthGuard isPrivate />}>
+            <Route element={<AppLayout />}>
+              <Route element={<DashboardPage />} path="/" />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
