@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { Swiper } from 'swiper/types';
 import { type ISliderStateType, numberKeys } from '@/shared';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
@@ -22,9 +22,9 @@ export function useBankAccountsResumeViewModel() {
     });
   }
 
-  function handleOpenModalCreateBankAccount() {
+  const handleOpenModalCreateBankAccount = useCallback(() => {
     setVisibility(true);
-  }
+  }, []);
 
   const isMobileDisplay = windowWidth <= numberKeys.MAX_MOBILE_DISPLAY;
   const hasBankAccounts = !!bankAccounts?.length;

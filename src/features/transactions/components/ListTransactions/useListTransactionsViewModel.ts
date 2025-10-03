@@ -24,7 +24,7 @@ export function useListTransactionsViewModel() {
     });
   }
 
-  const hasTransactions = !!transactions?.length && transactions.length > 0;
+  const hasTransactions = !!transactions?.length;
   const loading = false;
 
   function handleOpenModalFilters() {
