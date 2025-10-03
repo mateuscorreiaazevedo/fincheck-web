@@ -32,6 +32,7 @@ function Modal({
       <Dialog.Portal>
         {!noOverlay && (
           <Dialog.Overlay
+            aria-hidden="true"
             className={cn(
               'fixed inset-0 z-40 bg-black/80 backdrop-blur-sm',
               'data-[state=open]:animate-overlayShow'
@@ -40,18 +41,26 @@ function Modal({
         )}
         {!noContent && (
           <Dialog.Content
+            aria-label={title}
+            aria-modal="true"
             className={cn(
               '-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 outline-none',
               'data-[state=open]:animate-contentShow',
               'w-full max-w-[400px] space-y-10 rounded-2xl bg-white p-6 shadow-default'
             )}
+            role="dialog"
           >
             <header className="flex h-12 items-center justify-between text-gray-8">
               <Dialog.Close className="flex size-12 items-center justify-center outline-none">
                 <CrossIcon />
               </Dialog.Close>
               <Dialog.Title asChild>
-                <h3 className="font-bold text-lg tracking-[-1px]">{title}</h3>
+                <h3
+                  className="font-bold text-lg tracking-[-1px]"
+                  id="modal-title"
+                >
+                  {title}
+                </h3>
               </Dialog.Title>
               <button
                 className={cn(
@@ -75,6 +84,8 @@ function Modal({
 }
 
 Modal.Content = ModalContent;
+
+Modal.Close = Dialog.Close;
 
 Modal.Close = Dialog.Close;
 

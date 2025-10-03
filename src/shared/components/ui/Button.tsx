@@ -56,8 +56,11 @@ export const Button = memo(
   }: ButtonProps) => (
     <button
       {...props}
+      aria-busy={isLoading}
+      aria-disabled={isLoading || disabled}
       className={buttonVariants({ size, className, variant, radius })}
       disabled={isLoading || disabled}
+      type={props.type || 'button'}
     >
       {isLoading && (
         <>

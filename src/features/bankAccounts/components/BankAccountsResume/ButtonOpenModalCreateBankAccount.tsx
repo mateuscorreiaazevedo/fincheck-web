@@ -11,6 +11,7 @@ export function ButtonOpenModalCreateBankAccount({
 }: ButtonOpenModalCreateBankAccountProps) {
   return (
     <button
+      aria-label="Cadastrar nova conta bancária"
       className={cn(
         'flex h-[200px] flex-col items-center justify-center gap-4 rounded-2xl border-2 border-teal-6 border-dashed text-white',
         isSlider && 'w-full'

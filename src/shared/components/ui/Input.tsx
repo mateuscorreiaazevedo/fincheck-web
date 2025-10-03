@@ -26,6 +26,8 @@ export const Input = memo(
           <input
             data-error={!!error}
             {...props}
+            aria-describedby={error ? `${inputId}-error` : undefined}
+            aria-invalid={!!error}
             className={cn(
               'peer h-[52px] w-full rounded-lg border border-gray-5 bg-white px-3 pt-4 font-normal text-gray-8 outline-none transition-colors focus:border-gray-8',
               !!error && '!border-red-9 bg-red-0',
