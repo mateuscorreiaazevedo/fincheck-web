@@ -9,7 +9,8 @@ import {
 import { useModalCreateTransactionViewModel } from './viewModel';
 
 export function ModalCreateTransaction() {
-  const { onClose, type, visible } = useModalCreateTransactionViewModel();
+  const { onClose, type, visible, categories } =
+    useModalCreateTransactionViewModel();
 
   const isExpense = type === 'EXPENSE';
 
@@ -34,7 +35,13 @@ export function ModalCreateTransaction() {
             name="name"
             placeholder={isExpense ? 'Nome da despesa' : 'Nome da receita'}
           />
-          <Select options={[]} placeholder="Categoria" />
+          <Select
+            classNames={{
+              content: 'max-h-48 overflow-y-auto',
+            }}
+            options={categories}
+            placeholder="Categoria"
+          />
           <Select
             options={[]}
             placeholder={isExpense ? 'Pagar com' : 'Receber com'}

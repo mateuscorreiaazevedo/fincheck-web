@@ -12,10 +12,10 @@ export function handleListOptions<T = unknown>({
   data,
   keys,
 }: IHandleListOptions<T>): SelectOption[] {
-  return (
-    data?.map(item => ({
-      label: item[keys.label] as string,
-      value: item[keys.value] as string,
-    })) ?? []
-  );
+  return data?.length
+    ? data.map(item => ({
+        label: item[keys.label] as string,
+        value: item[keys.value] as string,
+      }))
+    : [];
 }
