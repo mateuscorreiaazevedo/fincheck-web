@@ -8,5 +8,5 @@ export interface BankAccount {
   accountType: BankAccountType;
   color: string;
   createdAt: string;
-  currentBalanceInCents: number;
+  currentBalanceInCents?: number;
 }

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { bankAccountsQueryKeys } from '../constants/bankAccountsQueryKeys';
 import { bankAccountsService } from '../services/httpBankAccountsService';
+import type { BankAccount } from '../types/BankAccount';
 import type { HttpDeleteBankAccountRequest } from '../types/HttpDeleteBankAccountRequest';
 
 export function useDeleteBankAccount() {
@@ -11,11 +12,14 @@ export function useDeleteBankAccount() {
     mutationFn: async (data: HttpDeleteBankAccountRequest) => {
       await bankAccountsService.delete(data);
     },
-    onSuccess: () => {
+    onSuccess: (_, { bankAccountId }) => {
       toast.success('Sua conta bancária foi excluída com sucesso!');
-      queryClient.invalidateQueries({
-        queryKey: bankAccountsQueryKeys.getBankAccounts(),
-      });
+      queryClient.setQueryData<BankAccount[]>(
+        bankAccountsQueryKeys.getBankAccounts(),
+        oldData => {
+          return oldData?.filter(account => account.id !== bankAccountId);
+        }
+      );
     },
     onError(error) {
       toast.error(error.message);

@@ -6,14 +6,14 @@ import type { HttpDeleteBankAccountRequest } from '../types/HttpDeleteBankAccoun
 import type { HttpUpdateBankAccountRequest } from '../types/HttpUpdateBankAccountRequest';
 
 class HttpBankAccountsService extends HttpClientService {
-  async create(body: HttpCreateBankAccountRequest): Promise<void> {
-    const response = await this.request({
+  async create(body: HttpCreateBankAccountRequest): Promise<BankAccount> {
+    const response = await this.request<BankAccount>({
       url: '/bank-accounts',
       method: 'POST',
       body,
     });
 
-    httpResponseHandler(response);
+    return httpResponseHandler(response);
   }
 
   async list(): Promise<BankAccount[]> {
