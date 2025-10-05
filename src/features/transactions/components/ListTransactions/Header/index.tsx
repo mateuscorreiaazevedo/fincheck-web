@@ -18,6 +18,7 @@ interface IHeaderProps {
   isLoading?: boolean;
   onOpenModalFilters(): void;
   currentSlider: number;
+  onSelectMonth?(month: number): void;
 }
 
 export function ListTransactionsHeader({
@@ -26,6 +27,7 @@ export function ListTransactionsHeader({
   isLoading = false,
   onOpenModalFilters,
   currentSlider,
+  onSelectMonth,
 }: IHeaderProps) {
   return (
     <header>
@@ -68,6 +70,7 @@ export function ListTransactionsHeader({
                   isActive={isActive}
                   isLoading={isLoading}
                   item={item}
+                  onSelectMonth={onSelectMonth}
                 />
               )}
             </SwiperSlide>

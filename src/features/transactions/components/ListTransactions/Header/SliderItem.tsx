@@ -6,6 +6,7 @@ interface SliderItemProps {
   item: string;
   index: number;
   isLoading?: boolean;
+  onSelectMonth?(index: number): void;
 }
 
 export function SliderItem({
@@ -13,11 +14,13 @@ export function SliderItem({
   item,
   index,
   isLoading,
+  onSelectMonth,
 }: SliderItemProps) {
   const swiper = useSwiper();
 
   function handleSelectMonth() {
     swiper.slideTo(index);
+    onSelectMonth?.(index);
   }
 
   if (isLoading) {

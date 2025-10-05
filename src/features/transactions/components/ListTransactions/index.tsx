@@ -16,6 +16,7 @@ export function ListTransactions() {
     hasTransactions,
     handleOpenModalFilters,
     currentMonth,
+    handleSelectMonth,
   } = useListTransactionsViewModel();
 
   return (
@@ -26,6 +27,7 @@ export function ListTransactions() {
           isLoading={isInitialLoading}
           onChangeSliderState={onChangeSliderState}
           onOpenModalFilters={handleOpenModalFilters}
+          onSelectMonth={handleSelectMonth}
           sliderState={sliderState}
         />
 
