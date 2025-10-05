@@ -11,6 +11,9 @@ export function ModalTransactionFilters() {
     handleSelectBankAcccountId,
     handleChangeYear,
     bankAccounts,
+    handleFilterTransactions,
+    handleClearFilters,
+    isClearFilters,
   } = useModalTransactionFiltersViewModel();
 
   return (
@@ -52,7 +55,20 @@ export function ModalTransactionFilters() {
         </div>
       </div>
 
-      <Button className="w-full">Aplicar filtros</Button>
+      <div className="space-y-2">
+        <Button className="w-full" onClick={handleFilterTransactions}>
+          Aplicar filtros
+        </Button>
+        {isClearFilters && (
+          <Button
+            className="w-full"
+            onClick={handleClearFilters}
+            variant="secondary"
+          >
+            Limpar filtros
+          </Button>
+        )}
+      </div>
     </Modal>
   );
 }
