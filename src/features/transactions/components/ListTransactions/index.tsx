@@ -17,6 +17,7 @@ export function ListTransactions() {
     handleOpenModalFilters,
     currentMonth,
     handleSelectMonth,
+    handleOpenModalEditTransaction,
   } = useListTransactionsViewModel();
 
   return (
@@ -44,7 +45,13 @@ export function ListTransactions() {
               {!hasTransactions && <ListTransactionsEmptyState />}
               {hasTransactions &&
                 transactions?.map(transaction => (
-                  <TransactionCard key={transaction.id} {...transaction} />
+                  <TransactionCard
+                    key={transaction.id}
+                    {...transaction}
+                    onOpenEditModal={() =>
+                      handleOpenModalEditTransaction(transaction)
+                    }
+                  />
                 ))}
             </>
           )}

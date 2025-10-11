@@ -6,6 +6,7 @@ import {
 import {
   ListTransactions,
   ModalCreateTransaction,
+  ModalEditTransaction,
 } from '@/features/transactions';
 import { DashboardFab } from './components/Fab';
 
@@ -22,6 +23,7 @@ export default function DashboardPage() {
       <ModalCreateBankAccount />
       <ModalEditBankAccount />
       <ModalCreateTransaction />
+      <ModalEditTransaction />
     </main>
   );
 }

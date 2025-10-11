@@ -8,11 +8,19 @@ import type { IconNames } from '../../../types/IconNames';
 import type { Transaction } from '../../../types/Transaction';
 import { Icon } from './Icon';
 
-export function TransactionCard(transaction: Transaction) {
+interface TransactionCardProps extends Transaction {
+  onOpenEditModal?(): void;
+}
+
+export function TransactionCard(transaction: TransactionCardProps) {
   const sign = transaction.type === 'EXPENSE' ? '-' : '+';
 
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl bg-white p-4">
+    <button
+      className="flex w-full items-center justify-between gap-4 rounded-2xl bg-white p-4"
+      onClick={transaction.onOpenEditModal}
+      type="button"
+    >
       <div className="flex flex-1 gap-4">
         <Icon
           icon={(transaction.icon ?? 'other') as IconNames}
@@ -39,6 +47,6 @@ export function TransactionCard(transaction: Transaction) {
           </span>
         </VisibilityToggleContent>
       </div>
-    </div>
+    </button>
   );
 }

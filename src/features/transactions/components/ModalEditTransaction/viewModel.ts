@@ -10,7 +10,10 @@ import { useVisibilityTransactionModalsStore } from '../../stores/useVisibilityT
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
-  valueInCents: z.string().nonempty('Insira o valor da sua transação'),
+  valueInCents: z.union(
+    [z.string(), z.number()],
+    'Insira o valor da sua transação'
+  ),
   bankAccountId: z.string().nonempty('A conta bancária é obrigatória.'),
   categoryId: z.string().nonempty('A categoria é obrigatória.'),
   date: z.date('A data é obrigatória.'),
@@ -18,8 +21,10 @@ const schema = z.object({
 
 type NewTransactionSchema = z.infer<typeof schema>;
 
-export function useModalCreateTransactionViewModel() {
-  const { create } = useVisibilityTransactionModalsStore();
+export function useModalEditTransactionViewModel() {
+  const {
+    edit: { transaction, ...edit },
+  } = useVisibilityTransactionModalsStore();
   const { data: categories } = useGetCategories();
   const { data: bankAccounts } = useGetBankAccounts();
   const {
@@ -31,21 +36,21 @@ export function useModalCreateTransactionViewModel() {
   } = useForm<NewTransactionSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
-      date: new Date(),
-      valueInCents: '0',
-      name: '',
-      bankAccountId: '',
-      categoryId: '',
+      name: transaction?.name,
+      date: transaction ? new Date(transaction.date) : new Date(),
+      valueInCents: transaction?.valueInCents,
+      bankAccountId: transaction?.bankAccountId,
+      categoryId: transaction?.categoryId,
     },
   });
 
   const { isPending, onCreateTransaction } = useCreateTransaction();
 
-  const isExpense = create.type === 'EXPENSE';
+  const isExpense = transaction?.type === 'EXPENSE';
 
   const onClose = useCallback(() => {
     reset(defaultValues);
-    create.onClose();
+    edit.onClose();
   }, []);
 
   const onSubmit = handleSubmit(async data => {
@@ -54,7 +59,7 @@ export function useModalCreateTransactionViewModel() {
         ...data,
         valueInCents: transformCurrencyString(data.valueInCents),
         date: data.date.toISOString(),
-        type: create.type!,
+        type: transaction?.type ?? 'INCOME',
       },
       {
         onSuccess() {
@@ -66,7 +71,8 @@ export function useModalCreateTransactionViewModel() {
 
   return {
     onClose,
-    visible: create.visible,
+    visible: edit.visible,
+    transaction,
     isExpense,
     onSubmit,
     control,

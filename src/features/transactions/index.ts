@@ -1,6 +1,7 @@
 // Components
 export * from './components/ListTransactions';
 export * from './components/ModalCreateTransaction';
+export * from './components/ModalEditTransaction';
 // Hooks
 export * from './hooks/useTransactionQueries';
 // Stores

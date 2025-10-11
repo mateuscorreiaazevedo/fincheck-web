@@ -6,10 +6,11 @@ import {
   InputCurrency,
   Modal,
   Select,
+  TrashIcon,
 } from '@/shared';
-import { useModalCreateTransactionViewModel } from './viewModel';
+import { useModalEditTransactionViewModel } from './viewModel';
 
-export function ModalCreateTransaction() {
+export function ModalEditTransactionContent() {
   const {
     onClose,
     isExpense,
@@ -21,13 +22,19 @@ export function ModalCreateTransaction() {
     fieldErrors,
     onSubmit,
     isPending,
-  } = useModalCreateTransactionViewModel();
+    transaction,
+  } = useModalEditTransactionViewModel();
+
+  if (!transaction) {
+    return null;
+  }
 
   return (
     <Modal
       onChangeOpen={onClose}
       open={visible}
-      title={isExpense ? 'Nova Despesa' : 'Nova Receita'}
+      rightIcon={() => <TrashIcon className="text-red-9" />}
+      title={isExpense ? 'Despesa' : 'Receita'}
     >
       <form className="space-y-10" onSubmit={onSubmit}>
         <div className="flex flex-col">

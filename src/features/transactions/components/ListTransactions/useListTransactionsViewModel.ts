@@ -3,9 +3,13 @@ import { useSearchParams } from 'react-router';
 import type { Swiper } from 'swiper/types';
 import type { ISliderStateType } from '@/shared';
 import { useGetTransactions } from '../../hooks/useGetTransactions';
+import { useVisibilityTransactionModalsStore } from '../../stores/useVisibilityTransactionModalsStore';
 import { useVisibleTransactionFiltersStore } from '../../stores/useVisibleTransactionFiltersStore';
+import type { Transaction } from '../../types/Transaction';
 
 export function useListTransactionsViewModel() {
+  const { setVisibility } = useVisibleTransactionFiltersStore();
+  const { edit } = useVisibilityTransactionModalsStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const [sliderState, setSliderState] = useState<ISliderStateType>({
     isBeginning: true,
@@ -15,8 +19,6 @@ export function useListTransactionsViewModel() {
   const currentMonth = searchParams.get('month')
     ? Number.parseInt(searchParams.get('month')!, 10) - 1
     : new Date().getMonth();
-
-  const { setVisibility } = useVisibleTransactionFiltersStore();
 
   const { data: transactions, isLoading: isInitialLoading } =
     useGetTransactions();
@@ -54,6 +56,10 @@ export function useListTransactionsViewModel() {
     return setVisibility(true);
   }
 
+  function handleOpenModalEditTransaction(transaction: Transaction) {
+    return edit.onOpen(transaction);
+  }
+
   return {
     sliderState,
     onChangeSliderState,
@@ -64,5 +70,6 @@ export function useListTransactionsViewModel() {
     handleOpenModalFilters,
     currentMonth,
     handleSelectMonth,
+    handleOpenModalEditTransaction,
   };
 }
