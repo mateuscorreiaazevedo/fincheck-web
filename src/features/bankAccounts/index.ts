@@ -6,8 +6,7 @@ export * from './components/ModalEditBankAccount';
 export * from './constants/bankAccountsQueryKeys';
 // Hooks
 export * from './hooks/useGetBankAccounts';
-export * from './hooks/useVisibilityModalCreateBankAccountStore';
-export * from './hooks/useVisibilityModalEditBankAccountStore';
+export * from './hooks/useVisibilityBankAccountModalsStore';
 // Services
 export * from './services/httpBankAccountsService';
 export * from './types/BankAccount';

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { transformCurrencyString } from '@/shared';
 import { useCreateBankAccount } from '../../hooks/useCreateBankAccount';
-import { useVisibilityModalCreateBankAccountStore } from '../../hooks/useVisibilityModalCreateBankAccountStore';
+import { useVisibilityBankAccountModalsStore } from '../../hooks/useVisibilityBankAccountModalsStore';
 import type { BankAccountType } from '../../types/BankAccountType';
 
 const schema = z.object({
@@ -24,7 +24,7 @@ const schema = z.object({
 type CreateBankAccountSchema = z.infer<typeof schema>;
 
 export function useModalCreateBankAccountViewModel() {
-  const visibility = useVisibilityModalCreateBankAccountStore();
+  const { create } = useVisibilityBankAccountModalsStore();
   const { handleCreateBankAccount, isPending } = useCreateBankAccount();
   const { control, register, formState, handleSubmit, reset } =
     useForm<CreateBankAccountSchema>({
@@ -39,8 +39,8 @@ export function useModalCreateBankAccountViewModel() {
 
   const onClose = useCallback(() => {
     reset(formState.defaultValues);
-    visibility.setVisibility(false);
-  }, [reset, visibility]);
+    create.onClose();
+  }, []);
 
   const onSubmit = handleSubmit(async data => {
     await handleCreateBankAccount(
@@ -60,7 +60,7 @@ export function useModalCreateBankAccountViewModel() {
   });
 
   return {
-    visible: visibility.visible,
+    visible: create.visible,
     onClose,
     control,
     register,

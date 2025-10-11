@@ -1,22 +1,19 @@
 import { useCallback } from 'react';
+import { useVisibilityBankAccountModalsStore } from '@/features/bankAccounts/hooks/useVisibilityBankAccountModalsStore';
 import {
   formatCurrencyHelper,
   RoundedIcon,
   VisibilityToggleContent,
 } from '@/shared';
-import { useVisibilityModalEditBankAccountStore } from '../../../hooks/useVisibilityModalEditBankAccountStore';
 import type { BankAccount } from '../../../types/BankAccount';
 import { BankAccountCardIcon } from './BankAccountCardIcon';
 
 export function BankAccountCard(bankAccount: BankAccount) {
   const { accountType, currentBalanceInCents, name, color } = bankAccount;
-  const { setVisibility } = useVisibilityModalEditBankAccountStore();
+  const { edit } = useVisibilityBankAccountModalsStore();
 
   const handleOpenModalEditBankAccount = useCallback(() => {
-    setVisibility({
-      bankAccount,
-      visible: true,
-    });
+    edit.onOpen(bankAccount);
   }, [bankAccount]);
 
   return (
@@ -42,7 +39,7 @@ export function BankAccountCard(bankAccount: BankAccount) {
       <div className="flex flex-col items-start">
         <VisibilityToggleContent>
           <span className="font-medium text-gray-8 tracking-[-0.5px]">
-            {formatCurrencyHelper(currentBalanceInCents)}
+            {formatCurrencyHelper(currentBalanceInCents ?? 0)}
           </span>
         </VisibilityToggleContent>
         <small className="text-gray-6 text-sm">Saldo atual</small>

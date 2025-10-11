@@ -1,17 +1,17 @@
 import { useCallback, useState } from 'react';
-import { useVisibilityModalCreateBankAccountStore } from '@/features/bankAccounts';
+import { useVisibilityBankAccountModalsStore } from '@/features/bankAccounts';
 import { useVisibilityTransactionModalsStore } from '@/features/transactions';
 
 export function useDashboardFABViewModel() {
   const [isOpen, setIsOpen] = useState(false);
-  const { setVisibility: setBankAccountVisibility } =
-    useVisibilityModalCreateBankAccountStore();
+  const { create: createBankAccountModal } =
+    useVisibilityBankAccountModalsStore();
   const { create: createTransactionModal } =
     useVisibilityTransactionModalsStore();
 
-  function handleOpenModalCreateBankAccount() {
-    setBankAccountVisibility(true);
-  }
+  const handleOpenModalCreateBankAccount = useCallback(() => {
+    createBankAccountModal.onOpen();
+  }, []);
 
   const handleOpenModalCreateIncomeTransaction = useCallback(() => {
     createTransactionModal.onOpen('INCOME');

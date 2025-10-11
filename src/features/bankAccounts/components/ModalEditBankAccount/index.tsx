@@ -1,8 +1,8 @@
-import { useVisibilityModalEditBankAccountStore } from '../../hooks/useVisibilityModalEditBankAccountStore';
+import { useVisibilityBankAccountModalsStore } from '../../hooks/useVisibilityBankAccountModalsStore';
 import { ModalEditBankAccountContent } from './content';
 
 export function ModalEditBankAccount() {
-  const { bankAccount } = useVisibilityModalEditBankAccountStore();
+  const { edit } = useVisibilityBankAccountModalsStore();
 
-  return !!bankAccount && <ModalEditBankAccountContent />;
+  return !!edit.bankAccount && <ModalEditBankAccountContent />;
 }

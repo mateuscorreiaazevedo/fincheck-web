@@ -5,7 +5,7 @@ import z from 'zod';
 import { transformCurrencyString } from '@/shared';
 import { useDeleteBankAccount } from '../../hooks/useDeleteBankAccount';
 import { useUpdateBankAccount } from '../../hooks/useUpdateBankAccount';
-import { useVisibilityModalEditBankAccountStore } from '../../hooks/useVisibilityModalEditBankAccountStore';
+import { useVisibilityBankAccountModalsStore } from '../../hooks/useVisibilityBankAccountModalsStore';
 
 const schema = z.object({
   initialBalanceInCents: z.union(
@@ -23,8 +23,9 @@ const schema = z.object({
 type CreateBankAccountSchema = z.infer<typeof schema>;
 
 export function useModalEditBankAccountViewModel() {
-  const { bankAccount, visible, setVisibility } =
-    useVisibilityModalEditBankAccountStore();
+  const {
+    edit: { onClose, visible, bankAccount },
+  } = useVisibilityBankAccountModalsStore();
   const [isOpenModalDeleteBankAccount, setIsOpenModalDeleteBankAccount] =
     useState(false);
   const { handleUpdateBankAccount, isPending } = useUpdateBankAccount();
@@ -42,12 +43,7 @@ export function useModalEditBankAccountViewModel() {
       },
     });
 
-  const handleCloseModalEditBankAccount = useCallback(() => {
-    setVisibility({
-      bankAccount: null,
-      visible: false,
-    });
-  }, []);
+  const handleCloseModalEditBankAccount = useCallback(onClose, []);
 
   const onSubmit = handleSubmit(async data => {
     await handleUpdateBankAccount(
