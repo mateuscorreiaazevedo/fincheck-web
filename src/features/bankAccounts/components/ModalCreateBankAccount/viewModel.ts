@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { transformCurrencyString } from '@/shared';
@@ -6,13 +7,15 @@ import { useCreateBankAccount } from '../../hooks/useCreateBankAccount';
 import { useVisibilityModalCreateBankAccountStore } from '../../hooks/useVisibilityModalCreateBankAccountStore';
 
 const schema = z.object({
-  initialBalanceInCents: z.string('Saldo inicial é obrigatório'),
+  initialBalanceInCents: z.string().min(0, 'O saldo inicial é obrigatório.'),
   name: z.string().min(1, 'Nome da conta bancária é obritagório.'),
   accountType: z.enum(
     ['CHECKING', 'INVESTMENT', 'CASH'],
     'O tipo da conta bancária é obrigatório.'
   ),
-  color: z.string('Defina uma cor personalizada para a sua conta bancária.'),
+  color: z
+    .string()
+    .nonempty('Defina uma cor personalizada para a sua conta bancária.'),
 });
 
 type CreateBankAccountSchema = z.infer<typeof schema>;
@@ -25,8 +28,16 @@ export function useModalCreateBankAccountViewModel() {
       resolver: zodResolver(schema),
       defaultValues: {
         initialBalanceInCents: '0',
+        name: '',
+        color: '',
+        accountType: undefined,
       },
     });
+
+  const onClose = useCallback(() => {
+    reset(formState.defaultValues);
+    visibility.setVisibility(false);
+  }, [reset, visibility]);
 
   const onSubmit = handleSubmit(async data => {
     await handleCreateBankAccount(
@@ -38,8 +49,7 @@ export function useModalCreateBankAccountViewModel() {
       },
       {
         onSuccess() {
-          visibility.setVisibility(false);
-          reset();
+          onClose();
         },
       }
     );
@@ -47,6 +57,7 @@ export function useModalCreateBankAccountViewModel() {
 
   return {
     ...visibility,
+    onClose,
     control,
     register,
     fieldErrors: formState.errors,

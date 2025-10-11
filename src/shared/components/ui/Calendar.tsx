@@ -39,7 +39,7 @@ export function Calendar({
         weekday: 'uppercase text-xs text-gray-5 font-medium pt-1 flex-1',
         week: 'flex w-full mt-2',
         day: 'text-gray-8 cursor-pointer relative size-10 flex items-center justify-center rounded-full font-medium',
-        disabled: 'text-gray-4 cursor-not-allowed !bg-transparent',
+        disabled: '!text-gray-4 !cursor-not-allowed !bg-transparent',
         outside: 'text-gray-5/90 font-normal',
         today: 'bg-gray-1 font-bold',
         selected: 'bg-teal-9 !text-white font-medium',

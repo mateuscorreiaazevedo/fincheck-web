@@ -10,9 +10,9 @@ import { useVisibilityModalCreateTransactionStore } from '../../stores/useVisibi
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
-  valueInCents: z.string('Insira o valor da sua transação'),
-  bankAccountId: z.string('A conta bancária é obrigatória.'),
-  categoryId: z.string('A categoria é obrigatória.'),
+  valueInCents: z.string().nonempty('Insira o valor da sua transação'),
+  bankAccountId: z.string().nonempty('A conta bancária é obrigatória.'),
+  categoryId: z.string().nonempty('A categoria é obrigatória.'),
   date: z.date('A data é obrigatória.'),
 });
 
@@ -28,11 +28,15 @@ export function useModalCreateTransactionViewModel() {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, defaultValues },
   } = useForm<NewTransactionSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
       date: new Date(),
+      valueInCents: '0',
+      name: '',
+      bankAccountId: '',
+      categoryId: '',
     },
   });
 
@@ -43,6 +47,7 @@ export function useModalCreateTransactionViewModel() {
   const isExpense = type === 'EXPENSE';
 
   const onClose = useCallback(() => {
+    reset(defaultValues);
     setVisibility({
       type: null,
       visible: false,
@@ -59,7 +64,6 @@ export function useModalCreateTransactionViewModel() {
       },
       {
         onSuccess() {
-          reset();
           onClose();
         },
       }

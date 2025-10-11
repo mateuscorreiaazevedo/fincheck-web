@@ -6,7 +6,7 @@ import { useModalCreateBankAccountViewModel } from './viewModel';
 
 export function ModalCreateBankAccount() {
   const {
-    setVisibility,
+    onClose,
     visible,
     control,
     fieldErrors,
@@ -16,7 +16,7 @@ export function ModalCreateBankAccount() {
   } = useModalCreateBankAccountViewModel();
 
   return (
-    <Modal onChangeOpen={setVisibility} open={visible} title="Nova conta">
+    <Modal onChangeOpen={onClose} open={visible} title="Nova conta">
       <form className="space-y-10" onSubmit={onSubmit}>
         <div className="flex flex-col">
           <span className="w-full text-gray-6 text-xs">Saldo inicial</span>
