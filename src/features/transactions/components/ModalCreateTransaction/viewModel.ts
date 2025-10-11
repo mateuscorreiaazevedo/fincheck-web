@@ -76,7 +76,10 @@ export function useModalCreateTransactionViewModel() {
     fieldErrors: errors,
     isPending,
     categories: handleListOptions({
-      data: categories,
+      data:
+        categories?.filter(
+          cat => cat.type === (isExpense ? 'EXPENSE' : 'INCOME')
+        ) ?? [],
       keys: {
         label: 'name',
         value: 'id',

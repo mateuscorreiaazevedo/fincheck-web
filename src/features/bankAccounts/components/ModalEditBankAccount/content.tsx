@@ -45,7 +45,7 @@ export function ModalEditBankAccountContent() {
       >
         <form className="space-y-10" onSubmit={onSubmit}>
           <div className="flex flex-col">
-            <span className="w-full text-gray-6 text-xs">Saldo</span>
+            <span className="w-full text-gray-6 text-xs">Saldo inicial</span>
             <div className="flex h-8 items-center gap-2">
               <span className="text-gray-6 text-lg tracking-[-0.5px]">R$</span>
               <Controller

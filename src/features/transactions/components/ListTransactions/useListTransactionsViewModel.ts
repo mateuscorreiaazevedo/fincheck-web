@@ -22,6 +22,10 @@ export function useListTransactionsViewModel() {
     useGetTransactions();
 
   function handleSelectMonth(month: number) {
+    if (month === currentMonth) {
+      return;
+    }
+
     setSearchParams(prev => {
       const { month: _, ...params } = Object.fromEntries(prev.entries());
 
