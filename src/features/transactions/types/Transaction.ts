@@ -9,4 +9,5 @@ export interface Transaction {
   valueInCents: number;
   date: string;
   type: TransactionType;
+  icon: string | null;
 }

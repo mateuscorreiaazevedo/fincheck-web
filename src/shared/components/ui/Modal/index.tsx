@@ -75,9 +75,8 @@ function Modal({
               </header>
             </Dialog.Title>
 
-            <Dialog.Description aria-describedby={title} asChild>
-              {children}
-            </Dialog.Description>
+            <Dialog.Description aria-describedby={title} />
+            {children}
           </Dialog.Content>
         )}
       </Dialog.Portal>

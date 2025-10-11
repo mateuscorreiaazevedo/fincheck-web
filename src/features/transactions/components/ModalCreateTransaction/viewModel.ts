@@ -27,11 +27,18 @@ export function useModalCreateTransactionViewModel() {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<NewTransactionSchema>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      date: new Date(),
+    },
   });
-  const { isPending, onCreateTransaction } = useCreateTransaction();
+
+  const { isPending, onCreateTransaction } = useCreateTransaction({
+    categories,
+  });
 
   const isExpense = type === 'EXPENSE';
 
@@ -52,6 +59,7 @@ export function useModalCreateTransactionViewModel() {
       },
       {
         onSuccess() {
+          reset();
           onClose();
         },
       }

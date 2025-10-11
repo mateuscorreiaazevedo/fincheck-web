@@ -43,9 +43,9 @@ export function ListTransactions() {
             <>
               {!hasTransactions && <ListTransactionsEmptyState />}
               {hasTransactions &&
-                Array.from({ length: transactions?.length ?? 2 }).map(
-                  (_, index) => <TransactionCard key={generateDateKey(index)} />
-                )}
+                transactions?.map(transaction => (
+                  <TransactionCard key={transaction.id} {...transaction} />
+                ))}
             </>
           )}
         </div>

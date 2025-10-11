@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router';
+import { transactionsQueryKeys } from '../constants/transactionsQueryKeys';
 
 export function useTransactionQueries() {
   const [searchParams] = useSearchParams();
@@ -12,5 +13,18 @@ export function useTransactionQueries() {
   const type = searchParams.get('type') ?? undefined;
   const bankAccountId = searchParams.get('bankAccountId') ?? undefined;
 
-  return [month, year, type, bankAccountId];
+  const listTransactionsKey = transactionsQueryKeys.listAll([
+    month,
+    year,
+    type,
+    bankAccountId,
+  ]);
+
+  return {
+    month,
+    year,
+    type,
+    bankAccountId,
+    listTransactionsKey,
+  };
 }

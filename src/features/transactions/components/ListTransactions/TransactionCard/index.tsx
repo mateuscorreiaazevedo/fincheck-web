@@ -1,28 +1,41 @@
 import {
+  cn,
   DateHelper,
   formatCurrencyHelper,
   VisibilityToggleContent,
 } from '@/shared';
+import type { IconNames } from '../../../types/IconNames';
+import type { Transaction } from '../../../types/Transaction';
 import { Icon } from './Icon';
 
-const MOCK_VALUE = 123_111;
+export function TransactionCard(transaction: Transaction) {
+  const sign = transaction.type === 'EXPENSE' ? '-' : '+';
 
-export function TransactionCard() {
   return (
     <div className="flex items-center justify-between gap-4 rounded-2xl bg-white p-4">
       <div className="flex flex-1 gap-4">
-        <Icon icon="other" type="INCOME" />
+        <Icon
+          icon={(transaction.icon ?? 'other') as IconNames}
+          type={transaction.type}
+        />
         <div className="flex flex-col">
-          <strong className="text-gray-8 tracking-[-0.5px]">Almoço</strong>
+          <strong className="text-gray-8 tracking-[-0.5px]">
+            {transaction.name}
+          </strong>
           <span className="text-gray-6 text-sm">
-            {DateHelper.formatDdMmYyyy(new Date().toISOString())}
+            {DateHelper.formatDdMmYyyy(transaction.date)}
           </span>
         </div>
       </div>
       <div>
         <VisibilityToggleContent>
-          <span className="font-medium text-red-8 tracking-[-0.5px]">
-            - {formatCurrencyHelper(MOCK_VALUE)}
+          <span
+            className={cn(
+              'font-medium text-green-8 tracking-[-0.5px]',
+              transaction.type === 'EXPENSE' && 'text-red-8'
+            )}
+          >
+            {sign} {formatCurrencyHelper(transaction.valueInCents)}
           </span>
         </VisibilityToggleContent>
       </div>

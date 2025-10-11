@@ -1,6 +1,7 @@
 import { HttpClientService } from '@/core/services/HttpClientService';
 import { httpResponseHandler } from '@/shared';
 import type { HttpCreateTransactionRequest } from '../types/HttpCreateTransactionRequest';
+import type { HttpListTransactionsParams } from '../types/HttpListTransactionsParams';
 import type { Transaction } from '../types/Transaction';
 
 class HttpTransactionsService extends HttpClientService {
@@ -9,6 +10,15 @@ class HttpTransactionsService extends HttpClientService {
       url: '/transactions',
       method: 'POST',
       body,
+    });
+
+    return httpResponseHandler(response);
+  }
+
+  async list(params: HttpListTransactionsParams): Promise<Transaction[]> {
+    const response = await this.request<Transaction[]>({
+      url: '/transactions',
+      params,
     });
 
     return httpResponseHandler(response);

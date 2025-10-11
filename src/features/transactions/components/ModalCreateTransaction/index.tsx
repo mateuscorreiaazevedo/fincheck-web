@@ -85,6 +85,7 @@ export function ModalCreateTransaction() {
             render={({ field, fieldState }) => (
               <DatePicker
                 error={fieldState.error?.message}
+                maxDate={new Date()}
                 onChange={field.onChange}
                 placeholder="Data"
                 value={field.value}
