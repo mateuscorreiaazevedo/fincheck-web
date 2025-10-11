@@ -1,10 +1,11 @@
 import { tv } from 'tailwind-variants';
+import { cn, ExpenseIcon, IncomeIcon } from '@/shared';
 import type { IconNames } from '../../../types/IconNames';
 import type { TransactionType } from '../../../types/TransactionType';
 import { iconsMap } from '../../../utils/iconsMap';
 
 interface IconProps {
-  icon: IconNames;
+  icon?: string;
   type: TransactionType;
 }
 
@@ -73,11 +74,30 @@ const iconVariants = tv({
 });
 
 export function Icon({ icon, type }: IconProps) {
-  const IconByType = iconsMap(icon, type);
+  if (!icon) {
+    const IconDefault = type === 'INCOME' ? IncomeIcon : ExpenseIcon;
+    return (
+      <div
+        className={cn(
+          'flex size-11 items-center justify-center rounded-full border-2 border-white',
+          type === 'EXPENSE' ? 'bg-red-0' : 'bg-teal-0'
+        )}
+      >
+        <IconDefault
+          className={cn(
+            'size-6',
+            type === 'EXPENSE' ? 'text-red-5' : 'text-teal-5'
+          )}
+        />
+      </div>
+    );
+  }
+
+  const IconByType = iconsMap(icon as IconNames, type);
 
   return (
-    <div className={bgVariants({ icon, type })}>
-      <IconByType className={iconVariants({ icon, type })} />
+    <div className={bgVariants({ icon: icon as IconNames, type })}>
+      <IconByType className={iconVariants({ icon: icon as IconNames, type })} />
     </div>
   );
 }

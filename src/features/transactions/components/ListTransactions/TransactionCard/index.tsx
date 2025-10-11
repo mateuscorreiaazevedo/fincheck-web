@@ -22,15 +22,12 @@ export function TransactionCard(transaction: TransactionCardProps) {
       type="button"
     >
       <div className="flex flex-1 gap-4">
-        <Icon
-          icon={(transaction.icon ?? 'other') as IconNames}
-          type={transaction.type}
-        />
+        <Icon icon={transaction.icon as IconNames} type={transaction.type} />
         <div className="flex flex-col">
           <strong className="text-gray-8 tracking-[-0.5px]">
             {transaction.name}
           </strong>
-          <span className="text-gray-6 text-sm">
+          <span className="text-start text-gray-6 text-sm">
             {DateHelper.formatDdMmYyyy(transaction.date)}
           </span>
         </div>
