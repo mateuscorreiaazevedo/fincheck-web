@@ -5,14 +5,17 @@ import z from 'zod';
 import { transformCurrencyString } from '@/shared';
 import { useCreateBankAccount } from '../../hooks/useCreateBankAccount';
 import { useVisibilityModalCreateBankAccountStore } from '../../hooks/useVisibilityModalCreateBankAccountStore';
+import type { BankAccountType } from '../../types/BankAccountType';
 
 const schema = z.object({
   initialBalanceInCents: z.string().min(0, 'O saldo inicial é obrigatório.'),
   name: z.string().min(1, 'Nome da conta bancária é obritagório.'),
-  accountType: z.enum(
-    ['CHECKING', 'INVESTMENT', 'CASH'],
-    'O tipo da conta bancária é obrigatório.'
-  ),
+  accountType: z
+    .enum(
+      ['', 'CHECKING', 'INVESTMENT', 'CASH'],
+      'O tipo da conta bancária é obrigatório.'
+    )
+    .refine(val => val !== '', 'O tipo da conta bancária é obrigatório.'),
   color: z
     .string()
     .nonempty('Defina uma cor personalizada para a sua conta bancária.'),
@@ -30,7 +33,7 @@ export function useModalCreateBankAccountViewModel() {
         initialBalanceInCents: '0',
         name: '',
         color: '',
-        accountType: undefined,
+        accountType: '',
       },
     });
 
@@ -43,6 +46,7 @@ export function useModalCreateBankAccountViewModel() {
     await handleCreateBankAccount(
       {
         ...data,
+        accountType: data.accountType as BankAccountType,
         initialBalanceInCents: transformCurrencyString(
           data.initialBalanceInCents
         ),
@@ -56,7 +60,7 @@ export function useModalCreateBankAccountViewModel() {
   });
 
   return {
-    ...visibility,
+    visible: visibility.visible,
     onClose,
     control,
     register,
