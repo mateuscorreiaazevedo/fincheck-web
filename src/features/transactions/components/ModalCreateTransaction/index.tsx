@@ -1,3 +1,4 @@
+import { Controller } from 'react-hook-form';
 import {
   Button,
   DatePicker,
@@ -9,10 +10,17 @@ import {
 import { useModalCreateTransactionViewModel } from './viewModel';
 
 export function ModalCreateTransaction() {
-  const { onClose, type, visible, categories } =
-    useModalCreateTransactionViewModel();
-
-  const isExpense = type === 'EXPENSE';
+  const {
+    onClose,
+    isExpense,
+    visible,
+    categories,
+    bankAccounts,
+    control,
+    register,
+    fieldErrors,
+    onSubmit,
+  } = useModalCreateTransactionViewModel();
 
   return (
     <Modal
@@ -20,33 +28,69 @@ export function ModalCreateTransaction() {
       open={visible}
       title={isExpense ? 'Nova Despesa' : 'Nova Receita'}
     >
-      <form className="space-y-10">
+      <form className="space-y-10" onSubmit={onSubmit}>
         <div className="flex flex-col">
           <span className="w-full text-gray-6 text-xs">
             {isExpense ? 'Valor da despesa' : 'Valor da receita'}
           </span>
           <div className="flex h-8 items-center gap-2">
             <span className="text-gray-6 text-lg tracking-[-0.5px]">R$</span>
-            <InputCurrency />
+            <Controller
+              control={control}
+              name="valueInCents"
+              render={({ field, fieldState }) => (
+                <InputCurrency {...field} error={fieldState.error?.message} />
+              )}
+            />
           </div>
         </div>
         <div className="space-y-4">
           <Input
-            name="name"
+            {...register('name')}
+            error={fieldErrors.name?.message}
             placeholder={isExpense ? 'Nome da despesa' : 'Nome da receita'}
           />
-          <Select
-            classNames={{
-              content: 'max-h-48 overflow-y-auto',
-            }}
-            options={categories}
-            placeholder="Categoria"
+          <Controller
+            control={control}
+            name="categoryId"
+            render={({ field, fieldState }) => (
+              <Select
+                classNames={{
+                  content: 'max-h-80 overflow-y-auto',
+                }}
+                error={fieldState.error?.message}
+                onSelect={field.onChange}
+                options={categories}
+                placeholder="Categoria"
+                selected={field.value}
+              />
+            )}
           />
-          <Select
-            options={[]}
-            placeholder={isExpense ? 'Pagar com' : 'Receber com'}
+          <Controller
+            control={control}
+            name="bankAccountId"
+            render={({ field, fieldState }) => (
+              <Select
+                error={fieldState.error?.message}
+                onSelect={field.onChange}
+                options={bankAccounts}
+                placeholder={isExpense ? 'Pagar com' : 'Receber com'}
+                selected={field.value}
+              />
+            )}
           />
-          <DatePicker />
+          <Controller
+            control={control}
+            name="date"
+            render={({ field, fieldState }) => (
+              <DatePicker
+                error={fieldState.error?.message}
+                onChange={field.onChange}
+                placeholder="Data"
+                value={field.value}
+              />
+            )}
+          />
           <Button className="w-full" type="submit">
             Salvar
           </Button>

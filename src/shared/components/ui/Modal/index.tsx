@@ -50,32 +50,34 @@ function Modal({
             )}
             role="dialog"
           >
-            <header className="flex h-12 items-center justify-between text-gray-8">
-              <Dialog.Close className="flex size-12 items-center justify-center outline-none">
-                <CrossIcon />
-              </Dialog.Close>
-              <Dialog.Title asChild>
+            <Dialog.Title asChild>
+              <header className="flex h-12 items-center justify-between text-gray-8">
+                <Dialog.Close className="flex size-12 items-center justify-center outline-none">
+                  <CrossIcon />
+                </Dialog.Close>
                 <h3
                   className="font-bold text-lg tracking-[-1px]"
                   id="modal-title"
                 >
                   {title}
                 </h3>
-              </Dialog.Title>
-              <button
-                className={cn(
-                  'flex size-12 cursor-default items-center justify-center outline-none',
-                  !!rightIconAction &&
-                    'cursor-pointer rounded-2xl transition-colors hover:bg-gray-1 focus:outline focus:outline-teal-9'
-                )}
-                onClick={rightIconAction}
-                type="button"
-              >
-                {RightIcon && <RightIcon />}
-              </button>
-            </header>
+                <button
+                  className={cn(
+                    'flex size-12 cursor-default items-center justify-center outline-none',
+                    !!rightIconAction &&
+                      'cursor-pointer rounded-2xl transition-colors hover:bg-gray-1 focus:outline focus:outline-teal-9'
+                  )}
+                  onClick={rightIconAction}
+                  type="button"
+                >
+                  {RightIcon && <RightIcon />}
+                </button>
+              </header>
+            </Dialog.Title>
 
-            {children}
+            <Dialog.Description aria-describedby={title} asChild>
+              {children}
+            </Dialog.Description>
           </Dialog.Content>
         )}
       </Dialog.Portal>

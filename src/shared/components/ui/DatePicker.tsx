@@ -18,8 +18,14 @@ export function DatePicker({
   error,
   value,
   placeholder = 'Data',
+  onChange,
 }: DatePickerProps) {
   const [date, setDate] = useState(value ?? new Date());
+
+  function handleSetDate(dateValue: Date) {
+    setDate(dateValue);
+    onChange?.(dateValue);
+  }
 
   return (
     <div>
@@ -47,7 +53,7 @@ export function DatePicker({
           </button>
         </Popover.Trigger>
         <Popover.Content className="z-50 w-fit p-4">
-          <Calendar onChange={setDate} value={date} />
+          <Calendar onChange={handleSetDate} value={date} />
         </Popover.Content>
       </Popover>
 
