@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import { useGetBankAccounts } from '@/features/bankAccounts';
 import { categoriesLabel, useGetCategories } from '@/features/categories';
 import { handleListOptions, transformCurrencyString } from '@/shared';
-import { useCreateTransaction } from '../../hooks/useCreateTransaction';
+import { useDeleteTransaction } from '../../hooks/useDeleteTransaction';
+import { useUpdateTransaction } from '../../hooks/useUpdateTransaction';
 import { useVisibilityTransactionModalsStore } from '../../stores/useVisibilityTransactionModalsStore';
 
 const schema = z.object({
@@ -23,8 +24,10 @@ type NewTransactionSchema = z.infer<typeof schema>;
 
 export function useModalEditTransactionViewModel() {
   const {
-    edit: { transaction, ...edit },
+    edit: { transaction, visible, ...edit },
   } = useVisibilityTransactionModalsStore();
+  const [isOpenModalDeleteTransaction, setIsOpenModalDeleteTransaction] =
+    useState(false);
   const { data: categories } = useGetCategories();
   const { data: bankAccounts } = useGetBankAccounts();
   const {
@@ -44,9 +47,18 @@ export function useModalEditTransactionViewModel() {
     },
   });
 
-  const { isPending, onCreateTransaction } = useCreateTransaction();
+  const { isPending, onUpdateTransaction } = useUpdateTransaction();
+  const { isDeleting, onDeleteTransaction } = useDeleteTransaction();
 
   const isExpense = transaction?.type === 'EXPENSE';
+
+  const handleOpenModalDeleteTransaction = useCallback(() => {
+    setIsOpenModalDeleteTransaction(true);
+  }, []);
+
+  const handleCloseModalDeleteTransaction = useCallback(() => {
+    setIsOpenModalDeleteTransaction(false);
+  }, []);
 
   const onClose = useCallback(() => {
     reset(defaultValues);
@@ -54,12 +66,15 @@ export function useModalEditTransactionViewModel() {
   }, []);
 
   const onSubmit = handleSubmit(async data => {
-    await onCreateTransaction(
+    await onUpdateTransaction(
       {
-        ...data,
-        valueInCents: transformCurrencyString(data.valueInCents),
-        date: data.date.toISOString(),
-        type: transaction?.type ?? 'INCOME',
+        transactionId: transaction?.id,
+        body: {
+          ...data,
+          valueInCents: transformCurrencyString(data.valueInCents),
+          date: data.date.toISOString(),
+          type: transaction?.type ?? 'INCOME',
+        },
       },
       {
         onSuccess() {
@@ -69,9 +84,21 @@ export function useModalEditTransactionViewModel() {
     );
   });
 
+  async function handleDeleteTransaction() {
+    await onDeleteTransaction(
+      { transactionId: transaction?.id },
+      {
+        onSuccess() {
+          handleCloseModalDeleteTransaction();
+          onClose();
+        },
+      }
+    );
+  }
+
   return {
     onClose,
-    visible: edit.visible,
+    visible,
     transaction,
     isExpense,
     onSubmit,
@@ -79,6 +106,11 @@ export function useModalEditTransactionViewModel() {
     register,
     fieldErrors: errors,
     isPending,
+    isDeleting,
+    handleDeleteTransaction,
+    isOpenModalDeleteTransaction,
+    handleCloseModalDeleteTransaction,
+    handleOpenModalDeleteTransaction,
     categories: handleListOptions({
       data:
         categories?.filter(
