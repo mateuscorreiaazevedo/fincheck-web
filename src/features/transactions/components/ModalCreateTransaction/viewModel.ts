@@ -6,7 +6,7 @@ import { useGetBankAccounts } from '@/features/bankAccounts';
 import { categoriesLabel, useGetCategories } from '@/features/categories';
 import { handleListOptions, transformCurrencyString } from '@/shared';
 import { useCreateTransaction } from '../../hooks/useCreateTransaction';
-import { useVisibilityModalCreateTransactionStore } from '../../stores/useVisibilityModalCreateTransactionStore';
+import { useVisibilityTransactionModalsStore } from '../../stores/useVisibilityTransactionModalsStore';
 
 const schema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
@@ -19,8 +19,7 @@ const schema = z.object({
 type NewTransactionSchema = z.infer<typeof schema>;
 
 export function useModalCreateTransactionViewModel() {
-  const { setVisibility, type, visible } =
-    useVisibilityModalCreateTransactionStore();
+  const { create } = useVisibilityTransactionModalsStore();
   const { data: categories } = useGetCategories();
   const { data: bankAccounts } = useGetBankAccounts();
   const {
@@ -44,14 +43,11 @@ export function useModalCreateTransactionViewModel() {
     categories,
   });
 
-  const isExpense = type === 'EXPENSE';
+  const isExpense = create.type === 'EXPENSE';
 
   const onClose = useCallback(() => {
     reset(defaultValues);
-    setVisibility({
-      type: null,
-      visible: false,
-    });
+    create.onClose();
   }, []);
 
   const onSubmit = handleSubmit(async data => {
@@ -60,7 +56,7 @@ export function useModalCreateTransactionViewModel() {
         ...data,
         valueInCents: transformCurrencyString(data.valueInCents),
         date: data.date.toISOString(),
-        type: type!,
+        type: create.type!,
       },
       {
         onSuccess() {
@@ -72,7 +68,7 @@ export function useModalCreateTransactionViewModel() {
 
   return {
     onClose,
-    visible,
+    visible: create.visible,
     isExpense,
     onSubmit,
     control,
