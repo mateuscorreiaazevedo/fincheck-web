@@ -1,20 +1,6 @@
-import { Button, cn, LeftIcon, Modal, RightIcon } from '@/shared';
+import { Button, LeftIcon, Modal, RightIcon } from '@/shared';
+import { DropdownBankAccounts } from './DropdownBankAccounts';
 import { useModalTransactionFiltersViewModel } from './viewModel';
-
-const mockAccounts = [
-  {
-    value: '123',
-    label: 'Nubank',
-  },
-  {
-    value: '456',
-    label: 'XP Investimentos',
-  },
-  {
-    value: '789',
-    label: 'Dinheiro',
-  },
-];
 
 export function ModalTransactionFilters() {
   const {
@@ -24,25 +10,21 @@ export function ModalTransactionFilters() {
     selectedBankAccountId,
     handleSelectBankAcccountId,
     handleChangeYear,
+    bankAccounts,
+    handleFilterTransactions,
+    handleClearFilters,
+    isClearFilters,
   } = useModalTransactionFiltersViewModel();
 
   return (
     <Modal onChangeOpen={setVisibility} open={visible} title="Filtros">
-      <div className="space-y-2">
+      <div className="max-h-44 space-y-2 overflow-y-auto">
         <h4 className="font-bold text-gray-8 text-lg">Conta</h4>
-        {mockAccounts.map(item => (
-          <button
-            className={cn(
-              'w-full rounded-2xl p-2 text-left text-gray-8 transition-colors hover:bg-gray-1',
-              selectedBankAccountId === item.value && '!bg-gray-2'
-            )}
-            key={item.value}
-            onClick={() => handleSelectBankAcccountId(item.value)}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+        <DropdownBankAccounts
+          data={bankAccounts}
+          onSelect={handleSelectBankAcccountId}
+          value={selectedBankAccountId}
+        />
       </div>
       <div className="w-52 space-y-2">
         <h4 className="font-bold text-gray-8 text-lg">Ano</h4>
@@ -73,9 +55,20 @@ export function ModalTransactionFilters() {
         </div>
       </div>
 
-      <Button className="w-full" disabled={selectedBankAccountId === null}>
-        Aplicar filtros
-      </Button>
+      <div className="space-y-2">
+        <Button className="w-full" onClick={handleFilterTransactions}>
+          Aplicar filtros
+        </Button>
+        {isClearFilters && (
+          <Button
+            className="w-full"
+            onClick={handleClearFilters}
+            variant="secondary"
+          >
+            Limpar filtros
+          </Button>
+        )}
+      </div>
     </Modal>
   );
 }

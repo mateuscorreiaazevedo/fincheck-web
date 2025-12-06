@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useDebounce } from './useDebounce';
 
 export function useMediaQuery() {
   const [width, setWidth] = useState(window.innerWidth);
+  const debouncedWidth = useDebounce(width);
 
   useEffect(() => {
     function handleChangeWidth() {
@@ -14,5 +16,5 @@ export function useMediaQuery() {
     };
   }, []);
 
-  return width;
+  return debouncedWidth;
 }

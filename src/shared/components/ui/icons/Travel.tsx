@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import type { IconProps } from '@/shared/types';
 import { cn } from '@/shared/utils';
 
-export function TravelIcon({ className }: IconProps) {
+export const TravelIcon = memo(({ className }: IconProps) => {
   return (
     <svg
       className={cn('size-6', className)}
@@ -48,4 +49,4 @@ export function TravelIcon({ className }: IconProps) {
       />
     </svg>
   );
-}
+});

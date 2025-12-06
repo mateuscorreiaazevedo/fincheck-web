@@ -9,9 +9,17 @@ interface CalendarProps {
   value: Date;
   onChange(date: Date): void;
   className?: string;
+  maxDate?: Date;
+  minDate?: Date;
 }
 
-export function Calendar({ onChange, value, className }: CalendarProps) {
+export function Calendar({
+  onChange,
+  value,
+  className,
+  maxDate,
+  minDate,
+}: CalendarProps) {
   return (
     <DayPicker
       className={cn('w-full', className)}
@@ -31,6 +39,7 @@ export function Calendar({ onChange, value, className }: CalendarProps) {
         weekday: 'uppercase text-xs text-gray-5 font-medium pt-1 flex-1',
         week: 'flex w-full mt-2',
         day: 'text-gray-8 cursor-pointer relative size-10 flex items-center justify-center rounded-full font-medium',
+        disabled: '!text-gray-4 !cursor-not-allowed !bg-transparent',
         outside: 'text-gray-5/90 font-normal',
         today: 'bg-gray-1 font-bold',
         selected: 'bg-teal-9 !text-white font-medium',
@@ -39,7 +48,10 @@ export function Calendar({ onChange, value, className }: CalendarProps) {
         PreviousMonthButton: PrevButton,
         NextMonthButton: NextButton,
       }}
-      defaultMonth={value}
+      disabled={[
+        ...(maxDate ? [{ after: maxDate }] : []),
+        ...(minDate ? [{ before: minDate }] : []),
+      ]}
       formatters={{
         formatCaption: (date, options) => {
           return format(date, 'LLLL yyyy', options);

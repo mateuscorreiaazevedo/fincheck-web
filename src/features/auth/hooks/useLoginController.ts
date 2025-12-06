@@ -8,7 +8,7 @@ import { throwException } from '@/shared';
 import { authErrorsMessage } from '../constants/authErrorsMessage';
 import { authQueryKeys } from '../constants/authQueryKeys';
 import { MIN_LENGTH_PASSWORD } from '../constants/minLengthPassword';
-import { authService } from '../services/httpClientAuthService';
+import { authService } from '../services/HttpClientAuthService';
 import { useAuth } from './useAuth';
 
 const loginSchema = z.object({

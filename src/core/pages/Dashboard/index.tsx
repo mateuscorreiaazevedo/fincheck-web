@@ -1,10 +1,12 @@
 import {
   BankAccountsResume,
   ModalCreateBankAccount,
+  ModalEditBankAccount,
 } from '@/features/bankAccounts';
 import {
   ListTransactions,
   ModalCreateTransaction,
+  ModalEditTransaction,
 } from '@/features/transactions';
 import { DashboardFab } from './components/Fab';
 
@@ -19,7 +21,9 @@ export default function DashboardPage() {
       </article>
       <DashboardFab />
       <ModalCreateBankAccount />
+      <ModalEditBankAccount />
       <ModalCreateTransaction />
+      <ModalEditTransaction />
     </main>
   );
 }

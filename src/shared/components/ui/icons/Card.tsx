@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import type { IconProps } from '@/shared/types';
 import { cn } from '@/shared/utils';
 
-export function CardIcon({ className }: IconProps) {
+export const CardIcon = memo(({ className }: IconProps) => {
   return (
     <svg
       className={cn('size-6', className)}
@@ -34,4 +35,4 @@ export function CardIcon({ className }: IconProps) {
       />
     </svg>
   );
-}
+});

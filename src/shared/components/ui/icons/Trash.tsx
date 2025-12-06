@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import type { IconProps } from '@/shared/types';
 import { cn } from '@/shared/utils';
 
-export function TrashIcon({ className }: IconProps) {
+export const TrashIcon = memo(({ className }: IconProps) => {
   return (
     <svg
       className={cn('size-6', className)}
@@ -18,4 +19,4 @@ export function TrashIcon({ className }: IconProps) {
       />
     </svg>
   );
-}
+});

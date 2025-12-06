@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { sleep } from '@/shared';
-import { transactionsQueryKeys } from '../constants/transactionsQueryKeys';
+import { httpTransactionsService } from '../services/httpTransactionsService';
+import { useTransactionQueries } from './useTransactionQueries';
 
 export function useGetTransactions() {
-  return useQuery({
-    queryKey: transactionsQueryKeys.listAll(),
-    queryFn: async () => {
-      const delay = 1400;
-      await sleep(delay);
+  const { listTransactionsKey, ...params } = useTransactionQueries();
 
-      return [];
-    },
+  return useQuery({
+    queryKey: listTransactionsKey,
+    queryFn: async () =>
+      httpTransactionsService.list({ ...params, month: params.month - 1 }),
   });
 }

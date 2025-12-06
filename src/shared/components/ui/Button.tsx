@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import { type ComponentProps, memo } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { Spinner } from './Spinner';
 
@@ -7,6 +7,8 @@ const buttonVariants = tv({
   variants: {
     variant: {
       none: 'bg-transparent',
+      danger:
+        'bg-red-9 font-medium text-white outline-red-7 active:bg-red-8 enabled:hover:bg-red-7',
       default:
         'bg-teal-8 font-medium text-white outline-teal-9 active:bg-teal-9 enabled:hover:bg-teal-7',
       ghostGray:
@@ -40,22 +42,25 @@ type ButtonProps = ComponentProps<'button'> &
     isLoadingLabel?: string;
   };
 
-export function Button({
-  className,
-  variant,
-  size,
-  radius,
-  disabled,
-  isLoading,
-  children,
-  isLoadingLabel,
-  ...props
-}: ButtonProps) {
-  return (
+export const Button = memo(
+  ({
+    className,
+    variant,
+    size,
+    radius,
+    disabled,
+    isLoading,
+    children,
+    isLoadingLabel,
+    ...props
+  }: ButtonProps) => (
     <button
       {...props}
+      aria-busy={isLoading}
+      aria-disabled={isLoading || disabled}
       className={buttonVariants({ size, className, variant, radius })}
       disabled={isLoading || disabled}
+      type={props.type || 'button'}
     >
       {isLoading && (
         <>
@@ -68,5 +73,5 @@ export function Button({
       )}
       {!isLoading && children}
     </button>
-  );
-}
+  )
+);

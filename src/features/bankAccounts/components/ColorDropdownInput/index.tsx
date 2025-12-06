@@ -14,19 +14,29 @@ interface ColorDropdownInputProps {
   classNames?: ClassNames;
   error?: string;
   value?: string;
-  changeValue?(value: string): void;
+  onChange?(value: string): void;
 }
 
 export function ColorDropdownInput({
   classNames,
   error,
+  onChange,
+  value,
 }: ColorDropdownInputProps) {
   const [selectedColor, setSelectedColor] = useState<ColorInputOption | null>(
-    null
+    () => {
+      if (value) {
+        return colorOptions.find(item => item.color === value) ?? null;
+      }
+      return null;
+    }
   );
 
   function handleSelect(color: ColorInputOption) {
     setSelectedColor(color);
+    if (onChange) {
+      onChange(color.color);
+    }
   }
 
   return (

@@ -16,7 +16,7 @@ function DropdownMenuContent({
       <Dropdown.Content
         {...props}
         className={cn(
-          'h-auto w-full rounded-2xl border border-gray-1 bg-white shadow-default transition-all data-[side=bottom]:animate-slideUpAndFade data-[side=top]:animate-slideDownAndFade',
+          'h-auto w-full rounded-2xl border border-gray-1 bg-white shadow-default transition-all data-[side=bottom]:mt-2 data-[side=left]:mr-2 data-[side=top]:mb-2 data-[side=right]:ml-2 data-[side=bottom]:animate-slideUpAndFade data-[side=top]:animate-slideDownAndFade',
           className
         )}
       />

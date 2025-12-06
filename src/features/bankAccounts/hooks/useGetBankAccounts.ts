@@ -1,15 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { sleep } from '@/shared';
+
 import { bankAccountsQueryKeys } from '../constants/bankAccountsQueryKeys';
+import { bankAccountsService } from '../services/httpBankAccountsService';
 
 export function useGetBankAccounts() {
   const query = useQuery({
     queryKey: bankAccountsQueryKeys.getBankAccounts(),
-    queryFn: async () => {
-      await sleep();
-
-      return [2];
-    },
+    queryFn: () => bankAccountsService.list(),
   });
 
   return query;

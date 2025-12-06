@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import type { IconProps } from '@/shared/types';
 import { cn } from '@/shared/utils';
 
-export function MixerIcon({ className }: IconProps) {
+export const MixerIcon = memo(({ className }: IconProps) => {
   return (
     <svg
       className={cn('size-6', className)}
@@ -80,4 +81,4 @@ export function MixerIcon({ className }: IconProps) {
       />
     </svg>
   );
-}
+});

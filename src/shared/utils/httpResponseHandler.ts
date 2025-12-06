@@ -1,9 +1,10 @@
 import { type HttpResponse, HttpStatusCode } from '@/core/types/HttpClient';
+import { CustomError } from './customError';
 
-export function httpResponseHandler<T = unknown>(response: HttpResponse<T>): T {
+export function httpResponseHandler<T = undefined>(
+  response: HttpResponse<T>
+): T {
   const { statusCode, data } = response;
-
-  const error = Array.isArray(data?.message) ? data.message[0] : data?.message;
 
   switch (statusCode) {
     case HttpStatusCode.OK:
@@ -11,21 +12,21 @@ export function httpResponseHandler<T = unknown>(response: HttpResponse<T>): T {
     case HttpStatusCode.CREATED:
       return data!;
     case HttpStatusCode.NO_CONTENT:
-      throw data;
+      return data!;
     case HttpStatusCode.BAD_REQUEST:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     case HttpStatusCode.UNAUTHORIZED:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     case HttpStatusCode.FORBIDDEN:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     case HttpStatusCode.NOT_FOUND:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     case HttpStatusCode.CONFLICT:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     case HttpStatusCode.INTERNAL_SERVER_ERROR:
-      throw new Error(error);
+      throw new CustomError(data?.message ?? '');
     default:
-      throw new Error(
+      throw new CustomError(
         'Ocorreu um erro inesperado, por favor tente novamente mais tarde.'
       );
   }

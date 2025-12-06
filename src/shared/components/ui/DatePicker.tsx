@@ -11,6 +11,8 @@ interface DatePickerProps {
   value?: Date;
   onChange?(value: Date): void;
   placeholder?: string;
+  maxDate?: Date;
+  minDate?: Date;
 }
 
 export function DatePicker({
@@ -18,12 +20,22 @@ export function DatePicker({
   error,
   value,
   placeholder = 'Data',
+  onChange,
+  maxDate,
+  minDate,
 }: DatePickerProps) {
   const [date, setDate] = useState(value ?? new Date());
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleSetDate(dateValue: Date) {
+    setDate(dateValue);
+    setIsOpen(false);
+    onChange?.(dateValue);
+  }
 
   return (
     <div>
-      <Popover>
+      <Popover onOpenChange={setIsOpen} open={isOpen}>
         <Popover.Trigger asChild>
           <button
             className={cn(
@@ -47,7 +59,12 @@ export function DatePicker({
           </button>
         </Popover.Trigger>
         <Popover.Content className="z-50 w-fit p-4">
-          <Calendar onChange={setDate} value={date} />
+          <Calendar
+            maxDate={maxDate}
+            minDate={minDate}
+            onChange={handleSetDate}
+            value={date}
+          />
         </Popover.Content>
       </Popover>
 

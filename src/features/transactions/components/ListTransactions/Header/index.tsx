@@ -6,17 +6,19 @@ import {
   type ISliderStateType,
   LoadingSkeleton,
 } from '@/shared';
-import { generateDateKey } from '../../utils/generateDateKey';
-import { listMonths } from '../../utils/listMonths';
-import { SliderItem } from '../SliderItem';
-import { SliderNavigation } from '../SliderNavigation';
-import { TransactionTypeDropdown } from '../TransactionTypeDropdown';
+import { generateDateKey } from '../../../utils/generateDateKey';
+import { listMonths } from '../../../utils/listMonths';
+import { TransactionTypeDropdown } from '../../TransactionTypeDropdown';
+import { SliderItem } from './SliderItem';
+import { SliderNavigation } from './SliderNavigation';
 
 interface IHeaderProps {
   sliderState: ISliderStateType;
   onChangeSliderState: (swiper: SwiperType) => void;
   isLoading?: boolean;
   onOpenModalFilters(): void;
+  currentSlider: number;
+  onSelectMonth?(month: number): void;
 }
 
 export function ListTransactionsHeader({
@@ -24,6 +26,8 @@ export function ListTransactionsHeader({
   sliderState,
   isLoading = false,
   onOpenModalFilters,
+  currentSlider,
+  onSelectMonth,
 }: IHeaderProps) {
   return (
     <header>
@@ -52,6 +56,7 @@ export function ListTransactionsHeader({
       <div className="relative mt-6">
         <Swiper
           centeredSlides
+          initialSlide={currentSlider}
           onSlideChange={onChangeSliderState}
           slidesPerView={3}
           spaceBetween={16}
@@ -65,6 +70,7 @@ export function ListTransactionsHeader({
                   isActive={isActive}
                   isLoading={isLoading}
                   item={item}
+                  onSelectMonth={onSelectMonth}
                 />
               )}
             </SwiperSlide>

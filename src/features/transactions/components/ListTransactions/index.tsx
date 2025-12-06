@@ -15,15 +15,20 @@ export function ListTransactions() {
     isLoading,
     hasTransactions,
     handleOpenModalFilters,
+    currentMonth,
+    handleSelectMonth,
+    handleOpenModalEditTransaction,
   } = useListTransactionsViewModel();
 
   return (
     <>
       <ContentView className="flex flex-col bg-gray-1">
         <ListTransactionsHeader
+          currentSlider={currentMonth}
           isLoading={isInitialLoading}
           onChangeSliderState={onChangeSliderState}
           onOpenModalFilters={handleOpenModalFilters}
+          onSelectMonth={handleSelectMonth}
           sliderState={sliderState}
         />
 
@@ -39,9 +44,15 @@ export function ListTransactions() {
             <>
               {!hasTransactions && <ListTransactionsEmptyState />}
               {hasTransactions &&
-                Array.from({ length: transactions?.length ?? 2 }).map(
-                  (_, index) => <TransactionCard key={generateDateKey(index)} />
-                )}
+                transactions?.map(transaction => (
+                  <TransactionCard
+                    key={transaction.id}
+                    {...transaction}
+                    onOpenEditModal={() =>
+                      handleOpenModalEditTransaction(transaction)
+                    }
+                  />
+                ))}
             </>
           )}
         </div>

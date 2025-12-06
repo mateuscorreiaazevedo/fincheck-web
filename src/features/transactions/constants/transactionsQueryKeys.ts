@@ -1,3 +1,3 @@
 export const transactionsQueryKeys = {
-  listAll: () => [],
+  listAll: (params: unknown[]) => ['transactions', ...params] as const,
 };
